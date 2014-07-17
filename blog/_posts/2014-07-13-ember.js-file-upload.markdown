@@ -1,0 +1,16 @@
+---
+layout: post
+title:  "Ember.js File Upload..."
+date:   2014-07-13 11:07:13
+categories: emberjs
+---
+
+<p>Woke up early to work on DVD inventory web app, and have some new fields integrated into the Ember.js model.  They are simple text fields, well one is a textarea, and didn't post any big problem.  Except for the edit form is now quite large, but it's not the size of your form that matters.</p>
+
+<p>I'm now being tripped up by uploading an image file in Ember.  Which really Ember might not need to know too much about the file upload process, but then I realized that I'm not actually using a traditional form element.  Instead I'm relying on Ember's data binding model to handle all that for me.  There are some cool HTML5 things you can do with multi-part form file upload data, and I found <a href="http://stackoverflow.com/questions/13923122/ember-js-upload-file-component" rel="nofollow">this</a> great thread on StackOverflow with some great code at the bottom to automatically add the image element below the file choose button.  I like that feature.</p>
+
+<p>The current problem I'm blasting my thinker against is how to actually send the data to the server.  From what I can tell by printing some statements in my Flask app is that the actual binary file data isn't being sent.  There are several Ember file upload projects out there, and I'm currently looking at <a href="https://github.com/workmanw/embernati-upload-demo" rel="nofollow">Wesley Workman's</a> repo which I was pointed to by his comment on <a href="http://ryantablada.com/post/file-uploads-in-ember-js" rel="nofollow">this post</a>.  Hopefully I can extract enough code from his cool drag 'n drop example to make my simple one file upload work.  </p>
+
+<p>Might be still on this tomorrow though.</p>
+
+<p>Party On!</p>

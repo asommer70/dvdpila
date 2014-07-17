@@ -1,0 +1,96 @@
+---
+layout: default
+---
+
+<div class="home">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <a href="" class="hero-logo no-bottom"><img src="{{ site.baseurl }}assets/images/dvd_pila_logo_white.svg" alt="DVD Pila!"></a>
+      <div class="hero-copy">
+        <h1>A web app for storing information about your DVD archive.</h1>
+        <p>If you have a stack of DVDs just sitting around, and you'd like a way to inventory them. Then DVD Pila! is for you.</p>
+      </div>
+      <a href="/about" class="no-bottom"><button class="success">Learn More</button></a>
+    </div>
+  </div>
+
+  <br/><br/>
+
+  <div class="bullets">
+    <div class="bullet three-col-bullet">
+      <div class="bullet-icon">
+        <img src="assets/images/spreadsheet_white.svg" alt="" width="28" height="29">
+      </div>
+      <div class="bullet-content">
+        <h2>Simple Database</h2>
+        <p>
+        A simple table to contain the meta information about your DVD archive.  Easy to integrate the schema into larger applications.
+        </p>
+      </div>
+    </div>  
+    <div class="bullet three-col-bullet">
+      <div class="bullet-icon">
+        <img src="assets/images/compass_white.svg" alt="" width="28" height="29">
+      </div>
+      <div class="bullet-content">
+        <h2>Organize Your DVDs</h2>
+        <p>
+        Know what content you have in your DVD archive, and where it is.
+        </p>
+      </div>
+    </div>
+    <div class="bullet three-col-bullet">
+      <div class="bullet-icon">
+        <img src="assets/images/video_white.svg" alt="" width="28" height="29">
+      </div>
+      <div class="bullet-content">
+        <h2>Watch Your Videos</h2>
+        <p>
+        Use Ogg, MP4, or WebM files, and view your collection in any modern browser.  
+        </p>
+      </div>
+    </div> 
+  </div>
+
+  <div class="side-image">
+    <div class="images-wrapper"></div>
+    <div class="content">
+      <h1>Join the DVD Pila! Mailing List</h1>
+      <p>
+      Join now and receive a free eBook detailing the tools and methods used in developing DVD Pila!.  
+      </p>
+
+      <p>
+      Learn about developing an Open Source web app, and sharing it with the world, dive into some nitty gritty details of web development, 
+      and get a glimpse of the world from a developers stand point.
+      </p>
+
+      <div class="form-wrapper">
+        <label for="modal-1">
+          <div class="success btn js-btn">Join DVD Pila!</div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal">
+    <input class="modal-state" id="modal-1" type="checkbox" />
+    <div class="modal-window">
+      <div class="modal-inner">
+        <label class="modal-close" for="modal-1"></label>
+        <h1>Join The Mailing List</h1>
+        <p class="intro">
+        </p>
+        <p class="body">
+        <form id="list-form" action="http://www.thehoick.com/dvdpila-list.php" method="post">
+          <label for="email">Email Address:</label>
+          <input type="text" name="email" id="email"/>
+          <button id="join-list" class="success">Join</button>
+        </form>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>

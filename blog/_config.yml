@@ -1,0 +1,15 @@
+# Site settings
+title: DVD Pila!
+email: adam@thehoick.com
+description: "This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives."
+baseurl: "/"
+url: "http://dvdpila.thehoick.com"
+twitter_username: asommer
+github_username: asommer70
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+sass:
+  sass_dir: _sass
