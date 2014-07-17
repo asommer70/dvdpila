@@ -19,7 +19,7 @@ $base-bg-color: #ECECD1;
 $base-body-color: #CBF8EF;
 $base-border-color: #202817;
 $base-border-radius: 5px;
-$dark-gray: #475333;
+$dark-green: #475333;
 $light-gray: #cccccc;
 $blue: #2e4272;
 
@@ -100,7 +100,7 @@ footer {
 
 header.navigation {
   $navigation-padding: 1em;
-  $navigation-background: $dark-gray;
+  $navigation-background: $dark-green;
   $navigation-color: transparentize(white, 0.3);
   $navigation-color-hover: white;
   $navigation-height: 60px;
@@ -586,8 +586,10 @@ table {
   }
 }
 
-$side-image-background-top: #B5EBEB;
-$side-image-background-bottom: #5DAC5D;
+//$side-image-background-top: #B5EBEB;
+$side-image-background-bottom: $base-link-color;
+//$side-image-background-bottom: #5DAC5D;
+$side-image-background-top: rgba(159, 65, 21, .2);
 $side-image-border: 1px solid darken(transparentize($side-image-background-bottom, .8), 30);
 
 .side-image {
@@ -598,8 +600,7 @@ $side-image-border: 1px solid darken(transparentize($side-image-background-botto
   }
 
   .images-wrapper {
-    @include background(url('https:
-//raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains.png'), linear-gradient($side-image-background-top, $side-image-background-bottom), no-repeat $side-image-background-top scroll);
+    @include background(linear-gradient($side-image-background-top, $side-image-background-bottom), url('/assets/images/dvd_stack.jpg'), no-repeat $side-image-background-top scroll);
     background-color: $side-image-background-top;
     border-bottom: $side-image-border;
     background-size: cover;
@@ -654,8 +655,8 @@ $side-image-border: 1px solid darken(transparentize($side-image-background-botto
 }
 
 .footer {
-  //$footer-background: desaturate(darken($dark-gray, 20), 30);
-  $footer-background: $dark-gray;
+  //$footer-background: desaturate(darken($dark-green, 20), 30);
+  $footer-background: $dark-green;
   $footer-color: white;
   $footer-link-color: transparentize($footer-color, .6);
   $footer-disclaimer-color: transparentize($footer-color, .6);
@@ -906,3 +907,64 @@ ul.posts {
 }
 
 // Based on code by Kasper Mikiewicz
+
+
+.image-gradient-dynamic {
+  $image-gradient-color-top: red;
+  $transparency-top: .9;
+  $image-gradient-color-bottom: green;
+  $transparency-bottom: .6;
+  $vertical-angle: 0deg;
+
+  $image-gradient-color-left: teal;
+  $transparency-left: .8;
+  $image-gradient-color-right: yellow;
+  $transparency-right: .8;
+  $horizontal-angle: 90deg;
+
+  position: relative;
+  line-height: 0;
+  width: 100%;
+  margin-bottom: $base-line-height;
+
+  img {
+   width: 100%;
+   height: auto;
+   position: relative;
+   top: 0;
+   left: 0;
+  }
+
+  .copy {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: auto;
+    z-index: 999;
+    text-align: center;
+    @include transform(translate(-50%, -50%));
+
+    p {
+      line-height: 1.5em;
+      padding: 1em 2em;
+      position: relative;
+      color: white;
+      font-weight: 800;
+    }
+  }
+
+  .overlay {
+    @include linear-gradient($vertical-angle, transparentize($image-gradient-color-top, $transparency-top),
+      transparentize($image-gradient-color-bottom, $transparency-bottom));
+    display: block;
+    @include position(absolute, 0px 0px 0px 0px);
+
+    &:after {
+      content: '';
+      @include linear-gradient($horizontal-angle, transparentize($image-gradient-color-left, $transparency-left),
+        transparentize($image-gradient-color-right, $transparency-right));
+      display: block;
+      @include position(absolute, 0px 0px 0px 0px);
+    }
+  }
+}
