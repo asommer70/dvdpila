@@ -5,9 +5,34 @@
     <description>This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.</description>
     <link>http://dvdpila.thehoick.com//</link>
     <atom:link href="http://dvdpila.thehoick.com//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 17 Jul 2014 06:38:19 -0400</pubDate>
-    <lastBuildDate>Thu, 17 Jul 2014 06:38:19 -0400</lastBuildDate>
+    <pubDate>Thu, 17 Jul 2014 06:57:45 -0400</pubDate>
+    <lastBuildDate>Thu, 17 Jul 2014 06:57:45 -0400</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
+    
+      <item>
+        <title>Jekyll Project Website on Github</title>
+        <description>&lt;p&gt;&lt;img alt=&quot;jekyll default screeny&quot; src=&quot;http://www.thehoick.com/images/jekyll_default.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I&#39;m working on a website for the &lt;a href=&quot;https://github.com/asommer70/dvdpila&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt; project, and working with the &lt;a href=&quot;http://jekyllrb.com/&quot; rel=&quot;nofollow&quot;&gt;Jekyll&lt;/a&gt; static site generator.  The documentation is a quick read and so far has been detailed enough to answer any question&#39;s I&#39;ve had.&lt;/p&gt;
+
+&lt;p&gt;Working with Jekyll a few minutes gave me ideas for multiple other sites that could be a good fit.  So many ideas, so little time...&lt;/p&gt;
+
+&lt;p&gt;It&#39;s also very easy to integrate SASS mixins with Jekyll by creating a &lt;em&gt;_sass&lt;/em&gt; directory in the base site folder and adding a couple of lines to the &lt;em&gt;_config.yml&lt;/em&gt; file.  I&#39;ve integrated Bourbon and freinds into the project site and setup the same basic theme/template as the Ember.js web app.  I should include some links in the web app that point back to the project page.&lt;/p&gt;
+
+&lt;p&gt;I&#39;ve read about Jekyll in &lt;a href=&quot;http://joshkaufman.net/&quot; rel=&quot;nofollow&quot;&gt;Josh Kaufman&#39;s&lt;/a&gt; book &lt;a href=&quot;http://first20hours.com/&quot; rel=&quot;nofollow&quot;&gt;The First 20 Hours&lt;/a&gt;, but at the time I didn&#39;t think I&#39;d ever find a use for it.  I highly recommend this book, and yes, after I read it I went out and bought an ukulele.&lt;/p&gt;
+
+&lt;p&gt;Looking forward to finishing the project page, and putting it out there.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Thu, 17 Jul 2014 06:07:54 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/17/jekyll-project-website-on-github/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/17/jekyll-project-website-on-github/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
     
       <item>
         <title>Ember Star Rating</title>
@@ -57,15 +82,7 @@
     
       <item>
         <title>Flask File Uploads</title>
-        <description>
-&lt;hr /&gt;
-&lt;p&gt;layout: post
-title:  “Flask File Uploads”
-date:   2014-07-14 13:07:20
-categories: emberjs
-—&lt;/p&gt;
-
-&lt;p&gt;&lt;img alt=&quot;flask doc screenshot&quot; src=&quot;http://www.thehoick.com/images/flask_upload.png&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img alt=&quot;flask doc screenshot&quot; src=&quot;http://www.thehoick.com/images/flask_upload.png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Figured out my problem with uploading an image file to my Flask server this morning.  Turns out you have to grab the actual input field and not the Ember model binding for that input field.&lt;/p&gt;
 
@@ -77,10 +94,12 @@ categories: emberjs
 
 &lt;p&gt;Party On!&lt;/p&gt;
 </description>
-        <pubDate>Mon, 14 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//2014/07/14/flask-file-uploads/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//2014/07/14/flask-file-uploads/</guid>
+        <pubDate>Mon, 14 Jul 2014 09:07:20 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/14/flask-file-uploads/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/14/flask-file-uploads/</guid>
         
+        
+        <category>emberjs</category>
         
       </item>
     

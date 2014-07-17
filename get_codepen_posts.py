@@ -13,25 +13,34 @@ for post in d.entries:
 
   # Check for Ember in the post.description.
   try:
-    # Get today's post and check for key words.
-    ember_index = post.description.index('Ember')
+    # Get some date stuff from the Codepen post.
     post_date = datetime.datetime.strptime(post.date[:-6], "%Y-%m-%dT%H:%M:%S")
-    slug = post.title.replace(' ', '-').lower()
-    file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '')) + ".markdown"
-    
-    print file_name, slug, post_date
+    post_date_day = post_date.strftime("%Y-%m-%d")
 
-    header = """---
+    # Get today's post and check for key words.
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    ember_index = post.description.index('Ember')
+
+    if (today == post_date_day and ember_index):
+
+      slug = post.title.replace(' ', '-').lower()
+      file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '')) + ".markdown"
+      
+      print file_name, slug, post_date
+
+      header = """---
 layout: post
 title:  "%s"
 date:   %s
 categories: emberjs
 ---
 
-""" % (post.title, post_date.strftime("%Y-%m-%d %H:%m:%S"))
+"""   % (post.title, post_date.strftime("%Y-%m-%d %H:%m:%S"))
 
-    #post_file = open("blog/_posts/" + file_name, 'w')
-    #post_file.write(header + post.description + "\n")
+      post_file = open("_posts/" + file_name, 'w')
+
+      # Check for extra </span> at the end of the description
+      post_file.write(header + post.description + "\n")
 
     #print post.title, post.date
   except ValueError:
