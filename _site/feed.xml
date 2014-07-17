@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DVD Pila!</title>
+    <description>This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.</description>
+    <link>http://dvdpila.thehoick.com//</link>
+    <atom:link href="http://dvdpila.thehoick.com//feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Wed, 16 Jul 2014 23:01:55 -0400</pubDate>
+    <lastBuildDate>Wed, 16 Jul 2014 23:01:55 -0400</lastBuildDate>
+    <generator>Jekyll v1.5.1</generator>
+    
+      <item>
+        <title>Ember Star Rating</title>
+        <description>&lt;p&gt;&lt;img alt=&quot;stars&quot; src=&quot;http://www.thehoick.com/images/stars.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At some point in my &lt;a href=&quot;http://emberjs.com/&quot; rel=&quot;nofollow&quot;&gt;Ember.js&lt;/a&gt; learning I came across some simple snippets that implement a &quot;star&quot; rating widget.  I thought I had either booked marked the page in my &lt;a href=&quot;https://pinboard.in&quot; rel=&quot;nofollow&quot;&gt;Pinboard&lt;/a&gt;, or saved a link in Evernote, but when I went to find it I was straight up denied by the gods of the internets.&lt;/p&gt;
+
+&lt;p&gt;Not to get too down in the dumps because I found &lt;a href=&quot;http://www.toptal.com/javascript/a-step-by-step-guide-to-building-your-first-ember-js-app&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; great guide for building an Ember app.  At the bottom is an example of implementing a star rating widget.  It worked as advertised for me, but I&#39;m sure there are other ways of doing this.&lt;/p&gt;
+
+&lt;p&gt;After implementing &lt;a href=&quot;http://balinterdi.com/&quot; rel=&quot;nofollow&quot;&gt;Balint Erdi&#39;s&lt;/a&gt; code, I needed a star icon, image, or what have you.  In the example they use the great &lt;a href=&quot;http://getbootstrap.com/&quot; rel=&quot;nofollow&quot;&gt;Bootstrap&lt;/a&gt; framework and use it&#39;s icon font to render the star/s.  Since I&#39;m not using Bootstrap in my project I had to come up with another solution.  I could hunt up a font icon set and use that, but after reading &lt;a href=&quot;http://ianfeather.co.uk/ten-reasons-we-switched-from-an-icon-font-to-svg/&quot; rel=&quot;nofollow&quot;&gt;posts like this&lt;/a&gt; I&#39;ve been thinking for small projects maybe using straight SVG files is better.  I then found the &lt;a href=&quot;https://useiconic.com/open/&quot; rel=&quot;nofollow&quot;&gt;Open Iconic&lt;/a&gt; SVG library, and boom star icon acquired.&lt;/p&gt;
+
+&lt;p&gt;I only implemented the star rating on the main list page, but I probably will integrate it into the DVD edit page at some point.&lt;/p&gt;
+
+&lt;p&gt;Paty On!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 16 Jul 2014 10:07:45 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/16/ember-star-rating/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/16/ember-star-rating/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Ember Pagination Weeee</title>
+        <description>&lt;p&gt;&lt;img alt=&quot;console screenshot&quot; src=&quot;http://www.thehoick.com/images/pagination.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The next big hurdle for my little project is to add some pagination to the 110 item object collection.  I might look into server side pagination at some point, after finding out that that is even a thing, but for now adding a few funcitons to the Ember controller has given the needed functionality.&lt;/p&gt;
+
+&lt;p&gt;I used &lt;a href=&quot;http://hawkins.io/&quot; rel=&quot;nofollow&quot;&gt;Adam Hawkin&#39;s&lt;/a&gt; great &lt;a href=&quot;http://hawkins.io/2013/07/pagination-with-ember/&quot; rel=&quot;nofollow&quot;&gt;pagination&lt;/a&gt; guide, and it worked for me with only a few changes.  The changes were quite minor adjusting &lt;em&gt;bindAttr&lt;/em&gt; to &lt;em&gt;bind-attr&lt;/em&gt; was the main one.  Ember printed some deprecation messages in the console, but everything still worked.  I also needed to move one of the functions into the actions object, but other than that everything worked as the coded in the &lt;a href=&quot;http://jsbin.com/ijoqom/6/edit&quot; rel=&quot;nofollow&quot;&gt;JS Bin&lt;/a&gt; example.&lt;/p&gt;
+
+&lt;p&gt;There was an issue with my &quot;search&quot; filter after adding pagination.  I first thought that if you clicked on a different page that the filter broke, but after more testing I realized that it&#39;s filtering only the objects on the current page forward.  So after some digging and wrong turns, I added this quick call in my query action: &lt;em&gt;this.send(&#39;selectPage&#39;, 1);&lt;/em&gt;.  This will executes the &lt;em&gt;selectPage&lt;/em&gt; action function sending it back to the first page, and after that all the results are filtered on the search query.  Bob&#39;s your uncle!&lt;/p&gt;
+
+&lt;p&gt;Next up... star rating.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Tue, 15 Jul 2014 07:07:58 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/15/ember-pagination-weeee/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/15/ember-pagination-weeee/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Flask File Uploads</title>
+        <description>
+&lt;hr /&gt;
+&lt;p&gt;layout: post
+title:  “Flask File Uploads”
+date:   2014-07-14 13:07:20
+categories: emberjs
+—&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;flask doc screenshot&quot; src=&quot;http://www.thehoick.com/images/flask_upload.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Figured out my problem with uploading an image file to my Flask server this morning.  Turns out you have to grab the actual input field and not the Ember model binding for that input field.&lt;/p&gt;
+
+&lt;p&gt;The interesting thing about the Ember binding of the file input field is that it grabbed the binary data of the image.  So that confused me for a while.  Once I used some straight jQuery to grab the input element I was able to get the appropriate fields for name, type, etc and the upload worked as all the &lt;a href=&quot;http://flask.pocoo.org/docs/patterns/fileuploads/&quot; rel=&quot;nofollow&quot;&gt;tutorials&lt;/a&gt; I read worked.&lt;/p&gt;
+
+&lt;p&gt;I next ran into a small issue with the size of the &lt;em&gt;varchar&lt;/em&gt; abstract_url field that contains the link to where the information about the DVD came from.  Turns out that if you get that information from Amazon, which is a great place to find info about DVDS, you can run into &lt;a href=&quot;http://www.amazon.com/Bridesmaids-Kristen-Wiig/dp/B00466HN7M/ref=sr_1_1?ie=UTF8&amp;amp;qid=1405335917&amp;amp;sr=8-1&amp;amp;keywords=brides+maids+movie&quot; rel=&quot;nofollow&quot;&gt;URLs&lt;/a&gt; that are longer than 100 characters if you use their search field.  Thanksfully this small error was easy to address with a quick search for &lt;a href=&quot;http://www.postgresql.org/docs/9.3/static/sql-altertable.html&quot; rel=&quot;nofollow&quot;&gt;PostgreSQL alter table&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Also, I discovered the &lt;a href=&quot;http://blog.codepen.io/radio/&quot; rel=&quot;nofollow&quot;&gt;Codepen Podcast&lt;/a&gt; this weekend, and really enjoyed listening to the latest episode while playing with my son.  Good times!&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Mon, 14 Jul 2014 00:00:00 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//2014/07/14/flask-file-uploads/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//2014/07/14/flask-file-uploads/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Ember.js File Upload...</title>
+        <description>&lt;p&gt;Woke up early to work on DVD inventory web app, and have some new fields integrated into the Ember.js model.  They are simple text fields, well one is a textarea, and didn&#39;t post any big problem.  Except for the edit form is now quite large, but it&#39;s not the size of your form that matters.&lt;/p&gt;
+
+&lt;p&gt;I&#39;m now being tripped up by uploading an image file in Ember.  Which really Ember might not need to know too much about the file upload process, but then I realized that I&#39;m not actually using a traditional form element.  Instead I&#39;m relying on Ember&#39;s data binding model to handle all that for me.  There are some cool HTML5 things you can do with multi-part form file upload data, and I found &lt;a href=&quot;http://stackoverflow.com/questions/13923122/ember-js-upload-file-component&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; great thread on StackOverflow with some great code at the bottom to automatically add the image element below the file choose button.  I like that feature.&lt;/p&gt;
+
+&lt;p&gt;The current problem I&#39;m blasting my thinker against is how to actually send the data to the server.  From what I can tell by printing some statements in my Flask app is that the actual binary file data isn&#39;t being sent.  There are several Ember file upload projects out there, and I&#39;m currently looking at &lt;a href=&quot;https://github.com/workmanw/embernati-upload-demo&quot; rel=&quot;nofollow&quot;&gt;Wesley Workman&#39;s&lt;/a&gt; repo which I was pointed to by his comment on &lt;a href=&quot;http://ryantablada.com/post/file-uploads-in-ember-js&quot; rel=&quot;nofollow&quot;&gt;this post&lt;/a&gt;.  Hopefully I can extract enough code from his cool drag &#39;n drop example to make my simple one file upload work.  &lt;/p&gt;
+
+&lt;p&gt;Might be still on this tomorrow though.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Sun, 13 Jul 2014 07:07:13 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/13/ember.js-file-upload/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/13/ember.js-file-upload/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Python and Duck Duck Go</title>
+        <description>&lt;p&gt;Did some late night work and tried to find an API for IMDB in order to gather more information on the DVDs I own.  I guess they don&#39;t have an official API, and the only thing I found was a StackOverflow thread about using it through JSONP.&lt;/p&gt;
+
+&lt;p&gt;There does seem to be a couple of alternative databases of movies that could work for what I&#39;m needed, but none of them looked to up to date to me.  My next thought was to use the Duck Duck Go search engine and parse it&#39;s API for the info I need.  The documentation for the &quot;Instant Answer&quot; &lt;a href=&quot;https://duckduckgo.com/api&quot; rel=&quot;nofollow&quot;&gt;API&lt;/a&gt; is very good.&lt;/p&gt;
+
+&lt;p&gt;I think looked for a Python library that I could integrate with my Flask server, and found &lt;a href=&quot;https://github.com/crazedpsyc/python-duckduckgo&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; great project on Github.  The library is very easy to use and I was able to find the information I need in a short amount of time.  I then adjusted a test script to query the database and update some new fields in the table.  &lt;/p&gt;
+
+&lt;p&gt;I then ran into a slight problem with using a search engine.  If there are multiple things with the same title my script doesn&#39;t account for that.  So for movies like &lt;em&gt;The Fellowship of The Ring&lt;/em&gt; Duck Duck Go will also return entries for the book.  I could make the script a smarter and account for similar search results, but I think the better solution is to make the new fields editable.  That way if a user doesn&#39;t like the pic in Wikipedia they can upload their own.&lt;/p&gt;
+
+&lt;p&gt;So it&#39;ll be learning how to upload files in Ember.js for me...&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Sat, 12 Jul 2014 02:07:54 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/12/python-and-duck-duck-go/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/12/python-and-duck-duck-go/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Finding Great Ember Snippets</title>
+        <description>&lt;p&gt;After this morning&#39;s hour of coding I was able to implement search.  Well more of a filter really, but it amounts to the same thing.  Yay for regex.  &lt;/p&gt;
+
+&lt;p&gt;I found &lt;a href=&quot;http://stackoverflow.com/questions/19767733/build-search-box-searching-with-ember-js&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; great StackOverlfow post that details implementing a search filter of an ArrayController.  There is also an explanation of the code in the answer comments.  I found it enlightening.&lt;/p&gt;
+
+&lt;p&gt;After publishing yesterday&#39;s post, I had some additional coding time before bed, and implemented some validations in Ember.js.  I know I&#39;m probably doing it wrong, but my code works so pffft.  I also setup flash messages from &lt;a href=&quot;http://coderberry.me/blog/2013/06/20/using-flash-messages-with-emberjs/&quot; rel=&quot;nofollow&quot;&gt;this great post&lt;/a&gt; by Eric Barry.  It works like a charm, but I might like a more Railsy flash message that sticks around until you click a close button... we&#39;ll see about adjusting that later.&lt;/p&gt;
+
+&lt;p&gt;Things are moving along, and it&#39;s now a lot of fun to develop using Ember.js.  Next up IMDB integration...&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 11 Jul 2014 07:07:41 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/11/finding-great-ember-snippets/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/11/finding-great-ember-snippets/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Ember Data Break Through</title>
+        <description>&lt;h3&gt;Lot&#39;s of Ember Learning&lt;/h3&gt;
+
+&lt;p&gt;After poking through the source code for Ember Data and Ember to try and determine why there wasn&#39;t any data being sent in the HTTP POST, I&#39;ve finally had a break through.  &lt;/p&gt;
+
+&lt;p&gt;The break through came not from digging through the source, which was a lot of fun, but from finally finding relavant Google search.  I turned up this &lt;a href=&quot;http://stackoverflow.com/questions/21974570/ember-js-typeerror-type-create-is-not-a-function&quot; rel=&quot;nofollow&quot;&gt;question&lt;/a&gt; on StackOverflow.  To find the post I searched Goolge with &quot;ember data type._create&quot;. So I guess working with the source did help because that&#39;s where I found the call to &lt;em&gt;type._create&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The answer to the question is to install the latest Beta version of Ember Data.  I was using version .14 originally after following the suggested &lt;em&gt;bower install ember-data --save&lt;/em&gt;.  After cloning the &lt;a href=&quot;https://github.com/emberjs/data&quot; rel=&quot;nofollow&quot;&gt;repo&lt;/a&gt; and following the &lt;a href=&quot;https://github.com/emberjs/data#setup&quot; rel=&quot;nofollow&quot;&gt;setup&lt;/a&gt; instructions I was able to build the packages and copy a new ember-data.js file into my project.&lt;/p&gt;
+
+&lt;p&gt;There were a few new errors in the Chrome Dev Tools console, but a few adjustments to my app.js file were all that was needed to update to the new Ember Data syntax.  So back to my code that uses the createRecord method and still not seeing anything in the output from my Flask server where I called &lt;em&gt;print request.form&lt;/em&gt; to view the POST data.  Since there weren&#39;t any additional errors in the JavaScript console, I got to thinking that maybe there was some data and I&#39;m just not seeing it.  The &lt;em&gt;print request.form&lt;/em&gt; call has worked with a non-Ember Data version, so I thought it would work here as well.  &lt;/p&gt;
+
+&lt;p&gt;Silly me.  I then googled &quot;flask post content&quot; and turned up this StackOver flow &lt;a href=&quot;http://stackoverflow.com/questions/10434599/how-can-i-get-the-whole-request-post-body-in-python-with-flask&quot; rel=&quot;nofollow&quot;&gt;post&lt;/a&gt;.  And you guessed it after calling &lt;em&gt;print request.data&lt;/em&gt; I was able to see a &quot;dvd&quot; JSON string sent to the server via HTTP POST.&lt;/p&gt;
+
+&lt;p&gt;A quick look at the database and voila new records in the table.  Actually there were a lot of new records in the table.  Most of them had empty strings because I wasn&#39;t passing the correct data into the SQL query.&lt;/p&gt;
+
+&lt;h3&gt;Lessons Learned:&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Build from the latest source if a project is in heavy development. (this did occur to several days ago, but I didn&#39;t listent to myself)&lt;/li&gt;
+&lt;li&gt; Double check the database.&lt;/li&gt;
+&lt;li&gt;Print the entire request object on the server side.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Top 2 Tech Ideas:&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Add &lt;a href=&quot;https://github.com/tholman/giflinks&quot; rel=&quot;nofollow&quot;&gt;Giflinks&lt;/a&gt; to a web app for added fun.&lt;/li&gt;
+&lt;li&gt;Might use &lt;a href=&quot;http://codyhouse.co/gem/smart-fixed-navigation/&quot; rel=&quot;nofollow&quot;&gt;Smart Fixed Navigation&lt;/a&gt; for a web app project.  Might be good for Photolandia instead of Headroom.js.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 09 Jul 2014 12:07:46 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/09/ember-data-break-through/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/09/ember-data-break-through/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Ember.js Data With REST Server</title>
+        <description>&lt;p&gt;For whatever reason, maybe I&#39;m just dense, I&#39;ve been having a very hard time connecting Ember.js Data with a simple REST server written in Flask that queries one table in PostgreSQL.  Sounds simple enough, and I could smash togther some jQuery, or even Angular.js, code to push and pull JSON to and from the Flask server.  I&#39;d like to use Ember Data though.&lt;/p&gt;
+
+&lt;p&gt;I think a lot of my confusion is coming from when to call the createRecord method to save the data to the server via HTTP POST.  I can send the POST call, but the request has no data and therefore Flask can&#39;t save anything to the database.  &lt;/p&gt;
+
+&lt;p&gt;A big frustration for me is that though there are some great tutorials, especially the one on &lt;a href=&quot;http://courses.tutsplus.com/courses/lets-learn-ember&quot; rel=&quot;nofollow&quot;&gt;Tuts+&lt;/a&gt; all seem to use fixture data and not live database calls.  Fixture data would be fine, I guess, but I&#39;m still blasting my head up against the wall trying to get Ember to send data.&lt;/p&gt;
+
+&lt;p&gt;Thought I&#39;d start a daily development blog and use this platform at least until/if things get crazy.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Tue, 08 Jul 2014 12:07:25 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/08/ember.js-data-with-rest-server/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/08/ember.js-data-with-rest-server/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+  </channel>
+</rss>

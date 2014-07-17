@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ember Star Rating</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.">
+    <link rel="canonical" href="http://dvdpila.thehoick.com//emberjs/2014/07/16/ember-star-rating/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/assets/images/favicons/mstile-144x144.png">
+
+</head>
+
+
+    <body>
+
+      <header class="navigation">
+    <div class="navigation-wrapper">
+        <a href="/" class="logo">
+          <img src="/assets/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
+        </a>
+      <div class="nav">
+        <ul id="navigation-menu">
+          <li class="nav-link"><a href="https://github.com/asommer70/dvdpila">Fork</a></li>
+          <li class="nav-link"><a href="/blog">Blog</a></li>
+          <li class="nav-link"><a href="/about">About</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+
+
+    <div class="container">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Ember Star Rating</h1>
+    <p class="meta">Jul 16, 2014</p>
+  </header>
+
+  <article class="post-content">
+  <p><img alt="stars" src="http://www.thehoick.com/images/stars.png" /></p>
+
+<p>At some point in my <a href="http://emberjs.com/" rel="nofollow">Ember.js</a> learning I came across some simple snippets that implement a "star" rating widget.  I thought I had either booked marked the page in my <a href="https://pinboard.in" rel="nofollow">Pinboard</a>, or saved a link in Evernote, but when I went to find it I was straight up denied by the gods of the internets.</p>
+
+<p>Not to get too down in the dumps because I found <a href="http://www.toptal.com/javascript/a-step-by-step-guide-to-building-your-first-ember-js-app" rel="nofollow">this</a> great guide for building an Ember app.  At the bottom is an example of implementing a star rating widget.  It worked as advertised for me, but I'm sure there are other ways of doing this.</p>
+
+<p>After implementing <a href="http://balinterdi.com/" rel="nofollow">Balint Erdi's</a> code, I needed a star icon, image, or what have you.  In the example they use the great <a href="http://getbootstrap.com/" rel="nofollow">Bootstrap</a> framework and use it's icon font to render the star/s.  Since I'm not using Bootstrap in my project I had to come up with another solution.  I could hunt up a font icon set and use that, but after reading <a href="http://ianfeather.co.uk/ten-reasons-we-switched-from-an-icon-font-to-svg/" rel="nofollow">posts like this</a> I've been thinking for small projects maybe using straight SVG files is better.  I then found the <a href="https://useiconic.com/open/" rel="nofollow">Open Iconic</a> SVG library, and boom star icon acquired.</p>
+
+<p>I only implemented the star rating on the main list page, but I probably will integrate it into the DVD edit page at some point.</p>
+
+<p>Paty On!</p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="footer">
+
+<div class="footer-logo">
+  <img src="/assets/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
+</div>
+<div class="footer-links">
+  <ul>
+    <li><h3>Content</h3></li>
+    <li><a href="https://github.com/asommer70/dvdpila">Fork</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+  <ul>
+    <li><h3>Follow Us</h3></li>
+    <li>
+      <a href="/feed.xml" class="no-bottom">
+        <img src="/assets/images/rss_white.svg" width="28" height="29"/> 
+      </a>
+    </li>
+    <li>
+      <a href="/" class="no-bottom">
+        <img src="/assets/images/envelope-closed_white.svg" width="28" height="29"/> 
+      </a>
+    </li>
+  </ul>
+  <ul>
+    <li><h3>Legal</h3></li>
+    <li><a href="/terms-and-conditions">Terms and Conditions</a></li>
+    <li><a href="/attribution">Attribution</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<p>un-&copy; <script>document.write(new Date().getFullYear())</script> Adam Sommer. All rights shared.</p>
+
+</footer>
+
+
+    </body>
+</html>

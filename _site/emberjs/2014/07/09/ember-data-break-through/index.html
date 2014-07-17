@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ember Data Break Through</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.">
+    <link rel="canonical" href="http://dvdpila.thehoick.com//emberjs/2014/07/09/ember-data-break-through/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/assets/images/favicons/mstile-144x144.png">
+
+</head>
+
+
+    <body>
+
+      <header class="navigation">
+    <div class="navigation-wrapper">
+        <a href="/" class="logo">
+          <img src="/assets/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
+        </a>
+      <div class="nav">
+        <ul id="navigation-menu">
+          <li class="nav-link"><a href="https://github.com/asommer70/dvdpila">Fork</a></li>
+          <li class="nav-link"><a href="/blog">Blog</a></li>
+          <li class="nav-link"><a href="/about">About</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+
+
+    <div class="container">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Ember Data Break Through</h1>
+    <p class="meta">Jul 9, 2014</p>
+  </header>
+
+  <article class="post-content">
+  <h3>Lot's of Ember Learning</h3>
+
+<p>After poking through the source code for Ember Data and Ember to try and determine why there wasn't any data being sent in the HTTP POST, I've finally had a break through.  </p>
+
+<p>The break through came not from digging through the source, which was a lot of fun, but from finally finding relavant Google search.  I turned up this <a href="http://stackoverflow.com/questions/21974570/ember-js-typeerror-type-create-is-not-a-function" rel="nofollow">question</a> on StackOverflow.  To find the post I searched Goolge with "ember data type._create". So I guess working with the source did help because that's where I found the call to <em>type._create</em>.</p>
+
+<p>The answer to the question is to install the latest Beta version of Ember Data.  I was using version .14 originally after following the suggested <em>bower install ember-data --save</em>.  After cloning the <a href="https://github.com/emberjs/data" rel="nofollow">repo</a> and following the <a href="https://github.com/emberjs/data#setup" rel="nofollow">setup</a> instructions I was able to build the packages and copy a new ember-data.js file into my project.</p>
+
+<p>There were a few new errors in the Chrome Dev Tools console, but a few adjustments to my app.js file were all that was needed to update to the new Ember Data syntax.  So back to my code that uses the createRecord method and still not seeing anything in the output from my Flask server where I called <em>print request.form</em> to view the POST data.  Since there weren't any additional errors in the JavaScript console, I got to thinking that maybe there was some data and I'm just not seeing it.  The <em>print request.form</em> call has worked with a non-Ember Data version, so I thought it would work here as well.  </p>
+
+<p>Silly me.  I then googled "flask post content" and turned up this StackOver flow <a href="http://stackoverflow.com/questions/10434599/how-can-i-get-the-whole-request-post-body-in-python-with-flask" rel="nofollow">post</a>.  And you guessed it after calling <em>print request.data</em> I was able to see a "dvd" JSON string sent to the server via HTTP POST.</p>
+
+<p>A quick look at the database and voila new records in the table.  Actually there were a lot of new records in the table.  Most of them had empty strings because I wasn't passing the correct data into the SQL query.</p>
+
+<h3>Lessons Learned:</h3>
+
+<ol>
+<li>Build from the latest source if a project is in heavy development. (this did occur to several days ago, but I didn't listent to myself)</li>
+<li> Double check the database.</li>
+<li>Print the entire request object on the server side.</li>
+</ol>
+
+<h3>Top 2 Tech Ideas:</h3>
+
+<ol>
+<li>Add <a href="https://github.com/tholman/giflinks" rel="nofollow">Giflinks</a> to a web app for added fun.</li>
+<li>Might use <a href="http://codyhouse.co/gem/smart-fixed-navigation/" rel="nofollow">Smart Fixed Navigation</a> for a web app project.  Might be good for Photolandia instead of Headroom.js.</li>
+</ol>
+
+<p>Party On!</p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="footer">
+
+<div class="footer-logo">
+  <img src="/assets/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
+</div>
+<div class="footer-links">
+  <ul>
+    <li><h3>Content</h3></li>
+    <li><a href="https://github.com/asommer70/dvdpila">Fork</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+  <ul>
+    <li><h3>Follow Us</h3></li>
+    <li>
+      <a href="/feed.xml" class="no-bottom">
+        <img src="/assets/images/rss_white.svg" width="28" height="29"/> 
+      </a>
+    </li>
+    <li>
+      <a href="/" class="no-bottom">
+        <img src="/assets/images/envelope-closed_white.svg" width="28" height="29"/> 
+      </a>
+    </li>
+  </ul>
+  <ul>
+    <li><h3>Legal</h3></li>
+    <li><a href="/terms-and-conditions">Terms and Conditions</a></li>
+    <li><a href="/attribution">Attribution</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<p>un-&copy; <script>document.write(new Date().getFullYear())</script> Adam Sommer. All rights shared.</p>
+
+</footer>
+
+
+    </body>
+</html>

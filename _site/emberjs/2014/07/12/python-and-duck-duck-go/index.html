@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Python and Duck Duck Go</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.">
+    <link rel="canonical" href="http://dvdpila.thehoick.com//emberjs/2014/07/12/python-and-duck-duck-go/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/assets/images/favicons/mstile-144x144.png">
+
+</head>
+
+
+    <body>
+
+      <header class="navigation">
+    <div class="navigation-wrapper">
+        <a href="/" class="logo">
+          <img src="/assets/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
+        </a>
+      <div class="nav">
+        <ul id="navigation-menu">
+          <li class="nav-link"><a href="https://github.com/asommer70/dvdpila">Fork</a></li>
+          <li class="nav-link"><a href="/blog">Blog</a></li>
+          <li class="nav-link"><a href="/about">About</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+
+
+    <div class="container">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Python and Duck Duck Go</h1>
+    <p class="meta">Jul 12, 2014</p>
+  </header>
+
+  <article class="post-content">
+  <p>Did some late night work and tried to find an API for IMDB in order to gather more information on the DVDs I own.  I guess they don't have an official API, and the only thing I found was a StackOverflow thread about using it through JSONP.</p>
+
+<p>There does seem to be a couple of alternative databases of movies that could work for what I'm needed, but none of them looked to up to date to me.  My next thought was to use the Duck Duck Go search engine and parse it's API for the info I need.  The documentation for the "Instant Answer" <a href="https://duckduckgo.com/api" rel="nofollow">API</a> is very good.</p>
+
+<p>I think looked for a Python library that I could integrate with my Flask server, and found <a href="https://github.com/crazedpsyc/python-duckduckgo" rel="nofollow">this</a> great project on Github.  The library is very easy to use and I was able to find the information I need in a short amount of time.  I then adjusted a test script to query the database and update some new fields in the table.  </p>
+
+<p>I then ran into a slight problem with using a search engine.  If there are multiple things with the same title my script doesn't account for that.  So for movies like <em>The Fellowship of The Ring</em> Duck Duck Go will also return entries for the book.  I could make the script a smarter and account for similar search results, but I think the better solution is to make the new fields editable.  That way if a user doesn't like the pic in Wikipedia they can upload their own.</p>
+
+<p>So it'll be learning how to upload files in Ember.js for me...</p>
+
+<p>Party On!</p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="footer">
+
+<div class="footer-logo">
+  <img src="/assets/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
+</div>
+<div class="footer-links">
+  <ul>
+    <li><h3>Content</h3></li>
+    <li><a href="https://github.com/asommer70/dvdpila">Fork</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+  <ul>
+    <li><h3>Follow Us</h3></li>
+    <li>
+      <a href="/feed.xml" class="no-bottom">
+        <img src="/assets/images/rss_white.svg" width="28" height="29"/> 
+      </a>
+    </li>
+    <li>
+      <a href="/" class="no-bottom">
+        <img src="/assets/images/envelope-closed_white.svg" width="28" height="29"/> 
+      </a>
+    </li>
+  </ul>
+  <ul>
+    <li><h3>Legal</h3></li>
+    <li><a href="/terms-and-conditions">Terms and Conditions</a></li>
+    <li><a href="/attribution">Attribution</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<p>un-&copy; <script>document.write(new Date().getFullYear())</script> Adam Sommer. All rights shared.</p>
+
+</footer>
+
+
+    </body>
+</html>
