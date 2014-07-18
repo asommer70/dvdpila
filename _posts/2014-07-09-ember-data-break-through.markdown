@@ -2,8 +2,10 @@
 layout: post
 title:  "Ember Data Break Through"
 date:   2014-07-09 16:07:46
+excerpt: "After poking through the source code for Ember Data and Ember to try and determine why there wasn't any data being sent in the HTTP POST, I've finally had a break through."
 categories: emberjs
 ---
+<div class="post-inner">
 
 <h3>Lot's of Ember Learning</h3>
 
@@ -35,4 +37,4 @@ categories: emberjs
 </ol>
 
 <p>Party On!</p>
-</span>
+</div>

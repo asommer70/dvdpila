@@ -5,9 +5,39 @@
     <description>This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.</description>
     <link>http://dvdpila.thehoick.com//</link>
     <atom:link href="http://dvdpila.thehoick.com//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 17 Jul 2014 15:20:01 -0400</pubDate>
-    <lastBuildDate>Thu, 17 Jul 2014 15:20:01 -0400</lastBuildDate>
+    <pubDate>Fri, 18 Jul 2014 17:08:35 -0400</pubDate>
+    <lastBuildDate>Fri, 18 Jul 2014 17:08:35 -0400</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
+    
+      <item>
+        <title>Github Page With Jekyll is Live!</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;sass website screeny&quot; src=&quot;http://www.thehoick.com/images/sass.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The documentation for Github pages is pretty good, but I ran into a couple of problems while setting up my project page.  The first problem was with configuring my DNS server to use a CNAME that points back to the Github project page.  &lt;a href=&quot;https://help.github.com/articles/tips-for-configuring-a-cname-record-with-your-dns-provider&quot; rel=&quot;nofollow&quot;&gt;This page&lt;/a&gt; has good information on adding the DNS records you&#39;ll need, but in this case I needed them to really spell it out for me and give me a sample BIND configuration.&lt;/p&gt;
+
+&lt;p&gt;Or maybe I&#39;m just dense and it was after 10:00pm.  My mind turns to crackers and jelly after 9:30.  The table at the bottom of &lt;a href=&quot;https://help.github.com/articles/about-custom-domains-for-github-pages-sites#subdomains&quot; rel=&quot;nofollow&quot;&gt;this page&lt;/a&gt; clued me into the problem.  I didn&#39;t think that having a CNAME record with a &quot;/&quot; in it would workd, but when I ran &lt;em&gt;named-checkzone&lt;/em&gt; on the config file it didn&#39;t give me any errors either.  After carefully reading the page and the table information I realized that GIthub will setup the root of the site as &lt;em&gt;/projectname&lt;/em&gt; and the domain name is determined by the &lt;a href=&quot;https://help.github.com/articles/adding-a-cname-file-to-your-repository&quot; rel=&quot;nofollow&quot;&gt;CNAME&lt;/a&gt; file you configure in the respository.&lt;/p&gt;
+
+&lt;p&gt;I should just work on new things in the morning, cause once I had everything configured correctly it worked like a charm.  Well almost...&lt;/p&gt;
+
+&lt;p&gt;The second problem had to do with Jekyll and SASS.  For security reasons Github disables all Jekyll plugins which means that when they &lt;em&gt;jekyll build&lt;/em&gt; your site some of the content may be off if you are relying on plugins.  I didn&#39;t realize that I was relying on a plugin when I was locally using SASS as detailed in the &lt;a href=&quot;http://jekyllrb.com/docs/assets/&quot; rel=&quot;nofollow&quot;&gt;Jekyll documentation&lt;/a&gt;.  So I had a site on Github using a custom domain, but no stylesheets, doh.&lt;/p&gt;
+
+&lt;p&gt;I haven&#39;t solved the SASS, Jekyll, and Github issue in a cool and clever way, but I did compile the stylesheet using &lt;em&gt;jekyll serve -w&lt;/em&gt; and manually copy the &lt;em&gt;_site/css/style.css&lt;/em&gt; file into the &lt;em&gt;css&lt;/em&gt; directory which then gets copied back when Github builds the site.  Some extra hubabaloo, but things are now working and looking good.&lt;/p&gt;
+
+&lt;p&gt;Check out my new project site &lt;a href=&quot;http://dvdpila.thehoick.com&quot; rel=&quot;nofollow&quot;&gt;here&lt;/a&gt;.  I&#39;ll be releasing the actual code soon.  Just need to add a few last features.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 18 Jul 2014 06:07:12 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/18/github-page-with-jekyll-is-live/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/18/github-page-with-jekyll-is-live/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
     
       <item>
         <title>Jekyll Project Website on Github</title>
@@ -24,6 +54,7 @@
 &lt;p&gt;Looking forward to finishing the project page, and putting it out there.&lt;/p&gt;
 
 &lt;p&gt;Party On!&lt;/p&gt;
+&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 17 Jul 2014 06:07:54 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/17/jekyll-project-website-on-github/</link>
@@ -47,6 +78,7 @@
 &lt;p&gt;I only implemented the star rating on the main list page, but I probably will integrate it into the DVD edit page at some point.&lt;/p&gt;
 
 &lt;p&gt;Paty On!&lt;/p&gt;
+&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 16 Jul 2014 10:07:45 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/16/ember-star-rating/</link>
@@ -70,6 +102,7 @@
 &lt;p&gt;Next up... star rating.&lt;/p&gt;
 
 &lt;p&gt;Party On!&lt;/p&gt;
+&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 15 Jul 2014 07:07:58 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/15/ember-pagination-weeee/</link>
@@ -93,6 +126,7 @@
 &lt;p&gt;Also, I discovered the &lt;a href=&quot;http://blog.codepen.io/radio/&quot; rel=&quot;nofollow&quot;&gt;Codepen Podcast&lt;/a&gt; this weekend, and really enjoyed listening to the latest episode while playing with my son.  Good times!&lt;/p&gt;
 
 &lt;p&gt;Party On!&lt;/p&gt;
+&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 14 Jul 2014 09:07:20 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/14/flask-file-uploads/</link>
@@ -114,6 +148,7 @@
 &lt;p&gt;Might be still on this tomorrow though.&lt;/p&gt;
 
 &lt;p&gt;Party On!&lt;/p&gt;
+&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 13 Jul 2014 07:07:13 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/13/ember.js-file-upload/</link>
@@ -158,6 +193,7 @@
 &lt;p&gt;Things are moving along, and it&#39;s now a lot of fun to develop using Ember.js.  Next up IMDB integration...&lt;/p&gt;
 
 &lt;p&gt;Party On!&lt;/p&gt;
+&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 11 Jul 2014 07:07:41 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/11/finding-great-ember-snippets/</link>
@@ -169,8 +205,29 @@
       </item>
     
       <item>
+        <title>More Progress With Ember Data</title>
+        <description>&lt;p&gt;Today I was able to clean up my controller and router functions.  I had a crap ton of &lt;em&gt;console.log()&lt;/em&gt; calls to try and figure out what &lt;em&gt;this&lt;/em&gt; is in any particular situation, and if I can call things like &lt;em&gt;get(&#39;model&#39;) and get(&#39;store&#39;)&lt;/em&gt; on it.  &lt;/p&gt;
+
+&lt;p&gt;Also cleaned up the Flask server.  Had a gaggle of routes that took URL arguments as parameters to query against the database.  The whole REST HTTP method things is pretty awesome.  Cut down like 8 routes to just 2.  Though inside those routes you then have to add some if statements to handle the different HTTP methods.  Well that&#39;s what I did at least, there are probably other ways to take care of business.&lt;/p&gt;
+
+&lt;p&gt;I need to post some code at some point.  &lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+</description>
+        <pubDate>Thu, 10 Jul 2014 17:07:59 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/10/more-progress-with-ember-data/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/10/more-progress-with-ember-data/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
         <title>Ember Data Break Through</title>
-        <description>&lt;h3&gt;Lot&#39;s of Ember Learning&lt;/h3&gt;
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;h3&gt;Lot&#39;s of Ember Learning&lt;/h3&gt;
 
 &lt;p&gt;After poking through the source code for Ember Data and Ember to try and determine why there wasn&#39;t any data being sent in the HTTP POST, I&#39;ve finally had a break through.  &lt;/p&gt;
 
@@ -200,31 +257,11 @@
 &lt;/ol&gt;
 
 &lt;p&gt;Party On!&lt;/p&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Wed, 09 Jul 2014 12:07:46 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/09/ember-data-break-through/</link>
         <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/09/ember-data-break-through/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Ember.js Data With REST Server</title>
-        <description>&lt;p&gt;For whatever reason, maybe I&#39;m just dense, I&#39;ve been having a very hard time connecting Ember.js Data with a simple REST server written in Flask that queries one table in PostgreSQL.  Sounds simple enough, and I could smash togther some jQuery, or even Angular.js, code to push and pull JSON to and from the Flask server.  I&#39;d like to use Ember Data though.&lt;/p&gt;
-
-&lt;p&gt;I think a lot of my confusion is coming from when to call the createRecord method to save the data to the server via HTTP POST.  I can send the POST call, but the request has no data and therefore Flask can&#39;t save anything to the database.  &lt;/p&gt;
-
-&lt;p&gt;A big frustration for me is that though there are some great tutorials, especially the one on &lt;a href=&quot;http://courses.tutsplus.com/courses/lets-learn-ember&quot; rel=&quot;nofollow&quot;&gt;Tuts+&lt;/a&gt; all seem to use fixture data and not live database calls.  Fixture data would be fine, I guess, but I&#39;m still blasting my head up against the wall trying to get Ember to send data.&lt;/p&gt;
-
-&lt;p&gt;Thought I&#39;d start a daily development blog and use this platform at least until/if things get crazy.&lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-</description>
-        <pubDate>Tue, 08 Jul 2014 12:07:25 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/08/ember.js-data-with-rest-server/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/08/ember.js-data-with-rest-server/</guid>
         
         
         <category>emberjs</category>

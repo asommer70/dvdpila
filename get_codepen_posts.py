@@ -42,13 +42,14 @@ title:  "%s"
 date:   %s
 categories: emberjs
 ---
+<div class="post-inner">
 
 """   % (post.title, post_date.strftime("%Y-%m-%d %H:%m:%S"))
 
       post_file = open("_posts/" + file_name, 'w')
 
-      # Check for extra </span> at the end of the description
-      post_file.write(header + post.description + "\n")
+      # Change the extra </span> at the end of the description to a </div> and write the file.
+      post_file.write(header + post.description[:-7] + "</div>\n")
 
     #print post.title, post.date
   except ValueError:
