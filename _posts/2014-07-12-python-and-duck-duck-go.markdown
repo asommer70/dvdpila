@@ -16,4 +16,3 @@ categories: emberjs
 <p>So it'll be learning how to upload files in Ember.js for me...</p>
 
 <p>Party On!</p>
-</span>
