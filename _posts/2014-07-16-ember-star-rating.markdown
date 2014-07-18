@@ -16,3 +16,4 @@ categories: emberjs
 <p>I only implemented the star rating on the main list page, but I probably will integrate it into the DVD edit page at some point.</p>
 
 <p>Paty On!</p>
+</span>

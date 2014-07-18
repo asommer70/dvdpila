@@ -16,3 +16,4 @@ categories: emberjs
 <p>Next up... star rating.</p>
 
 <p>Party On!</p>
+</span>

@@ -16,3 +16,4 @@ categories: emberjs
 <p>Also, I discovered the <a href="http://blog.codepen.io/radio/" rel="nofollow">Codepen Podcast</a> this weekend, and really enjoyed listening to the latest episode while playing with my son.  Good times!</p>
 
 <p>Party On!</p>
+</span>

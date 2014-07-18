@@ -14,3 +14,4 @@ categories: emberjs
 <p>Thought I'd start a daily development blog and use this platform at least until/if things get crazy.</p>
 
 <p>Party On!</p>
+</span>

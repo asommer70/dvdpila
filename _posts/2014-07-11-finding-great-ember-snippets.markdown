@@ -14,3 +14,4 @@ categories: emberjs
 <p>Things are moving along, and it's now a lot of fun to develop using Ember.js.  Next up IMDB integration...</p>
 
 <p>Party On!</p>
+</span>
