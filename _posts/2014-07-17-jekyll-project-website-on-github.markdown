@@ -18,3 +18,4 @@ categories: emberjs
 <p>Looking forward to finishing the project page, and putting it out there.</p>
 
 <p>Party On!</p>
+</span>

@@ -20,8 +20,9 @@ for post in d.entries:
     # Get today's post and check for key words.
     today = datetime.datetime.now().strftime("%Y-%m-%d")
     ember_index = post.description.index('Ember')
+    jekyll_index = post.description.index('Jekyll')
 
-    if (today == post_date_day and ember_index):
+    if (today == post_date_day and ember_index or jekyll_index):
 
       slug = post.title.replace(' ', '-').lower()
       file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '')) + ".markdown"
