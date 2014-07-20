@@ -228,6 +228,7 @@ App.DvdController = Ember.ObjectController.extend({
 
     saveDvd: function() {
       var model = this.get('model');
+      var self = this;
 
       //console.log('saving edit...');
       if (validateRating(this.get('model').get('rating'), App)) {
@@ -240,7 +241,8 @@ App.DvdController = Ember.ObjectController.extend({
             model.set('created_by', '');
           } else {
             //console.log('setting isEditing...');
-            model.isEditing = false;
+            App.FlashQueue.pushFlash('notice', dvd.get('title') + " updated.  Thank You!");
+            self.set('isEditing', false);
           }
         });
       }
