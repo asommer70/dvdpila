@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask, request, redirect, url_for, send_from_directory
+from flask import Flask, request, redirect, url_for, send_from_directory, g
 from werkzeug.utils import secure_filename
 import os.path
 
@@ -24,13 +24,32 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.debug = True
 
 # Connect to PostgreSQL.
-conn = psycopg2.connect(database=config.get('Database', 'db'), user=config.get('Database', 'db_user'), 
-                        password=config.get('Database', 'db_pass'), host=config.get('Database', 'host'))
+def connect_db():
+  """Connects to the specific database."""
+  conn = psycopg2.connect(database=config.get('Database', 'db'), user=config.get('Database', 'db_user'), 
+                          password=config.get('Database', 'db_pass'), host=config.get('Database', 'host'))
+  return conn
+
+def get_db():
+  """
+  Opens a new database connection if there is none yet for the current application context.
+  """
+  if not hasattr(g, 'pg_db'):
+    g.pg_db = connect_db()
+  return g.pg_db
+
+
+@app.teardown_appcontext
+def close_db(error):
+  """Closes the database again at the end of the request."""
+  if hasattr(g, 'pg_db'):
+    g.pg_db.close()
 
 
 # 'Model' functions.
-def find_all_dvds(conn):
-  cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+def find_all_dvds():
+  db = get_db()
+  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   cursor.execute("""
                  select id, title, created_by, rating, extract(epoch from created_at) as created_at,
                         abstract as abstract_txt, abstract_source, abstract_url, image_url, file_url
@@ -40,8 +59,9 @@ def find_all_dvds(conn):
   cursor.close()
   return dvds
 
-def find_by_id(conn, id):
-  cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+def find_by_id(id):
+  db = get_db()
+  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   cursor.execute("""
                  select id, title, created_by, rating, extract(epoch from created_at) as created_at, 
                         abstract as abstract_txt, abstract_source, abstract_url, image_url, file_url
@@ -51,8 +71,9 @@ def find_by_id(conn, id):
   cursor.close()
   return dvd
 
-def add_dvd(conn, data):
-  cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+def add_dvd(data):
+  db = get_db()
+  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
   ddg_info = get_ddg_info(data) 
 
@@ -64,11 +85,11 @@ def add_dvd(conn, data):
                    """, (data['title'], datetime.datetime.now(), data['created_by'], data['rating'],
                          ddg_info.abstract.text, ddg_info.abstract.source, ddg_info.abstract.url, ddg_info.image.url) )
     dvd = cursor.fetchone()
-    conn.commit()
+    db.commit()
     cursor.close()
     return dvd
   except psycopg2.IntegrityError as e:
-    conn.rollback()
+    db.rollback()
     cursor.close()
     if (e.pgcode == '23505'):
       return {"created_by": "error", "title": data['title'] + " already exists."}
@@ -92,9 +113,10 @@ def get_ddg_info(data):
 
   return r
 
-def update_dvd(conn, dvd_id, data):
+def update_dvd(dvd_id, data):
   try:
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    db = get_db()
+    cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute("update dvds set rating = %s where id = %s", (data['rating'], dvd_id ));
     cursor.execute("update dvds set title = %s where id = %s", (data['title'], dvd_id ));
     cursor.execute("update dvds set created_by = %s where id = %s", (data['created_by'], dvd_id ));
@@ -103,24 +125,25 @@ def update_dvd(conn, dvd_id, data):
     cursor.execute("update dvds set abstract_url = %s where id = %s", (data['abstract_url'], dvd_id ));
     cursor.execute("update dvds set image_url = %s where id = %s", (data['image_url'], dvd_id ));
     cursor.execute("update dvds set file_url = %s where id = %s", (data['file_url'], dvd_id ));
-    conn.commit()
+    db.commit()
     cursor.close()
 
-    return find_by_id(conn, dvd_id)
+    return find_by_id(dvd_id)
   except psycopg2.IntegrityError as e:
-    conn.rollback()
+    db.rollback()
     cursor.close()
     if (e.pgcode == '23505'):
       return {"created_by": "error", "title": data['title'] + " already exists.", "rating": data['rating'], "id": dvd_id}
     else:
       return False
 
-def delete_dvd(conn, dvd_id):
-  cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+def delete_dvd(dvd_id):
+  db = get_db()
+  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   dvd_id = str(dvd_id)
   cursor.execute("delete from dvds where id = " + dvd_id)
   cursor.close()
-  return conn.commit()
+  return db.commit()
 
 
 # Routes
@@ -136,10 +159,10 @@ def static_proxy(path):
 @app.route('/dvds', methods=['GET', 'POST'])
 def find_all():
   if (request.method == 'GET'):
-    dvds = {'dvds': find_all_dvds(conn)}
+    dvds = {'dvds': find_all_dvds()}
     return json.dumps(dvds)
   elif (request.method == 'POST'):
-    dvd = add_dvd(conn, json.loads(request.data)['dvd'])
+    dvd = add_dvd(json.loads(request.data)['dvd'])
     #print dvd
     return json.dumps({"dvd": dvd})
 
@@ -147,10 +170,10 @@ def find_all():
 def show_dvd(dvd_id):
   if (request.method == 'GET'):
     # Show the DVD with the given id, the id is an integer.
-    return json.dumps({ "dvd": find_by_id(conn, dvd_id) })
+    return json.dumps({ "dvd": find_by_id(dvd_id) })
   elif (request.method == 'PUT'):
 
-    status = update_dvd(conn, dvd_id, json.loads(request.data)['dvd'])
+    status = update_dvd(dvd_id, json.loads(request.data)['dvd'])
     return json.dumps({"dvd": status})
   elif (request.method == 'POST'):
     # Handle the image file upload.
@@ -161,7 +184,7 @@ def show_dvd(dvd_id):
       return json.dumps(True)
 
   elif (request.method == 'DELETE'):
-    delete_dvd(conn, dvd_id)
+    delete_dvd(dvd_id)
     return json.dumps(True)
 
 def allowed_file(filename):
