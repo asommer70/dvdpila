@@ -3,7 +3,6 @@
 from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 import os.path
-from flask.ext.autoindex import AutoIndex
 
 import datetime, time
 import json
@@ -11,7 +10,7 @@ import psycopg2, psycopg2.extras
 import duckduckgo
 import urllib2
 
-import ConfigParser
+import ConfigParser, os
 
 config = ConfigParser.ConfigParser()
 config.readfp(open('config.cfg'))
@@ -22,7 +21,6 @@ ALLOWED_EXTENSIONS = set(['svg', 'png', 'jpg', 'jpeg', 'gif'])
 # Setup Flask app.
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-AutoIndex(app, browse_root=os.path.curdir)
 app.debug = True
 
 # Connect to PostgreSQL.
@@ -126,6 +124,15 @@ def delete_dvd(conn, dvd_id):
 
 
 # Routes
+@app.route('/')
+def root():
+  return app.send_static_file('index.html')
+
+@app.route('/<path:path>')
+def static_proxy(path):
+  # send_static_file will guess the correct MIME type
+  return app.send_static_file(path)
+
 @app.route('/dvds', methods=['GET', 'POST'])
 def find_all():
   if (request.method == 'GET'):
