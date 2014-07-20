@@ -58,6 +58,11 @@ App.Dvd = DS.Model.extend({
       paramname: 'file',
       processData: false,
       contentType: false,
+      statusCode: {
+        500: function(dvd) {
+          App.FlashQueue.pushFlash('error', "Problem uploading file to server, please check the file type.");
+        }
+      }
     });
     return this.get('uploadPromise');
   },
@@ -232,7 +237,6 @@ App.DvdController = Ember.ObjectController.extend({
 
       //console.log('saving edit...');
       if (validateRating(this.get('model').get('rating'), App)) {
-        model.uploadFile();
         model.save().then(function(dvd) {
           //console.log(dvd);
           if (dvd.get('created_by') == 'error') {
@@ -245,6 +249,7 @@ App.DvdController = Ember.ObjectController.extend({
             self.set('isEditing', false);
           }
         });
+        model.uploadFile();
       }
     },
 
@@ -269,7 +274,6 @@ App.FotoUp = Ember.TextField.extend({
   type: 'file',
 
   change: function(evt) {
-    console.log(evt.target);
     var input = evt.target;
     if (input.files && input.files[0]) {
       var that = this;

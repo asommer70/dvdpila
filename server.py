@@ -15,13 +15,11 @@ import ConfigParser, os
 config = ConfigParser.ConfigParser()
 config.readfp(open('config.cfg'))
 
-UPLOAD_FOLDER = 'static/images'
-ALLOWED_EXTENSIONS = set(['svg', 'png', 'jpg', 'jpeg', 'gif'])
 
 # Setup Flask app.
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.debug = True
+app.config['UPLOAD_FOLDER'] = config.get('Server', 'upload_folder')
+app.debug = config.getboolean('Server', 'debug')
 
 # Connect to PostgreSQL.
 def connect_db():
@@ -182,6 +180,8 @@ def show_dvd(dvd_id):
       filename = secure_filename(file.filename)
       file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
       return json.dumps(True)
+    else:
+      return json.dumps(False), 500
 
   elif (request.method == 'DELETE'):
     delete_dvd(dvd_id)
@@ -189,7 +189,7 @@ def show_dvd(dvd_id):
 
 def allowed_file(filename):
   return '.' in filename and \
-    filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+    filename.rsplit('.', 1)[1] in config.get('Server', 'allowed_ext')
 
 
 if __name__ == '__main__':
