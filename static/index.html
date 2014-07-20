@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DVD Pila!</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script type="text/x-handlebars">
+    <header class="navigation">
+    <div class="menu-wrapper">
+      <p class="navigation-menu-button" id="js-mobile-menu">MENU</p>
+      <div class="nav">
+        <ul id="navigation-menu">
+          <li class="nav-link">{{#link-to 'index'}}DVD Pila!{{/link-to}}</li>
+          <li class="nav-link">{{#link-to 'about'}}About{{/link-to}}</li>
+        </ul>
+      </div>
+    </header>
+    <div class="container">
+      {{#view App.FlashView id="flash-view"}}
+        <div id="message">
+          {{view.content.message}}
+        </div>
+      {{/view}}
+
+
+      {{outlet}}
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="index">
+
+      {{#if model.isAdding}}
+        <div class="col-four dvd-form">
+          {{partial "dvd_fields"}}
+          <button class="success" {{action 'createDvd'}}>Add DVD</button> &nbsp;
+          <button class="default" {{action 'cancelAdding'}}>Cancel</button>
+        </div>
+      {{else}}
+        <button class="success" {{action 'add'}}>Add</button>
+        &nbsp;&nbsp;
+        <div class="search">
+          {{input type="text" class="search" placeholder="Search" value=search action="query"}}
+        </div>
+        <br/>
+        <br/>
+      {{/if}}
+
+    <div class="dvd-list">
+      <ul>
+        {{#each paginatedContent}}
+
+        <li class="dvd-block">
+          {{#link-to 'dvd' id class="dvd-image"}}
+          <img {{bind-attr src="image_url"}}/>
+          <br/>
+          {{title}} 
+          {{/link-to}}
+          <br/>
+          {{view App.StarRating maxRating=5}}
+          <br/>
+        </li>
+
+        {{/each}}
+      </ul>
+    </div>
+
+    {{#if hasPages}}
+    <div class="pagination">
+      <ul>
+        {{#if prevPage}}
+        <li class="page-prev"><a href="#" {{action "selectPage" prevPage}}>Prev</a></li>
+        {{else}}
+        <li class="disabled"><a>Prev</a></li>
+        {{/if}}
+
+        {{#each pages itemController="dvd"}}
+        <li {{bind-attr class="activePage disabled"}}><a href="#" {{action "selectPage" number}}>{{number}}</a></li>
+        {{/each}}
+
+        {{#if nextPage}}
+        <li class="page-next"><a href="#" {{action "selectPage" nextPage}}>Next</a></li>
+        {{else}}
+        <li class="disabled"><a>Next</a></li>
+        {{/if}}
+    </div>
+    {{/if}}
+  </script>
+
+   <script type="text/x-handlebars" id="dvd">
+
+    <br/><br/>
+
+    <div class="col-four">
+      <div class="dvd-image">
+        <img {{bind-attr src="image_url"}}/>
+      </div>
+      <ul class="dvd-attr">
+        <li><strong>Title:</strong> {{title}}</li>
+        <li><strong>Created:</strong> {{format-date created_at}}</li>
+        <li><strong>Created By:</strong> {{created_by}}</li>
+        <li><strong>Rating:</strong> {{rating}}</li>
+        <li>
+          <div>
+            <strong>Info:</strong> 
+            <br/>
+            <span class="dvd-info">
+              {{abstract_txt}}
+
+              <br/>
+              <div class="ddg-div">
+                <a {{bind-attr href="abstract_url"}} target="_blank">{{abstract_source}}</a>
+                &nbsp;&nbsp;
+                <a {{bind-attr href="ddg_url"}} target="_blank" class="ddg">
+                  <img src="images/ddg_logo.svg" width="80" height="80"/>
+                </a>
+              </div>
+
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    {{#if isEditing}}
+      <div class="col-four dvd-form">
+        {{partial 'dvd/edit'}}
+        <button class="success" {{action 'saveDvd'}}>Update DVD</button>
+        <button class="default" {{action 'cancelEditing'}}>Cancel</button>
+
+        <br/><br/><br/>
+
+        <button class="danger" {{action 'delete'}}>Delete</button>
+      </div>
+    {{else}}
+      <br/>
+      <button class="success" {{action 'edit'}}>Edit</button>
+
+    {{/if}}
+
+    <br/><br/>
+
+    <div class="player">
+      <video id="video1" controls>
+        <source {{ bind-attr src=file_url }}>
+      </video>
+    </div>
+
+  </script>
+
+  <script type="text/x-handlebars" id="dvd/_edit">
+    <p>
+      <label for="edit-title">Title</label>
+      {{input type="text" id="edit-title" value=title}}
+    </p>
+    <p>
+      <label for="edit-created_by">Created By:</label>
+      {{input type="text" id="edit-created_by" value=created_by}}
+    </p>
+    <p>
+      <label for="edit-rating">Rating:</label>
+      {{input type="text" id="edit-rating" value=rating}}
+    </p>
+    <p>
+      <label for="edit-abstract_txt">Info:</label>
+      {{textarea id="edit-abstract_txt" value=abstract_txt}}
+    </p>
+    <p>
+      <label for="edit-abstract_source">Info Source:</label>
+      {{input type="text" id="edit-abstract_source" value=abstract_source}}
+    </p>
+    <p>
+      <label for="edit-abstract_url">Info Source URL:</label>
+      {{input type="text" id="edit-abstract_url" value=abstract_url}}
+    </p>
+    <p>
+      <label for="edit-file_url">File URL:</label>
+      {{input type="text" id="edit-file_url" value=file_url}}
+    </p>
+    <p>
+      <label for="edit-image_url">DVD Image:</label>
+      <!--<img {{bind-attr src="image_url"}}/>-->
+      <!--{{input type="file" id="edit-image_url" value=image_url}}-->
+      {{#view Ember.View contentBinding="foto"}}
+        {{view App.FotoUp class="dvd-image-upload"}}
+        {{view App.FotoPreview width="200" srcBinding="foto"}}
+      {{/view}}
+    </p>
+  </script>
+
+  <script type="text/x-handlebars" id="dvd/_add">
+    <p>
+      <label for="add-title">Title</label>
+      {{input type="text" id="add-title" value=model.title}}
+    </p>
+    <p>
+      <label for="add-created_by">Created By:</label>
+      {{input type="text" id="add-created_by" value=model.created_by}}
+    </p>
+    <p>
+      <label for="add-rating">Rating:</label>
+      {{input type="text" id="add-rating" value=model.rating}}
+    </p>
+  </script>
+
+  <script type="text/x-handlebars" id="dvds/new">
+    <div class="col-four dvd-form">
+    <form {{action save on="submit"}}>
+      {{partial "dvd_fields"}}
+      <button type="submit">Add DVD</button>
+    </form>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" id="_dvd_fields">
+    {{view Ember.TextField valueBinding="title" id="title" placeholder="Title" required="true"}}<br />
+    {{view Ember.TextField valueBinding="created_by" id="created_by" placeholder="Created By" required="true"}}<br />
+    {{view Ember.TextField valueBinding="rating" id="rating" placeholder="Rating" required="true"}}<br />
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="star-rating">    
+    {{#each view.stars}}
+    <span {{bind-attr data-rating=rating}}
+      {{bind-attr class=":star-rating full:star:star-empty"}}
+      {{action "setRating" target=view}}>
+    </span>
+    {{/each}}
+  </script>
+
+  <script type="text/x-handlebars" id="about">
+    <h3>About DVD Pila!</h3>
+    <br/>
+
+      <p>
+      The word <strong>Pila</strong> is Spanish for Pile, and I have a pile of DVDs that I'd like to rip and record that I have ripped them.
+      </p>
+
+      <p>
+      This project is also an excuse to learn Ember.js and use the Bourbon SASS framework.
+      </p>
+  </script>
+
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="js/libs/handlebars-1.1.2.js"></script>
+  <script src="js/libs/ember-1.5.1.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/flash.js"></script>
+  <!-- to activate the test runner, add the "?test" query string parameter -->
+  <script src="tests/runner.js"></script>
+</body>
+</html>
