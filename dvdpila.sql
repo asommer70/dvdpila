@@ -79,6 +79,24 @@ ALTER TABLE ONLY dvds ALTER COLUMN id SET DEFAULT nextval('dvds_id_seq'::regclas
 
 
 --
+-- Data for Name: dvds; Type: TABLE DATA; Schema: public; Owner: adam
+--
+
+COPY dvds (id, title, created_at, created_by, rating, abstract, abstract_source, abstract_url, image_url, file_url) FROM stdin;
+2	Big Buck Bunny	2014-07-20 02:32:56.001999	Adam	5	Big Buck Bunny is a short computer animated comedy film by the Blender Institute, part of the Blender Foundation. Like the foundation's previous film Elephants Dream, the film was made using Blender, a free software application for animation made by the same foundation. It was released as an Open Source film under Creative Commons License Attribution 3.0.	Wikipedia	https://en.wikipedia.org/wiki/Big_Buck_Bunny	images/c75c5115.jpg	http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v
+3	Elephants Dream	2014-07-20 02:35:33.049107	Adam	5	Elephants Dream is a short computer-generated short film that was produced almost completely using the free software 3D suite Blender. It premiered on 24 March 2006, after about 8 months of work. Beginning in September 2005, it was developed under the name Orange by a team of seven artists and animators from around the world. It was later renamed Machina and then to Elephants Dream after the way in which Dutch children's stories abruptly end.	Wikipedia	https://en.wikipedia.org/wiki/Elephants_Dream	images/9252c944.jpg	https://archive.org/download/ElephantsDream/ed_1024.ogv
+1	Sintel	2014-07-20 02:27:55.031959	Adam	5	Sintel is a short computer animated film by the Blender Institute, part of the Blender Foundation.	Wikipedia	https://en.wikipedia.org/wiki/Sintel	images/fe9b3f8f.jpg	http://peach.themazzone.com/durian/movies/sintel-1024-surround.mp4
+\.
+
+
+--
+-- Name: dvds_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adam
+--
+
+SELECT pg_catalog.setval('dvds_id_seq', 3, true);
+
+
+--
 -- Name: dvds_pkey; Type: CONSTRAINT; Schema: public; Owner: adam; Tablespace: 
 --
 

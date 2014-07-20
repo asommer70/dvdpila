@@ -11,6 +11,11 @@ import psycopg2, psycopg2.extras
 import duckduckgo
 import urllib2
 
+import ConfigParser
+
+config = ConfigParser.ConfigParser()
+config.readfp(open('config.cfg'))
+
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = set(['svg', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -21,7 +26,8 @@ AutoIndex(app, browse_root=os.path.curdir)
 app.debug = True
 
 # Connect to PostgreSQL.
-conn = psycopg2.connect(database="", user="", password="", host="")
+conn = psycopg2.connect(database=config.get('Database', 'db'), user=config.get('Database', 'db_user'), 
+                        password=config.get('Database', 'db_pass'), host=config.get('Database', 'host'))
 
 
 # 'Model' functions.
