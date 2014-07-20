@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>DVD Pila!</title>
   <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -95,7 +96,9 @@
 
     <div class="col-four">
       <div class="dvd-image">
-        <img {{bind-attr src="image_url"}}/>
+        <a {{bind-attr href="image_url"}} class="fancybox" rel="">
+          <img {{bind-attr src="image_url"}}/>
+        </a>
       </div>
       <ul class="dvd-attr">
         <li><strong>Title:</strong> {{title}}</li>
@@ -247,6 +250,7 @@
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/ember-1.5.1.js"></script>
   <script src="js/libs/ember-data.js"></script>
+  <script type="text/javascript" src="js/libs/jquery.fancybox.js"></script>
   <script src="js/app.js"></script>
   <script src="js/flash.js"></script>
 </body>

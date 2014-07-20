@@ -341,6 +341,8 @@ var validateRating = function(rating, App) {
 }
 
 $(document).ready(function() {
+  $('.fancybox').fancybox();
+
   var menu = $('#navigation-menu');
   var menuToggle = $('#js-mobile-menu');
   var signUp = $('.sign-up');

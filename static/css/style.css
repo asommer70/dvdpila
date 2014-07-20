@@ -465,6 +465,9 @@ video {
   height: 16px;
   color: #cccccc; }
 
+.fancybox-close {
+  border-bottom: none; }
+
 .ddg {
   border-bottom: none; }
   .ddg img {
