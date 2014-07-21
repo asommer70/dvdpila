@@ -168,7 +168,7 @@ App.IndexController = Ember.ArrayController.extend({
           file_url: this.get('file_url'),
         });
         dvd.save().then(function(dvd) {
-          console.log(dvd);
+          //console.log(dvd);
           if (dvd.get('created_by') == 'error') {
             App.FlashQueue.pushFlash('error', dvd.get('title'));
           } else {
