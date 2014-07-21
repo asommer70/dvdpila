@@ -5,9 +5,50 @@
     <description>This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.</description>
     <link>http://dvdpila.thehoick.com//</link>
     <atom:link href="http://dvdpila.thehoick.com//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 18 Jul 2014 17:08:35 -0400</pubDate>
-    <lastBuildDate>Fri, 18 Jul 2014 17:08:35 -0400</lastBuildDate>
+    <pubDate>Mon, 21 Jul 2014 13:34:17 -0400</pubDate>
+    <lastBuildDate>Mon, 21 Jul 2014 13:34:17 -0400</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
+    
+      <item>
+        <title>Migrating Code and ConfigParser</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Discourse and PHP Woo&quot; src=&quot;http://www.thehoick.com/images/configparser.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I&#39;ve gotten around to migrating the actual code for the &lt;a href=&quot;https://github.com/asommer70/dvdpila&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt; web app.  It&#39;s now officiall more than just a Github pages &lt;a href=&quot;http://dvdpila.thehoick.com/&quot; rel=&quot;nofollow&quot;&gt;webasite&lt;/a&gt;.  &lt;/p&gt;
+
+&lt;p&gt;I think from a design aspect it&#39;s my best work yet.  I&#39;ve really enjoyed sing the &lt;a href=&quot;http://refills.bourbon.io/&quot; rel=&quot;nofollow&quot;&gt;Refills&lt;/a&gt; mixin library as well as the other &lt;a href=&quot;http://bourbon.io/&quot; rel=&quot;nofollow&quot;&gt;Bourbon&lt;/a&gt; libraries.  Bourbon has become my goto design framework.  I still like Bootstrap and Foundation, but there&#39;s just something really cool about using straight Sass.&lt;/p&gt;
+
+&lt;p&gt;The other thing I accomplished today was to migrate the database connection code from using straight username, host, and password to storing those variables in a config file.  I never realized that Python came with great functions baked in like the &lt;a href=&quot;https://docs.python.org/2/library/configparser.html&quot; rel=&quot;nofollow&quot;&gt;ConfigParser&lt;/a&gt; module.&lt;/p&gt;
+
+&lt;p&gt;In three quick lines your config files is read and your options are at your fingertips:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;import ConfigParser
+
+config = ConfigParser.ConfigParser()
+config.readfp(open(&#39;config.cfg&#39;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Use &lt;em&gt;get&lt;/em&gt; along with the section to retrieve specefic values:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;db_name = config.get(&#39;Database&#39;, &#39;db&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Of course to write to a config file there is a &lt;em&gt;set&lt;/em&gt; method.  I think this will be a very useful thing to know.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 21 Jul 2014 13:07:13 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/21/migrating-code-and-configparser/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/21/migrating-code-and-configparser/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
     
       <item>
         <title>Github Page With Jekyll is Live!</title>
@@ -41,7 +82,9 @@
     
       <item>
         <title>Jekyll Project Website on Github</title>
-        <description>&lt;p&gt;&lt;img alt=&quot;jekyll default screeny&quot; src=&quot;http://www.thehoick.com/images/jekyll_default.png&quot; /&gt;&lt;/p&gt;
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;jekyll default screeny&quot; src=&quot;http://www.thehoick.com/images/jekyll_default.png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I&#39;m working on a website for the &lt;a href=&quot;https://github.com/asommer70/dvdpila&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt; project, and working with the &lt;a href=&quot;http://jekyllrb.com/&quot; rel=&quot;nofollow&quot;&gt;Jekyll&lt;/a&gt; static site generator.  The documentation is a quick read and so far has been detailed enough to answer any question&#39;s I&#39;ve had.&lt;/p&gt;
 
@@ -54,7 +97,7 @@
 &lt;p&gt;Looking forward to finishing the project page, and putting it out there.&lt;/p&gt;
 
 &lt;p&gt;Party On!&lt;/p&gt;
-&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Thu, 17 Jul 2014 06:07:54 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/17/jekyll-project-website-on-github/</link>
@@ -217,51 +260,6 @@
         <pubDate>Thu, 10 Jul 2014 17:07:59 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/10/more-progress-with-ember-data/</link>
         <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/10/more-progress-with-ember-data/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Ember Data Break Through</title>
-        <description>&lt;div class=&quot;post-inner&quot;&gt;
-
-&lt;h3&gt;Lot&#39;s of Ember Learning&lt;/h3&gt;
-
-&lt;p&gt;After poking through the source code for Ember Data and Ember to try and determine why there wasn&#39;t any data being sent in the HTTP POST, I&#39;ve finally had a break through.  &lt;/p&gt;
-
-&lt;p&gt;The break through came not from digging through the source, which was a lot of fun, but from finally finding relavant Google search.  I turned up this &lt;a href=&quot;http://stackoverflow.com/questions/21974570/ember-js-typeerror-type-create-is-not-a-function&quot; rel=&quot;nofollow&quot;&gt;question&lt;/a&gt; on StackOverflow.  To find the post I searched Goolge with &quot;ember data type._create&quot;. So I guess working with the source did help because that&#39;s where I found the call to &lt;em&gt;type._create&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;The answer to the question is to install the latest Beta version of Ember Data.  I was using version .14 originally after following the suggested &lt;em&gt;bower install ember-data --save&lt;/em&gt;.  After cloning the &lt;a href=&quot;https://github.com/emberjs/data&quot; rel=&quot;nofollow&quot;&gt;repo&lt;/a&gt; and following the &lt;a href=&quot;https://github.com/emberjs/data#setup&quot; rel=&quot;nofollow&quot;&gt;setup&lt;/a&gt; instructions I was able to build the packages and copy a new ember-data.js file into my project.&lt;/p&gt;
-
-&lt;p&gt;There were a few new errors in the Chrome Dev Tools console, but a few adjustments to my app.js file were all that was needed to update to the new Ember Data syntax.  So back to my code that uses the createRecord method and still not seeing anything in the output from my Flask server where I called &lt;em&gt;print request.form&lt;/em&gt; to view the POST data.  Since there weren&#39;t any additional errors in the JavaScript console, I got to thinking that maybe there was some data and I&#39;m just not seeing it.  The &lt;em&gt;print request.form&lt;/em&gt; call has worked with a non-Ember Data version, so I thought it would work here as well.  &lt;/p&gt;
-
-&lt;p&gt;Silly me.  I then googled &quot;flask post content&quot; and turned up this StackOver flow &lt;a href=&quot;http://stackoverflow.com/questions/10434599/how-can-i-get-the-whole-request-post-body-in-python-with-flask&quot; rel=&quot;nofollow&quot;&gt;post&lt;/a&gt;.  And you guessed it after calling &lt;em&gt;print request.data&lt;/em&gt; I was able to see a &quot;dvd&quot; JSON string sent to the server via HTTP POST.&lt;/p&gt;
-
-&lt;p&gt;A quick look at the database and voila new records in the table.  Actually there were a lot of new records in the table.  Most of them had empty strings because I wasn&#39;t passing the correct data into the SQL query.&lt;/p&gt;
-
-&lt;h3&gt;Lessons Learned:&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Build from the latest source if a project is in heavy development. (this did occur to several days ago, but I didn&#39;t listent to myself)&lt;/li&gt;
-&lt;li&gt; Double check the database.&lt;/li&gt;
-&lt;li&gt;Print the entire request object on the server side.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;Top 2 Tech Ideas:&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Add &lt;a href=&quot;https://github.com/tholman/giflinks&quot; rel=&quot;nofollow&quot;&gt;Giflinks&lt;/a&gt; to a web app for added fun.&lt;/li&gt;
-&lt;li&gt;Might use &lt;a href=&quot;http://codyhouse.co/gem/smart-fixed-navigation/&quot; rel=&quot;nofollow&quot;&gt;Smart Fixed Navigation&lt;/a&gt; for a web app project.  Might be good for Photolandia instead of Headroom.js.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Wed, 09 Jul 2014 12:07:46 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/09/ember-data-break-through/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/09/ember-data-break-through/</guid>
         
         
         <category>emberjs</category>

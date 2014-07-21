@@ -27,9 +27,13 @@ for post in d.entries:
     try: 
       jekyll_index = post.description.index('Jekyll')
     except ValueError:
-      jekyll_Index = False
+      jekyll_index = False
+    try: 
+      dvdpila_index = post.description.index('dvdpila')
+    except ValueError:
+      dvdpila_index = False
 
-    if (today == post_date_day and ember_index or jekyll_index):
+    if (today == post_date_day and ember_index or jekyll_index or dvdpila_index):
 
       slug = post.title.replace(' ', '-').lower()
       file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '').replace('!', '')) + ".markdown"
