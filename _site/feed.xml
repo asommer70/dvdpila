@@ -5,9 +5,41 @@
     <description>This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.</description>
     <link>http://dvdpila.thehoick.com//</link>
     <atom:link href="http://dvdpila.thehoick.com//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 21 Jul 2014 13:34:17 -0400</pubDate>
-    <lastBuildDate>Mon, 21 Jul 2014 13:34:17 -0400</lastBuildDate>
+    <pubDate>Tue, 22 Jul 2014 14:14:50 -0400</pubDate>
+    <lastBuildDate>Tue, 22 Jul 2014 14:14:50 -0400</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
+    
+      <item>
+        <title>Problems with Pagination and Ember</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;pages&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/pages.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I&#39;ve blasted into a problem with adding DVD records to the ArrayController in Ember.js.  The pagination guide I followed didn&#39;t take into account adding new records to the paginated collection.  As far as I can tell it doesn&#39;t anyway.&lt;/p&gt;
+
+&lt;p&gt;The problem with using code someone else has written is that sometimes you don&#39;t understand how it works.  I&#39;m okay with not understanding how a particular peice of code works in my project... as long as it doesn&#39;t cause problems.  Understanding every line of code you use, without a doubt, is a better way to code and makes you a better developer all around.  Sometimes you just have to get things done and hack it together however works.  I&#39;m thinking this isn&#39;t one of those situations.&lt;/p&gt;
+
+&lt;p&gt;On Saturday night I decided to experiment with my own little &quot;development sprint&quot; to see how much I could get accomplished with the &lt;a href=&quot;https://github.com/asommer70/dvdpila&quot; rel=&quot;nofollow&quot;&gt;DVD PIla!&lt;/a&gt; web app.  I was able to migrate the code from my self-hosted &lt;a href=&quot;https://about.gitlab.com/&quot; rel=&quot;nofollow&quot;&gt;Gitlab&lt;/a&gt; repo to Github, implement a HMLT5 video element in Ember, adjust the database schema for a field to container a URL for the video file, and a plethora of improvements to the Flask server.&lt;/p&gt;
+
+&lt;p&gt;I started the sprint at 10:00pm on Saturday, and had the video element implemented by around 11:00 ish.  At which point I realized that I need to convert all my AVI files to MP4 so they can work in the video element, doh.  It&#39;s very cool to be able to view your videos in your a browser from any devise in your house, and I soon got caught up watching &lt;a href=&quot;https://duckduckgo.com/?q=terminator+salvation&quot; rel=&quot;nofollow&quot;&gt;Terminator: Salvation&lt;/a&gt; which I haven&#39;t seen in a while.  So I got back to serious work on the project around 1:00am.&lt;/p&gt;
+
+&lt;p&gt;At 3:00am I had most of the server code fixed up, and all the small things working and looking good.  I went to bed at 3:00am meaning to get back up at 5:00am and continue working, but the snooze was just too good.  I ended up getting back into it at 5:30am after my son woke up.  There&#39;s not a better alarm clock in the world than a 16 month old child.  &lt;/p&gt;
+
+&lt;p&gt;So I&#39;ve been on this pagination problem for about 4 hours now... hopefully I can have it locked up soon.  I think after that it&#39;ll be time to release a version 1.0.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 22 Jul 2014 10:07:40 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/22/problems-with-pagination-and-ember/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/22/problems-with-pagination-and-ember/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
     
       <item>
         <title>Migrating Code and ConfigParser</title>
@@ -241,25 +273,6 @@ config.readfp(open(&#39;config.cfg&#39;))
         <pubDate>Fri, 11 Jul 2014 07:07:41 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/11/finding-great-ember-snippets/</link>
         <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/11/finding-great-ember-snippets/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>More Progress With Ember Data</title>
-        <description>&lt;p&gt;Today I was able to clean up my controller and router functions.  I had a crap ton of &lt;em&gt;console.log()&lt;/em&gt; calls to try and figure out what &lt;em&gt;this&lt;/em&gt; is in any particular situation, and if I can call things like &lt;em&gt;get(&#39;model&#39;) and get(&#39;store&#39;)&lt;/em&gt; on it.  &lt;/p&gt;
-
-&lt;p&gt;Also cleaned up the Flask server.  Had a gaggle of routes that took URL arguments as parameters to query against the database.  The whole REST HTTP method things is pretty awesome.  Cut down like 8 routes to just 2.  Though inside those routes you then have to add some if statements to handle the different HTTP methods.  Well that&#39;s what I did at least, there are probably other ways to take care of business.&lt;/p&gt;
-
-&lt;p&gt;I need to post some code at some point.  &lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-</description>
-        <pubDate>Thu, 10 Jul 2014 17:07:59 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/10/more-progress-with-ember-data/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/10/more-progress-with-ember-data/</guid>
         
         
         <category>emberjs</category>

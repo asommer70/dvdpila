@@ -5,6 +5,7 @@
 
 import feedparser
 import datetime
+import os.path
 
 d = feedparser.parse('http://codepen.io/asommer70/blog/feed/')
 
@@ -38,7 +39,7 @@ for post in d.entries:
       slug = post.title.replace(' ', '-').lower()
       file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '').replace('!', '')) + ".markdown"
       
-      print file_name, slug, post_date
+      #print file_name, slug, post_date
 
       header = """---
 layout: post
@@ -50,10 +51,13 @@ categories: emberjs
 
 """   % (post.title, post_date.strftime("%Y-%m-%d %H:%m:%S"))
 
-      post_file = open("_posts/" + file_name, 'w')
+      # Don't overwrite the file if it exists.
+      if not (os.path.isfile("_posts/" + file_name):
+        print "writing: ", "_posts/" + filename
+        post_file = open("_posts/" + file_name, 'w')
 
-      # Change the extra </span> at the end of the description to a </div> and write the file.
-      post_file.write(header + post.description[:-7] + "</div>\n")
+        # Change the extra </span> at the end of the description to a </div> and write the file.
+        post_file.write(header + post.description[:-7] + "</div>\n")
 
     #print post.title, post.date
   except ValueError:
