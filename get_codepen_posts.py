@@ -57,8 +57,8 @@ categories: emberjs
 """   % (post.title, post_date.strftime("%Y-%m-%d %H:%m:%S"), soup.p)
 
       # Don't overwrite the file if it exists.
-      if not (os.path.isfile("_posts/" + file_name):
-        print "writing: ", "_posts/" + filename
+      if not (os.path.isfile("_posts/" + file_name)):
+        print "writing: ", "_posts/" + file_name
         post_file = open("_posts/" + file_name, 'w')
 
         # Change the extra </span> at the end of the description to a </div> and write the file.
