@@ -262,6 +262,13 @@ App.DvdRoute = Ember.Route.extend({
   model: function(params) {
     return this.store.find('dvd', params.dvd_id);
   },
+  actions: {
+    pageOne: function() {
+      // Filter from the first page.
+      //this.controller.send('selectPage', 1);
+      this.transitionTo('index');
+    },
+  }
 });
 
 App.DvdController = Ember.ObjectController.extend({
