@@ -31,7 +31,6 @@
       <div class="nav">
         <ul id="navigation-menu">
           <li class="nav-link">{{#link-to 'index'}}<span {{action "pageOne"}}>DVD Pila!</span>{{/link-to}}</li>
-          <li class="nav-link">{{#link-to 'about'}}About{{/link-to}}</li>
         </ul>
       </div>
       <div class="navigation-tools">
@@ -264,19 +263,6 @@
       {{action "setRating" target=view}}>
     </span>
     {{/each}}
-  </script>
-
-  <script type="text/x-handlebars" id="about">
-    <h3>About DVD Pila!</h3>
-    <br/>
-
-      <p>
-      The word <strong>Pila</strong> is Spanish for Pile, and I have a pile of DVDs that I'd like to rip and record that I have ripped them.
-      </p>
-
-      <p>
-      This project is also an excuse to learn Ember.js and use the Bourbon SASS framework.
-      </p>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
