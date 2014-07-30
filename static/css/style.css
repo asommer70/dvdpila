@@ -228,6 +228,15 @@ input:-moz-placeholder {
 input:-ms-input-placeholder {
   color: rgba(159, 65, 21, 0.4); }
 
+.search input::-webkit-input-placeholder {
+  color: white !important; }
+.search input::-moz-placeholder {
+  color: white !important; }
+.search input:-moz-placeholder {
+  color: white !important; }
+.search input:-ms-input-placeholder {
+  color: white !important; }
+
 button {
   border: 1px solid #076fe4;
   border-radius: 3px;
@@ -659,6 +668,14 @@ header.navigation {
         color: rgba(255, 255, 255, 0.7);
         border-radius: 10px;
         margin: 0; }
+        header.navigation .search-bar .search-and-submit input[type=search]::-webkit-input-placeholder {
+          color: rgba(255, 255, 255, 0.7); }
+        header.navigation .search-bar .search-and-submit input[type=search]::-moz-placeholder {
+          color: rgba(255, 255, 255, 0.7); }
+        header.navigation .search-bar .search-and-submit input[type=search]:-moz-placeholder {
+          color: rgba(255, 255, 255, 0.7); }
+        header.navigation .search-bar .search-and-submit input[type=search]:-ms-input-placeholder {
+          color: rgba(255, 255, 255, 0.7); }
       header.navigation .search-bar .search-and-submit button[type=submit] {
         border: 1px solid #4b5c2f;
         border-radius: 3px;

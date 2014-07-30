@@ -9,6 +9,21 @@ var attr = DS.attr,
 
 App.ApplicationAdapter = DS.RESTAdapter.extend({});
 
+App.Search = DS.Model.extend({
+  title: attr('string'),
+});
+
+App.Router.map(function() {
+  this.resource('about');
+  /*this.resource('dvds', function() {
+    this.route('search', { path: ':query' });
+  });*/
+  this.resource('dvd', { path: ':dvd_id' });
+  //this.resource('searchresults');
+  this.route("search", { path: "/dvds/search/:query" })
+});
+
+
 App.Dvd = DS.Model.extend({
   init: function() {
     this._super();
@@ -25,6 +40,7 @@ App.Dvd = DS.Model.extend({
   abstract_url: attr('string'),
   image_url: attr('string'),
   file_url: attr('string'),
+  search: attr('string'),
   ddg_url: function() {
     return 'https://duckduckgo.com/?q=' + this.get('title');
   }.property('title'),
@@ -69,22 +85,25 @@ App.Dvd = DS.Model.extend({
 
 });
 
-App.Router.map(function() {
-  this.resource('about');
-  this.resource('dvds', function() {
-    this.resource('dvd', { path: ':dvd_id' });
-  });
-});
-
 App.IndexController = Ember.ArrayController.extend({
   isEditing: false,
   isAdding: false,
 
-  search: '',
+  //search: '',
+  /*contentBinding: Ember.Binding.oneWay('App.searchResultsController'),
+
+  updateContent: function() {
+    console.log('updating content...');
+    var search_results = this.getPath('searchResultsController.content');
+    var newContent = Ember.A();
+    newContent.pushObject(search_results);
+    this.set('content', newContent);
+  }.observes('searchResultsController.content'),*/
+
   titleFilter: null,
 
-  sortProperties: ['id'],
-  sortAscending: false,
+  sortProperties: ['title'],
+  sortAscending: true,
   
   page: 1,
   perPage: 10,
@@ -138,14 +157,30 @@ App.IndexController = Ember.ArrayController.extend({
     return this.get('arrangedContent').slice(start, end);
   }).property('page', 'totalPages', 'arrangedContent.[]'),
 
+  search: function() {
+    query = this.get('q');
+    console.log('PlayersController: ' + query);
+    if(query != "") {
+      var that = this;
+      jQuery.getJSON("/api/v1/players/search.json?q=" + query, function(data) {
+        that.set('results', data['players']);
+      });
+    }
+  },
+
   actions: {
-    query: function() {
+    /*query: function() {
       // Filter from the first page.
       this.send('selectPage', 1);
 
       // the current value of the text field
       var query = this.get('search');
       this.set('titleFilter', query);
+    },*/
+
+    search: function() {
+      console.log('IndexController.actions.search...');
+      return this.store.find('search', params.query);
     },
 
     add: function() {
@@ -176,6 +211,7 @@ App.IndexController = Ember.ArrayController.extend({
             self.set('created_by', '');
             self.set('rating', '');
             self.get('model').set('isAdding', false);
+            App.FlashQueue.pushFlash('notice', dvd.get('title') + " added to your Pila.");
           }
         });
       }
@@ -191,21 +227,156 @@ App.IndexController = Ember.ArrayController.extend({
 
   },
 
-  arrangedContent: function() {
+  /*arrangedContent: function() {
     var search = this.get('search');
-    if (!search) { return this.get('content') }
+    console.log("search: ", search);
+    if (!search) { console.log("not search..."); return this.get('content') }
 
     return this.get('content').filter(function(dvd) {
       var re = new RegExp(search, 'i');
       return dvd.get('title').match(re) != null;
     })
-  }.property('content', 'titleFilter'),
+  }.property('content', 'titleFilter'),*/
 });
+
+App.ApplicationController = Ember.Controller.extend({
+  // the initial value of the `search` property
+  /*search: '',
+      
+  doSearch: function() {
+    // the current value of the text field
+    var query = this.get('search');
+    this.set('searchQuery', query);
+    this.transitionToRoute('search', query);
+  }*/
+
+  /*search: '',
+
+  doSearch: function() {
+    // the current value of the text field
+    var query = this.get('search');
+    this.set('searchQuery', query);
+    this.transitionToRoute('search', query);
+  }*/
+  actions: {
+    search: function() {
+      console.log("ApplicationController.actions.search...");
+      var self = this;
+      //this.transitionTo('searchresults', $('#query').val());
+      $.get('/dvds/search/' + $('#query').val()).then(function(dvd) {
+        console.log(JSON.parse(dvd));
+        //return JSON.parse(dvd);
+        //self.transitionTo('searchresults');
+        //self.modelFor('index').set('content') = JSON.parse(dvd);
+        //self.transitionTo('index');
+        self.set('content', JSON.parse(dvd));
+        self.transitionToRoute('index', JSON.parse(dvd).id);
+        //self.transitionTo('index', JSON.parse(dvd));
+        //console.log("self: ", self.modelFor('index'))
+        //self.get('model').set('content', JSON.parse(dvd));
+        //self.modelFor('index') = JSON.parse(dvd);
+      });
+    },
+  },
+});
+
+App.SearchBox = Ember.TextField.extend({
+  insertNewline: function(event) {
+    //console.log(event);
+    //console.log(this.get('target'));
+    console.log('insertNewLine...');
+    var query = this.get('value');
+    App.searchResultsController.search(query);
+  },
+});
+
+App.searchResultsController = Ember.ArrayController.create({
+  searchResults: false,
+  isSearching: false,
+
+  search: function(query) {
+    if (query == '') {
+      this.set('searchResults', false);
+      return;
+    }
+
+    var self = this;
+    this.set('isSearching', true);
+    this.set('content', []);
+
+      //$.get('/dvds/search/' + $('#query').val()).then(function(dvd) {
+      $.get('/dvds/search/' + query).then(function(dvd) {
+        console.log(JSON.parse(dvd));
+        self.set('content', JSON.parse(dvd).dvds);
+        //App.IndexController.set('paginatedContent', JSON.parse(dvd).dvds);
+        //App.IndexController.set();
+
+        //return JSON.parse(dvd);
+        //self.transitionTo('searchresults');
+        //self.modelFor('index').set('content') = JSON.parse(dvd);
+        //self.transitionTo('index');
+        //self.transitionTo('index', JSON.parse(dvd));
+        //console.log("self: ", self.modelFor('index'))
+        //self.get('model').set('content', JSON.parse(dvd));
+        //self.modelFor('index') = JSON.parse(dvd);
+        
+        self.set('searchResults', true);
+        self.set('isSearching', false);
+      });
+  },
+});
+
+/*App.SearchController = Ember.Controller.extend({
+  needs: ['application'],
+  application: Ember.computed.alias('controllers.application')
+});*/
+
+/*App.SearchRoute = Ember.Route.extend({  
+      deserialize: function(params) {
+                             this.controllerFor('application').setProperties({
+                                           searchQuery: params.query,
+                                           search: params.query
+                                       });
+                                 },
+
+      renderTemplate: function() {
+                                this.render('searchpage', { into: 'container' });
+                                    }
+});
+
+App.SearchRoute = Ember.Route.extend({
+  setupController: function(controller) {
+    controller.set('searchQuery', this.get('query'));
+  },
+
+  renderTemplate: function() {
+    this.render('searchpage', { into: 'container' });
+  }
+});*/
 
 App.IndexRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('dvd');
   },
+
+  /*actions: {
+    search: function(controller, query) {
+      console.log("IndexRoute.actions.search...");
+      var self = this;
+      //this.transitionTo('searchresults', $('#query').val());
+      $.get('/dvds/search/' + $('#query').val()).then(function(dvd) {
+        console.log(JSON.parse(dvd));
+        //return JSON.parse(dvd);
+        //self.transitionTo('searchresults');
+        //self.modelFor('index').set('content') = JSON.parse(dvd);
+        self.transitionTo('index');
+        //self.transitionTo('index', JSON.parse(dvd));
+        console.log("self: ", self.modelFor('index'))
+        //self.get('model').set('content', JSON.parse(dvd));
+        //self.modelFor('index') = JSON.parse(dvd);
+      });
+    },
+  },*/
 });
 
 App.DvdRoute = Ember.Route.extend({
@@ -225,6 +396,10 @@ App.DvdController = Ember.ObjectController.extend({
   actions: {
     edit: function() {
       this.set('isEditing', true);
+    },
+
+    search: function() {
+      return this.store.find('search', params.title);
     },
 
     cancelEditing: function() {
@@ -264,6 +439,25 @@ App.DvdController = Ember.ObjectController.extend({
 
   }
 });
+
+/*App.SearchResultsRoute = Ember.Route.extend({
+  model: function(params) {
+    return this.store.find('search', params.title);
+  },
+  actions: {
+    search: function() {
+      return this.store.find('search', params.title);
+    },
+  },
+});
+
+App.SearchResultsController = Ember.ObjectController.extend({
+  actions: {
+    search: function() {
+      return this.store.find('search', params.title);
+    },
+  },
+})*/
 
 App.FotoPreview = Ember.View.extend({
       attributeBindings: ['src'],

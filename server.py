@@ -69,6 +69,18 @@ def find_by_id(id):
   cursor.close()
   return dvd
 
+def find_by_title(title):
+  db = get_db()
+  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cursor.execute("""
+                 select id, title, created_by, rating, extract(epoch from created_at) as created_at, 
+                        abstract as abstract_txt, abstract_source, abstract_url, image_url, file_url
+                 from dvds where title ~* '%s';
+                 """ % (title))
+  dvds = cursor.fetchall()
+  cursor.close()
+  return dvds
+
 def add_dvd(data):
   db = get_db()
   cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -186,6 +198,12 @@ def show_dvd(dvd_id):
   elif (request.method == 'DELETE'):
     delete_dvd(dvd_id)
     return json.dumps(True)
+
+@app.route('/dvds/search/<query>', methods=['GET'])
+def search(query):
+  if (request.method == 'GET'):
+    return json.dumps({ "dvds": find_by_title(query) })
+
 
 def allowed_file(filename):
   return '.' in filename and \

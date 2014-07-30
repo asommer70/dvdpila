@@ -44,6 +44,14 @@ input {
   @include placeholder {
     color: fade-out($base-link-color, .6);
   }
+
+}
+
+.search input {
+  //color: white;
+  @include placeholder {
+    color: white !important;
+  }
 }
 
 button {
@@ -424,6 +432,10 @@ header.navigation {
         color: $navigation-color;
         border-radius: $base-border-radius * 2;
         margin: 0;
+
+        @include placeholder {
+          color: transparentize(white, 0.3);
+        }
       }
 
       button[type=submit] {

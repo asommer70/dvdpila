@@ -34,6 +34,15 @@
           <li class="nav-link">{{#link-to 'about'}}About{{/link-to}}</li>
         </ul>
       </div>
+      <div class="navigation-tools">
+        <div class="search-bar">
+          <div class="search-and-submit">
+            {{view App.SearchBox placeholder="Search" type="search"}}
+            <!--<input type="search" placeholder="Search" id="query" name="query"/>-->
+            <!--<button type="submit" class="success" {{action "search" target="controller"}}>
+              <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon.png" alt="">
+            </button>-->
+          </div>
     </header>
     <div class="container">
       {{#view App.FlashView id="flash-view"}}
@@ -41,7 +50,6 @@
           {{view.content.message}}
         </div>
       {{/view}}
-
 
       {{outlet}}
     </div>
@@ -58,29 +66,45 @@
       {{else}}
         <button class="success" {{action 'add'}}>Add</button>
         &nbsp;&nbsp;
-        <div class="search">
+        <!--<div class="search">
           {{input type="text" class="search" placeholder="Search" value=search action="query"}}
-        </div>
+        </div>-->
         <br/>
         <br/>
       {{/if}}
 
     <div class="dvd-list">
       <ul>
-        {{#each paginatedContent}}
+        {{#if App.searchResultsController.searchResults}}
+          {{#each App.searchResultsController.content}}
+            <li class="dvd-block">
+              {{#link-to 'dvd' id class="dvd-image"}}
+              <img {{bind-attr src="image_url"}}/>
+              <br/>
+              {{title}} 
+              {{/link-to}}
+              <br/>
+              {{view App.StarRating maxRating=5}}
+              <br/>
+            </li>
 
-        <li class="dvd-block">
-          {{#link-to 'dvd' id class="dvd-image"}}
-          <img {{bind-attr src="image_url"}}/>
-          <br/>
-          {{title}} 
-          {{/link-to}}
-          <br/>
-          {{view App.StarRating maxRating=5}}
-          <br/>
-        </li>
+          {{/each}}
+        {{else}}
+          {{#each paginatedContent}}
+            <li class="dvd-block">
+              {{#link-to 'dvd' id class="dvd-image"}}
+              <img {{bind-attr src="image_url"}}/>
+              <br/>
+              {{title}} 
+              {{/link-to}}
+              <br/>
+              {{view App.StarRating maxRating=5}}
+              <br/>
+            </li>
 
-        {{/each}}
+          {{/each}}
+        {{/if}}
+
       </ul>
     </div>
 
