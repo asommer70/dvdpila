@@ -293,6 +293,7 @@ App.SearchBox = Ember.TextField.extend({
 App.searchResultsController = Ember.ArrayController.create({
   searchResults: false,
   isSearching: false,
+  //hasPages: false,
 
   search: function(query) {
     if (query == '') {

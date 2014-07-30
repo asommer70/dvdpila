@@ -73,61 +73,40 @@
         <br/>
       {{/if}}
 
-    <div class="dvd-list">
-      <ul>
-        {{#if App.searchResultsController.searchResults}}
+      {{#if App.searchResultsController.searchResults}}
+        <div class="dvd-list">
           {{#each App.searchResultsController.content}}
-            <li class="dvd-block">
-              {{#link-to 'dvd' id class="dvd-image"}}
-              <img {{bind-attr src="image_url"}}/>
-              <br/>
-              {{title}} 
-              {{/link-to}}
-              <br/>
-              {{view App.StarRating maxRating=5}}
-              <br/>
-            </li>
-
+            {{partial "dvds_list"}}
           {{/each}}
-        {{else}}
+        </div>
+      {{else}}
+        <div class="dvd-list">
           {{#each paginatedContent}}
-            <li class="dvd-block">
-              {{#link-to 'dvd' id class="dvd-image"}}
-              <img {{bind-attr src="image_url"}}/>
-              <br/>
-              {{title}} 
-              {{/link-to}}
-              <br/>
-              {{view App.StarRating maxRating=5}}
-              <br/>
-            </li>
-
+            {{partial "dvds_list"}}
           {{/each}}
+        </div>
+
+        {{#if hasPages}}
+          <div class="pagination">
+            <ul>
+              {{#if prevPage}}
+              <li class="page-prev"><a href="#" {{action "selectPage" prevPage}}>Prev</a></li>
+              {{else}}
+              <li class="disabled"><a>Prev</a></li>
+              {{/if}}
+
+              {{#each pages itemController="dvd"}}
+              <li {{bind-attr class="activePage disabled"}}><a href="#" {{action "selectPage" number}}>{{number}}</a></li>
+              {{/each}}
+
+              {{#if nextPage}}
+              <li class="page-next"><a href="#" {{action "selectPage" nextPage}}>Next</a></li>
+              {{else}}
+              <li class="disabled"><a>Next</a></li>
+              {{/if}}
+          </div>
         {{/if}}
-
-      </ul>
-    </div>
-
-    {{#if hasPages}}
-    <div class="pagination">
-      <ul>
-        {{#if prevPage}}
-        <li class="page-prev"><a href="#" {{action "selectPage" prevPage}}>Prev</a></li>
-        {{else}}
-        <li class="disabled"><a>Prev</a></li>
-        {{/if}}
-
-        {{#each pages itemController="dvd"}}
-        <li {{bind-attr class="activePage disabled"}}><a href="#" {{action "selectPage" number}}>{{number}}</a></li>
-        {{/each}}
-
-        {{#if nextPage}}
-        <li class="page-next"><a href="#" {{action "selectPage" nextPage}}>Next</a></li>
-        {{else}}
-        <li class="disabled"><a>Next</a></li>
-        {{/if}}
-    </div>
-    {{/if}}
+      {{/if}}
   </script>
 
    <script type="text/x-handlebars" id="dvd">
@@ -250,11 +229,26 @@
 
   <script type="text/x-handlebars" id="dvds/new">
     <div class="col-four dvd-form">
-    <form {{action save on="submit"}}>
-      {{partial "dvd_fields"}}
-      <button type="submit">Add DVD</button>
-    </form>
-  </div>
+      <form {{action save on="submit"}}>
+        {{partial "dvd_fields"}}
+        <button type="submit">Add DVD</button>
+      </form>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="_dvds_list">
+    <ul>
+      <li class="dvd-block">
+        {{#link-to 'dvd' id class="dvd-image"}}
+          <img {{bind-attr src="image_url"}}/>
+          <br/>
+          {{title}} 
+        {{/link-to}}
+        <br/>
+        {{view App.StarRating maxRating=5}}
+        <br/>
+      </li>
+    </ul>
   </script>
 
   <script type="text/x-handlebars" id="_dvd_fields">
