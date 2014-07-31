@@ -151,7 +151,7 @@ def delete_dvd(dvd_id):
   db = get_db()
   cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   dvd_id = str(dvd_id)
-  cursor.execute("delete from dvds where id = %s;", (dvd_id))
+  cursor.execute("delete from dvds where id = %s;" % (dvd_id))
   cursor.close()
   return db.commit()
 
@@ -211,6 +211,7 @@ def show_dvd(dvd_id):
       return json.dumps(False), 500
 
   elif (request.method == 'DELETE'):
+    print type(dvd_id)
     delete_dvd(dvd_id)
     return json.dumps(True)
 
