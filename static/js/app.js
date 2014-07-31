@@ -384,6 +384,41 @@ App.StarRating = Ember.View.extend({
   },*/
 });
 
+App.Video = Ember.View.extend({
+  attributeBindings: ['src', 'controls'],
+  src: Ember.computed.alias('context.file_url'),
+  dvdId: Ember.computed.alias('context.id'),
+  controls: true,
+  tagName: 'video',
+
+  didInsertElement: function() {
+    //console.log('didInsertElement...');
+
+    // Get the DVD id.
+    var dvd_id = this.get('dvdId');
+
+    this.$().on("pause", function(event) {
+      //console.log('paused...');
+      //console.log(this.currentTime);
+
+      // Send time location to server.
+      $.post('/dvds/playback/' + dvd_id, { playback_time: this.currentTime });
+    });
+
+    this.$().on("play", function(event) {
+      //console.log('playing...');
+
+      var self = this;
+      $.get('/dvds/playback/' + dvd_id).then(function(data) {
+        //console.log(data);
+        self.currentTime = data;
+        self.play();
+      });
+    });
+
+  },
+});
+
 
 Ember.Handlebars.helper('format-date', function(date) {
   var js_date = new Date(date*1000);
@@ -411,6 +446,7 @@ $(document).ready(function() {
 
   $(menuToggle).on('click', function(e) {
     e.preventDefault();
+    console.log('menu click...');
     menu.slideToggle(function(){
       if(menu.is(':hidden')) {
         menu.removeAttr('style');

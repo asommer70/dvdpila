@@ -162,11 +162,10 @@
     {{/if}}
 
     <br/><br/>
+    <br/><br/>
 
     <div class="player">
-      <video id="video1" controls>
-        <source {{ bind-attr src=file_url }}>
-      </video>
+        {{view App.Video controllerBinding="App.videoController"}}
     </div>
 
   </script>

@@ -151,10 +151,25 @@ def delete_dvd(dvd_id):
   db = get_db()
   cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   dvd_id = str(dvd_id)
-  cursor.execute("delete from dvds where id = " + dvd_id)
+  cursor.execute("delete from dvds where id = %s;", (dvd_id))
   cursor.close()
   return db.commit()
 
+def get_playback_location(dvd_id):
+  db = get_db()
+  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cursor.execute("select playback_time from dvds where id = %s;", (str(dvd_id)))
+  playback_time = cursor.fetchone()['playback_time']
+  cursor.close()
+  return playback_time
+
+def set_playback_location(dvd_id, playback_time):
+  db = get_db()
+  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cursor.execute("update dvds set playback_time = %s where id = %s;", (dvd_id, playback_time))
+  db.commit()
+  cursor.close()
+  return True
 
 # Routes
 @app.route('/')
@@ -203,6 +218,14 @@ def show_dvd(dvd_id):
 def search(query):
   if (request.method == 'GET'):
     return json.dumps({ "dvds": find_by_title(query) })
+
+@app.route('/dvds/playback/<int:dvd_id>', methods=['GET', 'POST'])
+def play_dvd(dvd_id):
+  if (request.method == 'GET'):
+    playback_time = get_playback_location(dvd_id)
+    return json.dumps(int(get_playback_location(dvd_id)))
+  elif (request.method == 'POST'):
+    return json.dumps(set_playback_location(request.form.get('playback_time'), dvd_id))
 
 
 def allowed_file(filename):
