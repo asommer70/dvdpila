@@ -12,8 +12,10 @@ import urllib2
 
 import ConfigParser, os
 
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
 config = ConfigParser.ConfigParser()
-config.readfp(open('config.cfg'))
+config.readfp(open(os.path.join(__location__, 'config.cfg')))
 
 
 # Setup Flask app.
