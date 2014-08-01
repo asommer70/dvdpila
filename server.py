@@ -111,7 +111,10 @@ def add_dvd(data):
 def get_ddg_info(data):
   r = duckduckgo.query(data['title'])
 
-  image_file = r.image.url.split('/')[-1]
+  if (r.image):
+    image_file = r.image.url.split('/')[-1]
+  else:
+    image_file = ''
 
   try:
     response = urllib2.urlopen(r.image.url)
@@ -122,6 +125,9 @@ def get_ddg_info(data):
     r.image.url = 'images/' + image_file
   except ValueError:
     r.image.url = ''
+  except AttributeError:
+    r.image = lambda: None
+    setattr(r.image, 'url', '')
 
   return r
 
@@ -152,15 +158,14 @@ def update_dvd(dvd_id, data):
 def delete_dvd(dvd_id):
   db = get_db()
   cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  dvd_id = str(dvd_id)
-  cursor.execute("delete from dvds where id = %s;" % (dvd_id))
+  cursor.execute("delete from dvds where id = %s;", [dvd_id])
   cursor.close()
   return db.commit()
 
 def get_playback_location(dvd_id):
   db = get_db()
   cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  cursor.execute("select playback_time from dvds where id = %s;", (str(dvd_id)))
+  cursor.execute("select playback_time from dvds where id = %s;", [dvd_id])
   playback_time = cursor.fetchone()['playback_time']
   cursor.close()
   return playback_time
@@ -190,7 +195,6 @@ def find_all():
     return json.dumps(dvds)
   elif (request.method == 'POST'):
     dvd = add_dvd(json.loads(request.data)['dvd'])
-    #print dvd
     return json.dumps({"dvd": dvd})
 
 @app.route('/dvds/<int:dvd_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
@@ -213,7 +217,6 @@ def show_dvd(dvd_id):
       return json.dumps(False), 500
 
   elif (request.method == 'DELETE'):
-    print type(dvd_id)
     delete_dvd(dvd_id)
     return json.dumps(True)
 

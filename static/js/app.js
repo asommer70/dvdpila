@@ -319,6 +319,7 @@ App.DvdController = Ember.ObjectController.extend({
       this.get('model').destroyRecord();
 
       dvd.one('didDelete', this, function () {
+        App.FlashQueue.pushFlash('notice', dvd.get('title') + " successfully deleted.");
         this.transitionToRoute('index');
       });
     },

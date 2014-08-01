@@ -72,6 +72,7 @@
         <br/>
       {{/if}}
 
+      <ul>
       {{#if App.searchResultsController.searchResults}}
         <div class="dvd-list">
           {{#each App.searchResultsController.content}}
@@ -105,6 +106,7 @@
               {{/if}}
           </div>
         {{/if}}
+        </ul>
       {{/if}}
   </script>
 
@@ -235,7 +237,6 @@
   </script>
 
   <script type="text/x-handlebars" id="_dvds_list">
-    <ul>
       <li class="dvd-block">
         {{#link-to 'dvd' id class="dvd-image"}}
           <img {{bind-attr src="image_url"}}/>
@@ -246,7 +247,6 @@
         {{view App.StarRating maxRating=5}}
         <br/>
       </li>
-    </ul>
   </script>
 
   <script type="text/x-handlebars" id="_dvd_fields">
