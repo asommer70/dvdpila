@@ -448,6 +448,9 @@ video {
 
 .dvd-block {
   margin: 20px;
+  width: 170px;
+  height: 300px;
+  display: block;
   float: left;
   display: block;
   margin-right: 2.35765%;

@@ -136,6 +136,9 @@ video {
 
 .dvd-block {
   margin: 20px;
+  width: 170px;
+  height: 300px;
+  display: block;
   @include span-columns(2);
   //@include omega(4n);
 }
