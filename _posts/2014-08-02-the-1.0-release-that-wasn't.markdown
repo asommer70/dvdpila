@@ -1,0 +1,25 @@
+---
+layout: post
+title:  "The 1.0 Release That Wasn't"
+date:   2014-08-02 18:08:54
+excerpt: <p><img alt="dvd pila release screeny" class="post-image" src="http://www.thehoick.com/images/dvdpila_release.png"/></p>
+categories: emberjs
+---
+<div class="post-inner">
+
+<p><img alt="dvd pila release screeny" class="post-image" src="http://www.thehoick.com/images/dvdpila_release.png" /></p>
+
+<p>I was so excited the other day to release a 1.0 version of <a href="http://dvdpila.thehoick.com" rel="nofollow">DVD Pila!</a>, but maybe I should have taken some time and calmed down.  After generating the release in Github I worked on the documentation in the wiki for installing DVD Pila! in a "production" environment.</p>
+
+<p>I looked up how to deploy a <a href="http://flask.pocoo.org/" rel="nofollow">Flask</a> web app into a production environment.  Figured that is what most people who want to run DVD Pila!, if there are any people who want to run it, will do.  I settled on using <a href="http://www.tornadoweb.org/en/stable/" rel="nofollow">Tornado</a> for running my own production installation, and started documenting that.  After installing Tornado and cloning the repo into an Ubuntu LXC container, I realized that there were some additional files needed as well as some configuration options that I didn't commit into the sample config file.</p>
+
+<p>So virtually right after <a href="https://github.com/asommer70/dvdpila/releases" rel="nofollow">releasing 1.0</a> I had to release 1.1.  Woo more version numbers, heh.</p>
+
+<p>Actually there was a pretty big bug with adding new DVD entries in the released versions that I just fixed.  If the server wasn't able to find from <a href="https://duckduckgo.com/" rel="nofollow">Duck Duck Go</a> information on the title entered in the web form, then it would boilk and not create the new entry in the database.  Some additional Python code to handle an AttributeError exception solved it, but I have yet to generate a new release containing the fix.</p>
+
+<p>Wonder if Github will let you redo a release...</p>
+
+<p>Party On!</p>
+
+<p>[dvdpila]   </p>
+</div>
