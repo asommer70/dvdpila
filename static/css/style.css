@@ -489,6 +489,9 @@ video {
 .active {
   font-weight: bold; }
 
+#add-new-dvd {
+  margin-left: 15px; }
+
 .hero-logo img {
   height: 3.5em;
   margin-bottom: 1.5em; }
