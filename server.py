@@ -118,7 +118,7 @@ def get_ddg_info(data):
 
   try:
     response = urllib2.urlopen(r.image.url)
-    image_output = open('static/images/' + image_file, 'w')
+    image_output = open(os.path.join(__location__, app.config['UPLOAD_FOLDER'], image_file), 'w')
     image_output.write(response.read())
     image_output.close()
   
@@ -211,7 +211,7 @@ def show_dvd(dvd_id):
     file = request.files['file']
     if file and allowed_file(file.filename):
       filename = secure_filename(file.filename)
-      file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+      file.save(os.path.join(__location__, app.config['UPLOAD_FOLDER'], filename))
       return json.dumps(True)
     else:
       return json.dumps(False), 500
