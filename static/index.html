@@ -30,17 +30,15 @@
       <p class="navigation-menu-button" id="js-mobile-menu">MENU</p>
       <div class="nav">
         <ul id="navigation-menu">
-          <li class="nav-link">{{#link-to 'index'}}<span {{action "pageOne"}}>DVD Pila!</span>{{/link-to}}</li>
+          <li class="nav-link">{{#link-to 'index' class="hero-logo no-bottom"}}<span {{action "pageOne"}}>
+            <img src="css/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
+          </span>{{/link-to}}</li>
         </ul>
       </div>
       <div class="navigation-tools">
         <div class="search-bar">
           <div class="search-and-submit">
-            {{view App.SearchBox placeholder="Search" type="search"}}
-            <!--<input type="search" placeholder="Search" id="query" name="query"/>-->
-            <!--<button type="submit" class="success" {{action "search" target="controller"}}>
-              <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon.png" alt="">
-            </button>-->
+            {{view App.SearchBox placeholder="Search" class="search" type="search"}}
           </div>
     </header>
     <div class="container">
@@ -55,31 +53,26 @@
   </script>
 
   <script type="text/x-handlebars" id="index">
-
-      {{#if model.isAdding}}
-        <div class="col-four dvd-form">
-          {{partial "dvd_fields"}}
-          <button class="success" {{action 'createDvd'}}>Add DVD</button> &nbsp;
-          <button class="default" {{action 'cancelAdding'}}>Cancel</button>
-        </div>
-      {{else}}
-        <button class="success" {{action 'add'}}>Add</button>
-        &nbsp;&nbsp;
-        <!--<div class="search">
-          {{input type="text" class="search" placeholder="Search" value=search action="query"}}
-        </div>-->
-        <br/>
-        <br/>
-      {{/if}}
-
-      <ul>
+    <ul>
       {{#if App.searchResultsController.searchResults}}
         <div class="dvd-list">
-          {{#each App.searchResultsController.content}}
+          {{#each App.searchResultsController}}
             {{partial "dvds_list"}}
           {{/each}}
         </div>
       {{else}}
+        {{#if model.isAdding}}
+          <div class="col-four dvd-form">
+            {{partial "dvd_fields"}}
+            <button class="success" {{action 'createDvd'}}>Add DVD</button> &nbsp;
+            <button class="default" {{action 'cancelAdding'}}>Cancel</button>
+          </div>
+        {{else}}
+            <button class="success" {{action 'add'}}>Add</button>
+            <br/>
+            <br/>
+        {{/if}}
+
         <div class="dvd-list">
           {{#each paginatedContent}}
             {{partial "dvds_list"}}
@@ -104,14 +97,13 @@
               {{else}}
               <li class="disabled"><a>Next</a></li>
               {{/if}}
+            </ul>
           </div>
         {{/if}}
-        </ul>
       {{/if}}
   </script>
 
    <script type="text/x-handlebars" id="dvd">
-
     <br/><br/>
 
     <div class="col-four">
@@ -203,8 +195,6 @@
     </p>
     <p>
       <label for="edit-image_url">DVD Image:</label>
-      <!--<img {{bind-attr src="image_url"}}/>-->
-      <!--{{input type="file" id="edit-image_url" value=image_url}}-->
       {{#view Ember.View contentBinding="foto"}}
         {{view App.FotoUp class="dvd-image-upload"}}
         {{view App.FotoPreview width="200" srcBinding="foto"}}
