@@ -53,7 +53,6 @@
   </script>
 
   <script type="text/x-handlebars" id="index">
-    <ul>
       {{#if App.searchResultsController.searchResults}}
         <div class="dvd-list">
           {{#each App.searchResultsController}}
@@ -68,16 +67,19 @@
             <button class="default" {{action 'cancelAdding'}}>Cancel</button>
           </div>
         {{else}}
-            <button class="success" {{action 'add'}}>Add</button>
-            <br/>
-            <br/>
+          <br/>
+          <button id="add-new-dvd" class="success" {{action 'add'}}>Add New DVD</button>
+          <br/>
+          <br/>
         {{/if}}
 
+        <ul>
         <div class="dvd-list">
           {{#each paginatedContent}}
             {{partial "dvds_list"}}
           {{/each}}
         </div>
+      </ul>
 
         {{#if hasPages}}
           <div class="pagination">
