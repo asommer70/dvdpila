@@ -167,6 +167,8 @@ def get_playback_location(dvd_id):
   cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   cursor.execute("select playback_time from dvds where id = %s;", [dvd_id])
   playback_time = cursor.fetchone()['playback_time']
+  if not (playback_time):
+    playback_time = 0
   cursor.close()
   return playback_time
 

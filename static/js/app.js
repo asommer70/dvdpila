@@ -196,7 +196,6 @@ App.IndexController = Ember.ArrayController.extend({
 
 App.SearchBox = Ember.TextField.extend({
   insertNewline: function(event) {
-    console.log('insertNewLine...');
     var query = this.get('value');
     App.searchResultsController.search(query);
   },
@@ -217,15 +216,14 @@ App.searchResultsController = Ember.ArrayController.create({
     this.set('isSearching', true);
     this.set('content', []);
 
-    // Should find a more Ember way to do this...
     $.get('/dvds/search/' + query).then(function(dvd) {
-      console.log(JSON.parse(dvd));
       self.set('content', JSON.parse(dvd).dvds);
-       
       self.set('searchResults', true);
       self.set('isSearching', false);
     });
+
   },
+
 });
 
 App.IndexRoute = Ember.Route.extend({
@@ -251,8 +249,15 @@ App.IndexRoute = Ember.Route.extend({
       });
     },*/
     pageOne: function() {
-      // Filter from the first page.
-      console.log('sending to page 1...');
+      // Clear search results if there are any.
+      if ($('.search').val() != '') {
+        App.searchResultsController.set('searchResults', false);
+        $('.search').val('');
+      }
+
+      //console.log('sending to page 1...');
+      
+      // Go to the first page.
       this.controller.send('selectPage', 1);
     },
   },
@@ -278,6 +283,10 @@ App.DvdController = Ember.ObjectController.extend({
   activePage: (function() {
     return this.get('number') === this.get('currentPage');
   }).property('number', 'currentPage'),
+
+  searchResults: (function() {
+    this.transitionToRoute('index');
+  }).observes('App.searchResultsController.searchResults'),
 
   actions: {
     edit: function() {
