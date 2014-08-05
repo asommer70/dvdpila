@@ -268,6 +268,10 @@ button {
 video {
   border: 5px solid #475333;
   box-shadow: 0 8px 6px -3px #475333; }
+  @media screen and (max-width: 700px) {
+    video {
+      width: 100%;
+      margin-top: 20px; } }
 
 :-webkit-full-screen {
   border: none; }
@@ -412,7 +416,8 @@ video {
   border-radius: 3px; }
   @media screen and (max-width: 700px) {
     .dvd-form {
-      width: 100%; } }
+      width: 100%;
+      margin-bottom: 20px; } }
 
 .dvd-attr li:nth-child(even) {
   background: #eeeeee; }
@@ -507,6 +512,10 @@ video {
 
 .active {
   font-weight: bold; }
+
+@media screen and (max-width: 420px) {
+  .edit {
+    margin-top: 20px; } }
 
 #add-new-dvd {
   margin-left: 15px; }

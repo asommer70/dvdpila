@@ -62,6 +62,11 @@ button {
 video {
   border: 5px solid $dark-green;
   box-shadow: 0 8px 6px -3px $base-text-color;
+
+  @include media(max-width $medium-screen) {
+    width: 100%;
+    margin-top: 20px;
+  }
 }
 
 :-webkit-full-screen {
@@ -113,6 +118,7 @@ video {
   @include media(max-width $medium-screen) {
     //@include span-columns(6);
     width: 100%;
+    margin-bottom: 20px;
   }
 }
 
@@ -220,6 +226,13 @@ video {
 
 .active {
   font-weight: bold;
+}
+
+.edit {
+
+  @include media(max-width $small-screen) {
+    margin-top: 20px;
+  }
 }
 
 #add-new-dvd {
