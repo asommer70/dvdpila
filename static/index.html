@@ -27,10 +27,15 @@
   <script type="text/x-handlebars">
     <header class="navigation">
     <div class="menu-wrapper">
-      <p class="navigation-menu-button" id="js-mobile-menu">MENU</p>
+      <p class="navigation-menu-button" id="js-mobile-menu">
+          {{#link-to 'index' }}<span {{action "pageOne"}}>
+            <img src="css/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
+          </span>{{/link-to}}</li>
+      </p>
       <div class="nav">
         <ul id="navigation-menu">
-          <li class="nav-link">{{#link-to 'index' class="hero-logo no-bottom"}}<span {{action "pageOne"}}>
+          <li class="nav-link">
+          {{#link-to 'index' class="hero-logo no-bottom"}}<span {{action "pageOne"}}>
             <img src="css/images/dvd_pila_logo_white.svg" alt="DVD Pila!">
           </span>{{/link-to}}</li>
         </ul>
@@ -39,6 +44,8 @@
         <div class="search-bar">
           <div class="search-and-submit">
             {{view App.SearchBox placeholder="Search" class="search" type="search"}}
+          </div>
+          </div>
           </div>
     </header>
     <div class="container">

@@ -3,11 +3,9 @@
 @import "../assets/neat/neat";
 
 
-// Setup variables.
-$base-font-size: 18px;
-$medium-screen: 700px;
 $large-screen: 1000px;
-$base-line-height: 24px;
+$medium-screen: 700px;
+$small-screen: 420px;
 
 $base-accent-color: #05776D;
 $base-text-color: #475333;
@@ -17,10 +15,13 @@ $base-footer-color: #477478;
 $base-bg-color: #ECECD1;
 $base-body-color: #CBF8EF;
 $base-border-color: #202817;
-$base-border-radius: 5px;
-$dark-gray: #475333;
+$dark-green: #475333;
 $light-gray: #cccccc;
 $blue: #2e4272;
+
+$base-font-size: 18px;
+$base-line-height: 24px;
+$base-border-radius: 5px;
 
 body {
   color: $base-text-color;
@@ -59,7 +60,7 @@ button {
 }
 
 video {
-  border: 5px solid $dark-gray;
+  border: 5px solid $dark-green;
   box-shadow: 0 8px 6px -3px $base-text-color;
 }
 
@@ -93,6 +94,11 @@ video {
   padding: 20px;
   min-height: 500px;
   @include outer-container;
+
+  @include media(max-width $small-screen) {
+    padding-top: 50px;
+    //@include span-columns(6);
+  }
 }
 
 .shiny {
@@ -103,6 +109,11 @@ video {
   padding: 10px;
   border: 1px solid $base-border-color;
   border-radius: 3px;
+
+  @include media(max-width $medium-screen) {
+    //@include span-columns(6);
+    width: 100%;
+  }
 }
 
 .dvd-attr li:nth-child(even) {
@@ -111,6 +122,15 @@ video {
 
 .col-four {
   @include span-columns(4);
+
+  @include media(max-width $medium-screen) {
+    width: 75%;
+  }
+  @include media(max-width $small-screen) {
+    //@include span-columns(6);
+    margin-top: 30px;
+    width: 100%;
+  }
 }
 
 .search {
@@ -140,7 +160,16 @@ video {
   height: 300px;
   display: block;
   @include span-columns(2);
-  //@include omega(4n);
+
+  @include media(min-width $small-screen max-width $large-screen, 6) {
+    width: 200px;
+    //@include span-columns(6);
+  }
+
+  @include media(max-width $small-screen) {
+    width: 90%;
+    //@include span-columns(6);
+  }
 }
 
 .active-page {
@@ -200,11 +229,16 @@ video {
 .hero-logo img {
   height: 3.5em;
   margin-bottom: 1.5em;
+
+  @include media($medium-screen) {
+    //height: 2.5em;
+    margin-bottom: none;
+  }
 }
 
 header.navigation {
   $navigation-padding: 1em;
-  $navigation-background: $dark-gray;
+  $navigation-background: $dark-green;
   $navigation-color: transparentize(white, 0.3);
   $navigation-color-hover: white;
   $navigation-height: 60px;
@@ -215,7 +249,7 @@ header.navigation {
   $navigation-search-border: 1px solid darken($navigation-background, 5);
   $navigation-active-link-color: transparentize(white, 0.5);
   $navigation-submenu-padding: 1em;
-  $horizontal-bar-mode: $large-screen;
+  $horizontal-bar-mode: $small-screen;
 
   background-color: $navigation-background;
   border-bottom: 1px solid darken($navigation-background, 10);
@@ -247,12 +281,12 @@ header.navigation {
     color: $navigation-color;
     cursor: pointer;
     display: block;
-    float: right;
+    float: left;
     font-family: $sans-serif;
     font-weight: 700;
-    line-height: $navigation-height;
+    //line-height: $navigation-height;
     margin: 0;
-    padding-right: 1em;
+    padding-left: 1em;
     text-transform: uppercase;
 
     @include media ($horizontal-bar-mode) {
@@ -262,6 +296,18 @@ header.navigation {
     &:hover {
       color: $navigation-color-hover;
     }
+
+    img {
+      height: 3.4em;
+      margin-bottom: none;
+      padding-right: 20px;
+      text-align: middle;
+    }
+
+    a {
+      border-bottom: none;
+    }
+
   }
 
   .nav {
@@ -269,6 +315,7 @@ header.navigation {
     float: none;
     @include media ($horizontal-bar-mode) {
       float: left;
+      padding-left: 1em;
     }
   }
 
@@ -394,9 +441,9 @@ header.navigation {
     padding-right: $navigation-padding;
     padding-left: $navigation-padding/2;
     clear: both;
-    background: #505050;
+    background: $dark-green;
 
-    @include media($large-screen) {
+    @include media($small-screen) {
       background: transparent;
       float: right;
       clear: none;
@@ -505,7 +552,7 @@ header.navigation {
   $pagination-border: 1px solid $pagination-border-color;
   //$pagination-background: lighten($pagination-border-color, 10);
   $pagination-background: lighten($base-bg-color, 10);
-  $pagination-background: $dark-gray;
+  $pagination-background: $dark-green;
   $pagination-hover-background: lighten($pagination-background, 5);
   //$pagination-color: $base-font-color;
   $pagination-color: transparentize(white, 0.3);
