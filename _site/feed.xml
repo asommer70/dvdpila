@@ -5,9 +5,241 @@
     <description>This is the landing page for the DVD Pila! project.  DVD Pila! is a web application to help organize your DVD archives.</description>
     <link>http://dvdpila.thehoick.com//</link>
     <atom:link href="http://dvdpila.thehoick.com//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 22 Jul 2014 14:14:50 -0400</pubDate>
-    <lastBuildDate>Tue, 22 Jul 2014 14:14:50 -0400</lastBuildDate>
+    <pubDate>Wed, 06 Aug 2014 05:43:10 -0400</pubDate>
+    <lastBuildDate>Wed, 06 Aug 2014 05:43:10 -0400</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
+    
+      <item>
+        <title>Responsiveness Procrastination?</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;dvdpila responsiveness screeny&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/dvdpila_responsive.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In a previous &lt;a href=&quot;http://codepen.io/asommer70/blog/third-times-a-charm&quot; rel=&quot;nofollow&quot;&gt;post&lt;/a&gt; I mentioned that the next step for DVD Pila! is to start marketing it.  Well that was going to be the next step until I started using the app and got very annoyed at some of the bugs I didn&#39;t realize were there.&lt;/p&gt;
+
+&lt;p&gt;Bugs are fixed so it&#39;s time for the marketing right?  Not quite. &lt;/p&gt;
+
+&lt;p&gt;Maybe I&#39;m procrastinating (it definitely feels like I&#39;m procrastinating), but instead of working on the marketing I&#39;ve been working on making the app responsive.  I&#39;d like to be able to use the site from my tablets and phones, but that wasn&#39;t really a major feature.  I think even with the HTML5 supported videos you have to use an third party apps to play them on Android and iOS.  I haven&#39;t done a lot of testing though.&lt;/p&gt;
+
+&lt;p&gt;I think I&#39;m scared of criticism if I post &lt;a href=&quot;http://dvdpila.thehoick.com&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt; to places like Reddit and Hacker News.  I guess I&#39;m just going to have to get over it and plow through.  Otherwise what&#39;s the point?&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 06 Aug 2014 05:08:36 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/08/06/responsiveness-procrastination%3F/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/08/06/responsiveness-procrastination%3F/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Bugs Fixed Release Time</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;dvdpila 1.3 release&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/dvdpila_1.3.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Turns out I just needed one more day, and one more release to make &lt;a href=&quot;http://dvdpila.thehoick.com&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt; work the way I&#39;d like.  I needed to rearrange some elements in the templates, and add some &lt;em&gt;observers&lt;/em&gt; to get things rocking.  I did end up finding a couple of more bugs that were a pain while using the app.&lt;/p&gt;
+
+&lt;p&gt;I realized that it&#39;s not enough to get a feature working and do a release.  You need to actually use the whole app and make sure that things work they way you expect.  Instead of immediately creating a new release.  This time I used the app for a few hours adding, editing DVDs, etc before setting up the release.  Definitely a wise decision.&lt;/p&gt;
+
+&lt;p&gt;I&#39;m sure it&#39;s obvious, but actually using the app wasn&#39;t really on my list until this project.  I&#39;ve always tested my web apps, but in this case testing just didn&#39;t cut it.  I&#39;ve learned a lot building this project, and have had a lot of fun.&lt;/p&gt;
+
+&lt;p&gt;I think this is the first project that I will actually use.  There have been a couple of things in the past that after I developed them I was all like pffttt.  Who cares...&lt;/p&gt;
+
+&lt;p&gt;I guess the majority of my development efforts have been for other people... they do use the web apps I&#39;ve created.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 05 Aug 2014 09:08:41 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/08/05/bugs-fixed-release-time/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/08/05/bugs-fixed-release-time/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>More Bugs More Problems</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;bugs and bugs and bugs&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/bugs.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I thought I had all the bugs fixed up for release.  Mostly that&#39;s true, but whenever I go to use &lt;a href=&quot;http://dvdpila.thehoick.com&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt; things don&#39;t work quite like I would expect them to.  &lt;/p&gt;
+
+&lt;p&gt;Simple things like clicking on the logo icon from search results doesn&#39;t take you back to the main page with all the results.  Also, searching from inside a DVD page doesn&#39;t take you to the search results.  It does show you the results once you go back to the index page though.&lt;/p&gt;
+
+&lt;p&gt;These little things make the web app annoying to use.  It&#39;s those little annoying things that add up and add up and compound and blast into your thinker... then you don&#39;t want to use the app ever again.  I think the main problem with people using this app is to get it installed on their system, so I want to make things work as rock solid as possible once/if they do get it up and running.&lt;/p&gt;
+
+&lt;p&gt;Long story short I&#39;m going to put off the &quot;marketing&quot; part of the project until I have all the little banjaxes worked out.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 04 Aug 2014 10:08:00 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/08/04/more-bugs-more-problems/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/08/04/more-bugs-more-problems/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Third Times A Charm</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;dvdpila marketing fun&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/dvdpila_marketing.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Made a new release of &lt;a href=&quot;http://dvdpila.thehoick.com&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt;.  Version 1.2 should now work as expected.  &lt;/p&gt;
+
+&lt;p&gt;I tidied up some of the display CSS as well to make each &quot;dvd block&quot; have the same height and width.  This makes things look a  lot better.  Things just look better when they are in neat little rows.  I haven&#39;t tested the latest release in my &lt;em&gt;production&lt;/em&gt; setup yet as we are travelling this weekend.  Hopefully I won&#39;t have to release version 1.3 until some time in the future.  At least a couple of months from now would be nice.&lt;/p&gt;
+
+&lt;p&gt;I think for the month of July I&#39;m going to do as little development on DVD Pila! as possible.  Instead of cranking out more code/features I&#39;m going to learn as much as I can about marketing a software product. I read &lt;a href=&quot;http://www.amazon.com/Growth-Hacker-Marketing-Advertising-Portfolio-ebook/dp/B00BPDR3JM&quot; rel=&quot;nofollow&quot;&gt;&quot;Growth Hacker Marketing&quot;&lt;/a&gt; a few weeks ago and really loved it.  It&#39;s a great place to start getting the word out about your product.  Of course the main advise in growth hacking is to start marketing before you build anything.&lt;/p&gt;
+
+&lt;p&gt;Doing the marketing first helps you arrive at Product Market Fit, which means you actually make something people want.  In the case of DVD Pila! I was totally scratching my own itch.  If people don&#39;t want it no big deal.  It does what I set out to do when starting the project, and I learned a lot about Flask and Ember.js.  Learning was the real goal.&lt;/p&gt;
+
+&lt;p&gt;Wonder if I should start a &lt;em&gt;Daily Marketing Blog&lt;/em&gt;?  Maybe on Linkedin...&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sun, 03 Aug 2014 16:08:58 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/08/03/third-times-a-charm/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/08/03/third-times-a-charm/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>The 1.0 Release That Wasn&#39;t</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;dvd pila release screeny&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/dvdpila_release.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I was so excited the other day to release a 1.0 version of &lt;a href=&quot;http://dvdpila.thehoick.com&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt;, but maybe I should have taken some time and calmed down.  After generating the release in Github I worked on the documentation in the wiki for installing DVD Pila! in a &quot;production&quot; environment.&lt;/p&gt;
+
+&lt;p&gt;I looked up how to deploy a &lt;a href=&quot;http://flask.pocoo.org/&quot; rel=&quot;nofollow&quot;&gt;Flask&lt;/a&gt; web app into a production environment.  Figured that is what most people who want to run DVD Pila!, if there are any people who want to run it, will do.  I settled on using &lt;a href=&quot;http://www.tornadoweb.org/en/stable/&quot; rel=&quot;nofollow&quot;&gt;Tornado&lt;/a&gt; for running my own production installation, and started documenting that.  After installing Tornado and cloning the repo into an Ubuntu LXC container, I realized that there were some additional files needed as well as some configuration options that I didn&#39;t commit into the sample config file.&lt;/p&gt;
+
+&lt;p&gt;So virtually right after &lt;a href=&quot;https://github.com/asommer70/dvdpila/releases&quot; rel=&quot;nofollow&quot;&gt;releasing 1.0&lt;/a&gt; I had to release 1.1.  Woo more version numbers, heh.&lt;/p&gt;
+
+&lt;p&gt;Actually there was a pretty big bug with adding new DVD entries in the released versions that I just fixed.  If the server wasn&#39;t able to find from &lt;a href=&quot;https://duckduckgo.com/&quot; rel=&quot;nofollow&quot;&gt;Duck Duck Go&lt;/a&gt; information on the title entered in the web form, then it would boilk and not create the new entry in the database.  Some additional Python code to handle an AttributeError exception solved it, but I have yet to generate a new release containing the fix.&lt;/p&gt;
+
+&lt;p&gt;Wonder if Github will let you redo a release...&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]   &lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 02 Aug 2014 14:08:54 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/08/02/the-1.0-release-that-wasn't/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/08/02/the-1.0-release-that-wasn't/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>HTML5 Video Position Saving</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;playback code screeny&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/playback_code.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;One last feature I wanted to land for &lt;a href=&quot;http://dvdpila.thehoick.com/&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt; 1.0 is saving where in a video a user left off, and be able to start from where they left off once they play the video again.  Turns out implimenting this isn&#39;t all that hard.&lt;/p&gt;
+
+&lt;p&gt;To accomplish this wonderous feat of development awesomeness, I first had to add a column to the single grand table.  The &lt;a href=&quot;http://www.postgresql.org/docs/9.3/static/sql-altertable.html&quot; rel=&quot;nofollow&quot;&gt;PostgreSQL documentation&lt;/a&gt; helped to blast a numeric &lt;em&gt;playback_time&lt;/em&gt; field into the table.  &lt;/p&gt;
+
+&lt;p&gt;Over on the &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_HTML5_audio_and_video&quot; rel=&quot;nofollow&quot;&gt;MDN&lt;/a&gt; is a great page detailing the video, and audio, element.  There I learned all about the JavaScript &lt;em&gt;play&lt;/em&gt;, &lt;em&gt;pause&lt;/em&gt;, and &lt;em&gt;seek&lt;/em&gt; methods.  I figured it&#39;d be easy to integrate them into Ember.js.  Well maybe not easy, but it should be doable.  I wasn&#39;t able to find a guide, blog post, etc on using HTML5 video with Ember, but I did find &lt;a href=&quot;http://stackoverflow.com/questions/11416776/how-to-display-time-of-video-in-ember-js-handlebars&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; Stackoverflow post that is pretty close to what I was looking for.&lt;/p&gt;
+
+&lt;p&gt;After a some experimentation, I had the feature working the way I&#39;d like.  With that DVD PIla! is ready for 1.0 in my esteemed estimation.  There are a few things that still need fixed up, and I wanted to look at comments for the blog, but I&#39;ll probably come back to that stuff down the road sometime.&lt;/p&gt;
+
+&lt;p&gt;&lt;p class=&quot;codepen&quot;&gt;&lt;/p&gt;&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 01 Aug 2014 07:08:12 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/08/01/html5-video-position-saving/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/08/01/html5-video-position-saving/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Search and Pagination Success!</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;search and pagination ftw!&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/search_or_pagination_win.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Turns out the easiest way to fix my Ember.js pagination and search problem is to move the search functionality into it&#39;s own controller, move the search field out of the DVD list div, and apply some if statements in the template to display either search results or the paginated &lt;em&gt;all DVDs&lt;/em&gt; list.  Took a lot of learning to figure that out.&lt;/p&gt;
+
+&lt;p&gt;Might add some pagination to the search results at some point, but for now I&#39;m just glad it&#39;s working the way it is.  I&#39;m sure there&#39;s better ways to do search than a PostgreSQL regex as well.  Though I was doing a JavaScript regex before.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://alg.github.io/talks/emberjs&quot; rel=&quot;nofollow&quot;&gt;This cool&lt;/a&gt; Ember demo wasn&#39;t 100% responsible for the solution, but I borrowed a lot of code from &lt;a href=&quot;https://github.com/alg&quot; rel=&quot;nofollow&quot;&gt;Aleksey&lt;/a&gt;.  I also learned about the &lt;em&gt;insertNewline&lt;/em&gt; method which I know will come in handy in either this project or future ones.  Learning more about Ember ArrayControllers and attribute bindings was helpful too.&lt;/p&gt;
+
+&lt;p&gt;I feel like I can see the 1.0 release of DVD Pila! and it feels good...&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Thu, 31 Jul 2014 05:07:56 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/31/search-and-pagination-success/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/31/search-and-pagination-success/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
+    
+      <item>
+        <title>Pagination or Search</title>
+        <description>&lt;div class=&quot;post-inner&quot;&gt;
+
+&lt;p&gt;&lt;img alt=&quot;to search or not to search&quot; class=&quot;post-image&quot; src=&quot;http://www.thehoick.com/images/search_or_pagination.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally had a chance to get back to my Ember.js project today.  Still bashing my head against the error I get when adding a record to the paginated collection.&lt;/p&gt;
+
+&lt;p&gt;I&#39;ve tried removing all the custom code I&#39;ve found around the web.  I removed the star rating, moved the &quot;add new DVD&quot; functionality into it&#39;s own page instead of including it as a hidden form on the main page, and also removed all the pagination code and double checked that things worked without it.&lt;/p&gt;
+
+&lt;p&gt;It wasn&#39;t until I removed the search functionality wich sets the controller &lt;em&gt;arrangedContent&lt;/em&gt; attribute, and tried adding a new record that I made another step forward.  If both pagination and search are implemented things go bonkers when adding a record.  Disable one or the other and things work just fine and dandy.&lt;/p&gt;
+
+&lt;p&gt;The angle I&#39;m working on to solve this little pickle is to move the search to the server using some &lt;a href=&quot;http://www.postgresql.org/docs/9.3/static/functions-matching.html&quot; rel=&quot;nofollow&quot;&gt;PostgreSQL pattern matching&lt;/a&gt; and send back the results via JSON.  This should allow me to move the search field into the navigation menu instead of having it at the top of the main content area.  If I can get it working I think it&#39;ll be pretty cool.&lt;/p&gt;
+
+&lt;p&gt;Party On!&lt;/p&gt;
+
+&lt;p&gt;[dvdpila]&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 29 Jul 2014 11:07:42 -0400</pubDate>
+        <link>http://dvdpila.thehoick.com//emberjs/2014/07/29/pagination-or-search/</link>
+        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/29/pagination-or-search/</guid>
+        
+        
+        <category>emberjs</category>
+        
+      </item>
     
       <item>
         <title>Problems with Pagination and Ember</title>
@@ -76,203 +308,6 @@ config.readfp(open(&#39;config.cfg&#39;))
         <pubDate>Mon, 21 Jul 2014 13:07:13 -0400</pubDate>
         <link>http://dvdpila.thehoick.com//emberjs/2014/07/21/migrating-code-and-configparser/</link>
         <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/21/migrating-code-and-configparser/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Github Page With Jekyll is Live!</title>
-        <description>&lt;div class=&quot;post-inner&quot;&gt;
-
-&lt;p&gt;&lt;img alt=&quot;sass website screeny&quot; src=&quot;http://www.thehoick.com/images/sass.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The documentation for Github pages is pretty good, but I ran into a couple of problems while setting up my project page.  The first problem was with configuring my DNS server to use a CNAME that points back to the Github project page.  &lt;a href=&quot;https://help.github.com/articles/tips-for-configuring-a-cname-record-with-your-dns-provider&quot; rel=&quot;nofollow&quot;&gt;This page&lt;/a&gt; has good information on adding the DNS records you&#39;ll need, but in this case I needed them to really spell it out for me and give me a sample BIND configuration.&lt;/p&gt;
-
-&lt;p&gt;Or maybe I&#39;m just dense and it was after 10:00pm.  My mind turns to crackers and jelly after 9:30.  The table at the bottom of &lt;a href=&quot;https://help.github.com/articles/about-custom-domains-for-github-pages-sites#subdomains&quot; rel=&quot;nofollow&quot;&gt;this page&lt;/a&gt; clued me into the problem.  I didn&#39;t think that having a CNAME record with a &quot;/&quot; in it would workd, but when I ran &lt;em&gt;named-checkzone&lt;/em&gt; on the config file it didn&#39;t give me any errors either.  After carefully reading the page and the table information I realized that GIthub will setup the root of the site as &lt;em&gt;/projectname&lt;/em&gt; and the domain name is determined by the &lt;a href=&quot;https://help.github.com/articles/adding-a-cname-file-to-your-repository&quot; rel=&quot;nofollow&quot;&gt;CNAME&lt;/a&gt; file you configure in the respository.&lt;/p&gt;
-
-&lt;p&gt;I should just work on new things in the morning, cause once I had everything configured correctly it worked like a charm.  Well almost...&lt;/p&gt;
-
-&lt;p&gt;The second problem had to do with Jekyll and SASS.  For security reasons Github disables all Jekyll plugins which means that when they &lt;em&gt;jekyll build&lt;/em&gt; your site some of the content may be off if you are relying on plugins.  I didn&#39;t realize that I was relying on a plugin when I was locally using SASS as detailed in the &lt;a href=&quot;http://jekyllrb.com/docs/assets/&quot; rel=&quot;nofollow&quot;&gt;Jekyll documentation&lt;/a&gt;.  So I had a site on Github using a custom domain, but no stylesheets, doh.&lt;/p&gt;
-
-&lt;p&gt;I haven&#39;t solved the SASS, Jekyll, and Github issue in a cool and clever way, but I did compile the stylesheet using &lt;em&gt;jekyll serve -w&lt;/em&gt; and manually copy the &lt;em&gt;_site/css/style.css&lt;/em&gt; file into the &lt;em&gt;css&lt;/em&gt; directory which then gets copied back when Github builds the site.  Some extra hubabaloo, but things are now working and looking good.&lt;/p&gt;
-
-&lt;p&gt;Check out my new project site &lt;a href=&quot;http://dvdpila.thehoick.com&quot; rel=&quot;nofollow&quot;&gt;here&lt;/a&gt;.  I&#39;ll be releasing the actual code soon.  Just need to add a few last features.&lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Fri, 18 Jul 2014 06:07:12 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/18/github-page-with-jekyll-is-live/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/18/github-page-with-jekyll-is-live/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Jekyll Project Website on Github</title>
-        <description>&lt;div class=&quot;post-inner&quot;&gt;
-
-&lt;p&gt;&lt;img alt=&quot;jekyll default screeny&quot; src=&quot;http://www.thehoick.com/images/jekyll_default.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;I&#39;m working on a website for the &lt;a href=&quot;https://github.com/asommer70/dvdpila&quot; rel=&quot;nofollow&quot;&gt;DVD Pila!&lt;/a&gt; project, and working with the &lt;a href=&quot;http://jekyllrb.com/&quot; rel=&quot;nofollow&quot;&gt;Jekyll&lt;/a&gt; static site generator.  The documentation is a quick read and so far has been detailed enough to answer any question&#39;s I&#39;ve had.&lt;/p&gt;
-
-&lt;p&gt;Working with Jekyll a few minutes gave me ideas for multiple other sites that could be a good fit.  So many ideas, so little time...&lt;/p&gt;
-
-&lt;p&gt;It&#39;s also very easy to integrate SASS mixins with Jekyll by creating a &lt;em&gt;_sass&lt;/em&gt; directory in the base site folder and adding a couple of lines to the &lt;em&gt;_config.yml&lt;/em&gt; file.  I&#39;ve integrated Bourbon and freinds into the project site and setup the same basic theme/template as the Ember.js web app.  I should include some links in the web app that point back to the project page.&lt;/p&gt;
-
-&lt;p&gt;I&#39;ve read about Jekyll in &lt;a href=&quot;http://joshkaufman.net/&quot; rel=&quot;nofollow&quot;&gt;Josh Kaufman&#39;s&lt;/a&gt; book &lt;a href=&quot;http://first20hours.com/&quot; rel=&quot;nofollow&quot;&gt;The First 20 Hours&lt;/a&gt;, but at the time I didn&#39;t think I&#39;d ever find a use for it.  I highly recommend this book, and yes, after I read it I went out and bought an ukulele.&lt;/p&gt;
-
-&lt;p&gt;Looking forward to finishing the project page, and putting it out there.&lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Thu, 17 Jul 2014 06:07:54 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/17/jekyll-project-website-on-github/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/17/jekyll-project-website-on-github/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Ember Star Rating</title>
-        <description>&lt;p&gt;&lt;img alt=&quot;stars&quot; src=&quot;http://www.thehoick.com/images/stars.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;At some point in my &lt;a href=&quot;http://emberjs.com/&quot; rel=&quot;nofollow&quot;&gt;Ember.js&lt;/a&gt; learning I came across some simple snippets that implement a &quot;star&quot; rating widget.  I thought I had either booked marked the page in my &lt;a href=&quot;https://pinboard.in&quot; rel=&quot;nofollow&quot;&gt;Pinboard&lt;/a&gt;, or saved a link in Evernote, but when I went to find it I was straight up denied by the gods of the internets.&lt;/p&gt;
-
-&lt;p&gt;Not to get too down in the dumps because I found &lt;a href=&quot;http://www.toptal.com/javascript/a-step-by-step-guide-to-building-your-first-ember-js-app&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; great guide for building an Ember app.  At the bottom is an example of implementing a star rating widget.  It worked as advertised for me, but I&#39;m sure there are other ways of doing this.&lt;/p&gt;
-
-&lt;p&gt;After implementing &lt;a href=&quot;http://balinterdi.com/&quot; rel=&quot;nofollow&quot;&gt;Balint Erdi&#39;s&lt;/a&gt; code, I needed a star icon, image, or what have you.  In the example they use the great &lt;a href=&quot;http://getbootstrap.com/&quot; rel=&quot;nofollow&quot;&gt;Bootstrap&lt;/a&gt; framework and use it&#39;s icon font to render the star/s.  Since I&#39;m not using Bootstrap in my project I had to come up with another solution.  I could hunt up a font icon set and use that, but after reading &lt;a href=&quot;http://ianfeather.co.uk/ten-reasons-we-switched-from-an-icon-font-to-svg/&quot; rel=&quot;nofollow&quot;&gt;posts like this&lt;/a&gt; I&#39;ve been thinking for small projects maybe using straight SVG files is better.  I then found the &lt;a href=&quot;https://useiconic.com/open/&quot; rel=&quot;nofollow&quot;&gt;Open Iconic&lt;/a&gt; SVG library, and boom star icon acquired.&lt;/p&gt;
-
-&lt;p&gt;I only implemented the star rating on the main list page, but I probably will integrate it into the DVD edit page at some point.&lt;/p&gt;
-
-&lt;p&gt;Paty On!&lt;/p&gt;
-&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
-</description>
-        <pubDate>Wed, 16 Jul 2014 10:07:45 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/16/ember-star-rating/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/16/ember-star-rating/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Ember Pagination Weeee</title>
-        <description>&lt;p&gt;&lt;img alt=&quot;console screenshot&quot; src=&quot;http://www.thehoick.com/images/pagination.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The next big hurdle for my little project is to add some pagination to the 110 item object collection.  I might look into server side pagination at some point, after finding out that that is even a thing, but for now adding a few funcitons to the Ember controller has given the needed functionality.&lt;/p&gt;
-
-&lt;p&gt;I used &lt;a href=&quot;http://hawkins.io/&quot; rel=&quot;nofollow&quot;&gt;Adam Hawkin&#39;s&lt;/a&gt; great &lt;a href=&quot;http://hawkins.io/2013/07/pagination-with-ember/&quot; rel=&quot;nofollow&quot;&gt;pagination&lt;/a&gt; guide, and it worked for me with only a few changes.  The changes were quite minor adjusting &lt;em&gt;bindAttr&lt;/em&gt; to &lt;em&gt;bind-attr&lt;/em&gt; was the main one.  Ember printed some deprecation messages in the console, but everything still worked.  I also needed to move one of the functions into the actions object, but other than that everything worked as the coded in the &lt;a href=&quot;http://jsbin.com/ijoqom/6/edit&quot; rel=&quot;nofollow&quot;&gt;JS Bin&lt;/a&gt; example.&lt;/p&gt;
-
-&lt;p&gt;There was an issue with my &quot;search&quot; filter after adding pagination.  I first thought that if you clicked on a different page that the filter broke, but after more testing I realized that it&#39;s filtering only the objects on the current page forward.  So after some digging and wrong turns, I added this quick call in my query action: &lt;em&gt;this.send(&#39;selectPage&#39;, 1);&lt;/em&gt;.  This will executes the &lt;em&gt;selectPage&lt;/em&gt; action function sending it back to the first page, and after that all the results are filtered on the search query.  Bob&#39;s your uncle!&lt;/p&gt;
-
-&lt;p&gt;Next up... star rating.&lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 15 Jul 2014 07:07:58 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/15/ember-pagination-weeee/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/15/ember-pagination-weeee/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Flask File Uploads</title>
-        <description>&lt;p&gt;&lt;img alt=&quot;flask doc screenshot&quot; src=&quot;http://www.thehoick.com/images/flask_upload.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Figured out my problem with uploading an image file to my Flask server this morning.  Turns out you have to grab the actual input field and not the Ember model binding for that input field.&lt;/p&gt;
-
-&lt;p&gt;The interesting thing about the Ember binding of the file input field is that it grabbed the binary data of the image.  So that confused me for a while.  Once I used some straight jQuery to grab the input element I was able to get the appropriate fields for name, type, etc and the upload worked as all the &lt;a href=&quot;http://flask.pocoo.org/docs/patterns/fileuploads/&quot; rel=&quot;nofollow&quot;&gt;tutorials&lt;/a&gt; I read worked.&lt;/p&gt;
-
-&lt;p&gt;I next ran into a small issue with the size of the &lt;em&gt;varchar&lt;/em&gt; abstract_url field that contains the link to where the information about the DVD came from.  Turns out that if you get that information from Amazon, which is a great place to find info about DVDS, you can run into &lt;a href=&quot;http://www.amazon.com/Bridesmaids-Kristen-Wiig/dp/B00466HN7M/ref=sr_1_1?ie=UTF8&amp;amp;qid=1405335917&amp;amp;sr=8-1&amp;amp;keywords=brides+maids+movie&quot; rel=&quot;nofollow&quot;&gt;URLs&lt;/a&gt; that are longer than 100 characters if you use their search field.  Thanksfully this small error was easy to address with a quick search for &lt;a href=&quot;http://www.postgresql.org/docs/9.3/static/sql-altertable.html&quot; rel=&quot;nofollow&quot;&gt;PostgreSQL alter table&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Also, I discovered the &lt;a href=&quot;http://blog.codepen.io/radio/&quot; rel=&quot;nofollow&quot;&gt;Codepen Podcast&lt;/a&gt; this weekend, and really enjoyed listening to the latest episode while playing with my son.  Good times!&lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
-</description>
-        <pubDate>Mon, 14 Jul 2014 09:07:20 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/14/flask-file-uploads/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/14/flask-file-uploads/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Ember.js File Upload...</title>
-        <description>&lt;p&gt;Woke up early to work on DVD inventory web app, and have some new fields integrated into the Ember.js model.  They are simple text fields, well one is a textarea, and didn&#39;t post any big problem.  Except for the edit form is now quite large, but it&#39;s not the size of your form that matters.&lt;/p&gt;
-
-&lt;p&gt;I&#39;m now being tripped up by uploading an image file in Ember.  Which really Ember might not need to know too much about the file upload process, but then I realized that I&#39;m not actually using a traditional form element.  Instead I&#39;m relying on Ember&#39;s data binding model to handle all that for me.  There are some cool HTML5 things you can do with multi-part form file upload data, and I found &lt;a href=&quot;http://stackoverflow.com/questions/13923122/ember-js-upload-file-component&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; great thread on StackOverflow with some great code at the bottom to automatically add the image element below the file choose button.  I like that feature.&lt;/p&gt;
-
-&lt;p&gt;The current problem I&#39;m blasting my thinker against is how to actually send the data to the server.  From what I can tell by printing some statements in my Flask app is that the actual binary file data isn&#39;t being sent.  There are several Ember file upload projects out there, and I&#39;m currently looking at &lt;a href=&quot;https://github.com/workmanw/embernati-upload-demo&quot; rel=&quot;nofollow&quot;&gt;Wesley Workman&#39;s&lt;/a&gt; repo which I was pointed to by his comment on &lt;a href=&quot;http://ryantablada.com/post/file-uploads-in-ember-js&quot; rel=&quot;nofollow&quot;&gt;this post&lt;/a&gt;.  Hopefully I can extract enough code from his cool drag &#39;n drop example to make my simple one file upload work.  &lt;/p&gt;
-
-&lt;p&gt;Might be still on this tomorrow though.&lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
-</description>
-        <pubDate>Sun, 13 Jul 2014 07:07:13 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/13/ember.js-file-upload/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/13/ember.js-file-upload/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Python and Duck Duck Go</title>
-        <description>&lt;p&gt;Did some late night work and tried to find an API for IMDB in order to gather more information on the DVDs I own.  I guess they don&#39;t have an official API, and the only thing I found was a StackOverflow thread about using it through JSONP.&lt;/p&gt;
-
-&lt;p&gt;There does seem to be a couple of alternative databases of movies that could work for what I&#39;m needed, but none of them looked to up to date to me.  My next thought was to use the Duck Duck Go search engine and parse it&#39;s API for the info I need.  The documentation for the &quot;Instant Answer&quot; &lt;a href=&quot;https://duckduckgo.com/api&quot; rel=&quot;nofollow&quot;&gt;API&lt;/a&gt; is very good.&lt;/p&gt;
-
-&lt;p&gt;I think looked for a Python library that I could integrate with my Flask server, and found &lt;a href=&quot;https://github.com/crazedpsyc/python-duckduckgo&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; great project on Github.  The library is very easy to use and I was able to find the information I need in a short amount of time.  I then adjusted a test script to query the database and update some new fields in the table.  &lt;/p&gt;
-
-&lt;p&gt;I then ran into a slight problem with using a search engine.  If there are multiple things with the same title my script doesn&#39;t account for that.  So for movies like &lt;em&gt;The Fellowship of The Ring&lt;/em&gt; Duck Duck Go will also return entries for the book.  I could make the script a smarter and account for similar search results, but I think the better solution is to make the new fields editable.  That way if a user doesn&#39;t like the pic in Wikipedia they can upload their own.&lt;/p&gt;
-
-&lt;p&gt;So it&#39;ll be learning how to upload files in Ember.js for me...&lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-</description>
-        <pubDate>Sat, 12 Jul 2014 02:07:54 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/12/python-and-duck-duck-go/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/12/python-and-duck-duck-go/</guid>
-        
-        
-        <category>emberjs</category>
-        
-      </item>
-    
-      <item>
-        <title>Finding Great Ember Snippets</title>
-        <description>&lt;p&gt;After this morning&#39;s hour of coding I was able to implement search.  Well more of a filter really, but it amounts to the same thing.  Yay for regex.  &lt;/p&gt;
-
-&lt;p&gt;I found &lt;a href=&quot;http://stackoverflow.com/questions/19767733/build-search-box-searching-with-ember-js&quot; rel=&quot;nofollow&quot;&gt;this&lt;/a&gt; great StackOverlfow post that details implementing a search filter of an ArrayController.  There is also an explanation of the code in the answer comments.  I found it enlightening.&lt;/p&gt;
-
-&lt;p&gt;After publishing yesterday&#39;s post, I had some additional coding time before bed, and implemented some validations in Ember.js.  I know I&#39;m probably doing it wrong, but my code works so pffft.  I also setup flash messages from &lt;a href=&quot;http://coderberry.me/blog/2013/06/20/using-flash-messages-with-emberjs/&quot; rel=&quot;nofollow&quot;&gt;this great post&lt;/a&gt; by Eric Barry.  It works like a charm, but I might like a more Railsy flash message that sticks around until you click a close button... we&#39;ll see about adjusting that later.&lt;/p&gt;
-
-&lt;p&gt;Things are moving along, and it&#39;s now a lot of fun to develop using Ember.js.  Next up IMDB integration...&lt;/p&gt;
-
-&lt;p&gt;Party On!&lt;/p&gt;
-&lt;p&gt;&amp;lt;/span&amp;gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 11 Jul 2014 07:07:41 -0400</pubDate>
-        <link>http://dvdpila.thehoick.com//emberjs/2014/07/11/finding-great-ember-snippets/</link>
-        <guid isPermaLink="true">http://dvdpila.thehoick.com//emberjs/2014/07/11/finding-great-ember-snippets/</guid>
         
         
         <category>emberjs</category>

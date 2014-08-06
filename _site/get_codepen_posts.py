@@ -6,6 +6,7 @@
 import feedparser
 import datetime
 import os.path
+from bs4 import BeautifulSoup
 
 d = feedparser.parse('http://codepen.io/asommer70/blog/feed/')
 
@@ -41,19 +42,23 @@ for post in d.entries:
       
       #print file_name, slug, post_date
 
+      # Get the first paragraph.
+      soup = BeautifulSoup(post.description)
+
       header = """---
 layout: post
 title:  "%s"
 date:   %s
+excerpt: %s
 categories: emberjs
 ---
 <div class="post-inner">
 
-"""   % (post.title, post_date.strftime("%Y-%m-%d %H:%m:%S"))
+"""   % (post.title, post_date.strftime("%Y-%m-%d %H:%m:%S"), soup.p)
 
       # Don't overwrite the file if it exists.
-      if not (os.path.isfile("_posts/" + file_name):
-        print "writing: ", "_posts/" + filename
+      if not (os.path.isfile("_posts/" + file_name)):
+        print "writing: ", "_posts/" + file_name
         post_file = open("_posts/" + file_name, 'w')
 
         # Change the extra </span> at the end of the description to a </div> and write the file.
