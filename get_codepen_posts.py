@@ -14,7 +14,7 @@ for post in d.entries:
   #print post.title, post.description
 
   # Check for Ember in the post.description.
-  print post.date
+  #print post.date
   try:
     # Get some date stuff from the Codepen post.
     post_date = datetime.datetime.strptime(post.date[:-6], "%Y-%m-%dT%H:%M:%S")
@@ -38,7 +38,7 @@ for post in d.entries:
     if (today == post_date_day and ember_index or jekyll_index or dvdpila_index):
 
       slug = post.title.replace(' ', '-').lower()
-      file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '').replace('!', '')) + ".markdown"
+      file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '').replace('!', '').replace('?', '')) + ".markdown"
       
       #print file_name, slug, post_date
 
@@ -66,5 +66,5 @@ categories: emberjs
 
     #print post.title, post.date
   except ValueError:
-    print "error: ", post.date
+    #print "error: ", post.date
     pass
