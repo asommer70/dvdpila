@@ -78,7 +78,7 @@ layout: default
     <input class="modal-state" id="modal-1" type="checkbox" />
     <div class="modal-window">
       <div class="modal-inner">
-        <label class="modal-close" for="modal-1"></label>
+        <label class="modal-close" for="modal-1" id="closer"></label>
         <!-- Begin MailChimp Signup Form -->
         <link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
         <style type="text/css">
@@ -107,7 +107,25 @@ layout: default
           </form>
         </div>
 
-                                <!--End mc_embed_signup-->
+        <!--End mc_embed_signup-->
+
+        <script type="text/javascript">
+          // Empty email signup form and close modal after button is clicked.
+          document.addEventListener('DOMContentLoaded', function(){
+
+          var email_btn = document.querySelectorAll('#mc-embedded-subscribe')[0];
+          var email_input = document.querySelectorAll('#mce-EMAIL')[0];
+          var closer = document.querySelectorAll('#closer')[0];
+          email_btn.addEventListener('click', function(event) {
+              //event.preventDefault();
+              email_input.setAttribute('value', '');
+
+              event = document.createEvent('HTMLEvents');
+              event.initEvent('click', true, false);
+              closer.dispatchEvent(event);
+          });
+          });
+        </script>
                                 <!--
         <h1>Join The Mailing List</h1>
         <p class="intro">
