@@ -192,6 +192,10 @@ header.navigation {
       padding: .8em 0;
       width: 40px;
     }
+
+    @include media (max-width 320px) {
+      padding: .1em .2em;
+    }
   }
 
   .navigation-menu-button {
@@ -234,8 +238,12 @@ header.navigation {
     width: 100%;
     z-index: 9999;
 
-    @include media (max-width 420px) {
+    @include media (max-width 500px) {
       font-size: $base-font-size - 4;
+    }
+
+    @include media (max-width 435px) {
+      font-size: $base-font-size - 6;
     }
 
     @include media ($horizontal-bar-mode) {
@@ -730,7 +738,7 @@ $side-image-border: 1px solid darken(transparentize($side-image-background-botto
       height: 5em;
     }
 
-    @include media (max-width 700px) {
+    @include media (max-width 500px) {
       //@include columns(1);
       img {
         padding-left: 40px;
