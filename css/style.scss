@@ -8,6 +8,7 @@
 $base-font-size: 18px;
 $medium-screen: 700px;
 $large-screen: 1000px;
+$small-screen: 300px;
 $base-line-height: 24px;
 
 $base-accent-color: #05776D;
@@ -96,15 +97,21 @@ ul {
 
 .post-inner {
   @include columns(2);
+
+  @include media (max-width 500px) {
+    @include columns(1);
+  }
 }
 
 .post-wrapper {
   @include outer-container;
   //@include span-columns(6);
+
 }
 
 .post-part {
   @include span-columns(3 of 6);
+
 }
 
 .posts {
@@ -120,6 +127,10 @@ ul {
   .post-date {
     display: block;
     font-size: $base-font-size - 6;
+  }
+
+  @include media (max-width 500px) {
+    @include span-columns(12);
   }
 }
 
@@ -153,7 +164,7 @@ header.navigation {
   $navigation-search-border: 1px solid darken($navigation-background, 5);
   $navigation-active-link-color: transparentize(white, 0.5);
   $navigation-submenu-padding: 1em;
-  $horizontal-bar-mode: $large-screen;
+  $horizontal-bar-mode: $small-screen;
 
   background-color: $navigation-background;
   border-bottom: 1px solid darken($navigation-background, 10);
@@ -222,6 +233,10 @@ header.navigation {
     padding: 0;
     width: 100%;
     z-index: 9999;
+
+    @include media (max-width 420px) {
+      font-size: $base-font-size - 4;
+    }
 
     @include media ($horizontal-bar-mode) {
       display: inline;
@@ -714,6 +729,13 @@ $side-image-border: 1px solid darken(transparentize($side-image-background-botto
     img {
       height: 5em;
     }
+
+    @include media (max-width 700px) {
+      //@include columns(1);
+      img {
+        padding-left: 40px;
+      }
+    }
   }
 
   .footer-links {
@@ -809,11 +831,11 @@ $side-image-border: 1px solid darken(transparentize($side-image-background-botto
   }
 
 .modal {
-  $modal-padding: 3em;
-  $modal-background: $base-bg-color;
-  $modal-close-color: $light-gray;
-  $modal-image-height: 135px;
-  $modal-image-width: $modal-image-height;
+  $modal-padding: 3em !global;
+  $modal-background: $base-bg-color !global;
+  $modal-close-color: $light-gray !global;
+  $modal-image-height: 135px !global;
+  $modal-image-width: $modal-image-height !global;
 
   label {
     cursor: pointer;

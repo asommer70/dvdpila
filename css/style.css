@@ -373,6 +373,11 @@ ul {
   -webkit-columns: 2;
   -moz-columns: 2;
   columns: 2; }
+  @media screen and (max-width: 500px) {
+    .post-inner {
+      -webkit-columns: 1;
+      -moz-columns: 1;
+      columns: 1; } }
 
 .post-wrapper {
   max-width: 68em;
@@ -406,6 +411,14 @@ ul {
   .posts .post-date {
     display: block;
     font-size: 12px; }
+  @media screen and (max-width: 500px) {
+    .posts {
+      float: left;
+      display: block;
+      margin-right: 2.35765%;
+      width: 100%; }
+      .posts:last-child {
+        margin-right: 0; } }
 
 .post-wrapper {
   max-width: 68em;
@@ -465,7 +478,7 @@ header.navigation {
     margin: 0;
     padding-right: 1em;
     text-transform: uppercase; }
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 300px) {
       header.navigation .navigation-menu-button {
         display: none; } }
     header.navigation .navigation-menu-button:hover {
@@ -473,7 +486,7 @@ header.navigation {
   header.navigation .nav {
     z-index: 9999999;
     float: none; }
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 300px) {
       header.navigation .nav {
         float: left; } }
   header.navigation ul#navigation-menu {
@@ -485,7 +498,10 @@ header.navigation {
     padding: 0;
     width: 100%;
     z-index: 9999; }
-    @media screen and (min-width: 1000px) {
+    @media screen and (max-width: 420px) {
+      header.navigation ul#navigation-menu {
+        font-size: 14px; } }
+    @media screen and (min-width: 300px) {
       header.navigation ul#navigation-menu {
         display: inline;
         margin: 0;
@@ -499,7 +515,7 @@ header.navigation {
     text-align: right;
     width: 100%;
     z-index: 9999; }
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 300px) {
       header.navigation ul li {
         background: transparent;
         display: inline;
@@ -511,7 +527,7 @@ header.navigation {
       display: inline-block;
       color: rgba(255, 255, 255, 0.7);
       border: none; }
-      @media screen and (min-width: 1000px) {
+      @media screen and (min-width: 300px) {
         header.navigation ul li a {
           padding-right: 1em; } }
       header.navigation ul li a:hover {
@@ -523,7 +539,7 @@ header.navigation {
     padding-right: 0; }
     header.navigation li.more:hover .submenu {
       display: block; }
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 300px) {
       header.navigation li.more {
         position: relative;
         padding-right: .8em; } }
@@ -531,7 +547,7 @@ header.navigation {
     padding-right: .8em; }
   header.navigation .submenu {
     display: none; }
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 300px) {
       header.navigation .submenu {
         position: absolute;
         top: 1em;
@@ -539,7 +555,7 @@ header.navigation {
     header.navigation .submenu li {
       display: block;
       padding-right: 0; }
-      @media screen and (min-width: 1000px) {
+      @media screen and (min-width: 300px) {
         header.navigation .submenu li {
           line-height: 46.15385px; }
           header.navigation .submenu li:first-child a {
@@ -553,7 +569,7 @@ header.navigation {
         background-color: #3f4a2d;
         width: 100%;
         display: inline-block; }
-        @media screen and (min-width: 1000px) {
+        @media screen and (min-width: 300px) {
           header.navigation .submenu li a {
             width: 12em;
             background-color: #475333;
@@ -644,7 +660,7 @@ header.navigation {
         header.navigation .search-bar .search-and-submit button[type=submit] img {
           height: 12px;
           opacity: .7; }
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 300px) {
       header.navigation .search-bar {
         width: 16em;
         position: relative;
@@ -946,6 +962,9 @@ table {
     margin-bottom: 1.5em; }
     .footer .footer-logo img {
       height: 5em; }
+    @media screen and (max-width: 700px) {
+      .footer .footer-logo img {
+        padding-left: 40px; } }
   .footer .footer-links {
     margin-bottom: 24px; }
     .footer .footer-links:after {
