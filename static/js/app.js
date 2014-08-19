@@ -406,13 +406,24 @@ App.Video = Ember.View.extend({
 
     // Get the DVD id.
     var dvd_id = this.get('dvdId');
+    var vid = this.$();
 
     this.$().on("pause", function(event) {
       //console.log('paused...');
       //console.log(this.currentTime);
+      var self = this;
 
       // Send time location to server.
       $.post('/dvds/playback/' + dvd_id, { playback_time: this.currentTime });
+
+      // Play on space.
+      $('body').off('keyup');
+      $('body').keyup(function(event) {
+        event.preventDefault();
+        if (event.keyCode == 32 && self.paused == true) {
+          self.play();
+        }
+      });
     });
 
     this.$().on("play", function(event) {
@@ -423,6 +434,15 @@ App.Video = Ember.View.extend({
         //console.log(data);
         self.currentTime = data;
         self.play();
+      });
+
+      // Pause on space.
+      $('body').off('keyup');
+      $('body').keyup(function(event) {
+        event.preventDefault();
+        if (event.keyCode == 32) {
+          self.pause();
+        }
       });
     });
 
