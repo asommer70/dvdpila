@@ -5,6 +5,9 @@ date:   2014-08-20 17:00:00
 excerpt: <p><img alt="ember rest" class="image" src="http://www.thehoick.com/images/ember_rest.jpg"/> </p>
 categories: emberjs
 ---
+<div class="post-inner">
+
+<p><img alt="ember rest" class="image" src="http://www.thehoick.com/images/ember_rest.jpg"/> </p>
 
 Just wanted to create a quick post to get the word out about a new guide I've been working on.  The reason is mostly because there wasn't a lot of good guides on using the Ember Data project with an actual REST server.  There are plenty of guides for Ember and Ember Data, but they all use fixture data and it makes things harder to figure out when you're using an actual server.
 
@@ -15,3 +18,5 @@ Another thought I had was to sell the guide on Gumroad for a $0.99 just to see i
 I guess we'll see how things go.
 
 Party On!
+
+</div>
