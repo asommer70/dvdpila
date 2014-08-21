@@ -12,10 +12,40 @@ import urllib2
 
 import ConfigParser, os
 
-__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
+
+# Read the config.cfg file.
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 config = ConfigParser.ConfigParser()
 config.readfp(open(os.path.join(__location__, 'config.cfg')))
+
+
+# Setup SQLAlchemy database connection and table class.
+engine = create_engine('postgresql://adam:pivo70@localhost/dvdsdb')
+engine = create_engine('postgresql://' + config.get('Database', 'db_user') + ':' + config.get('Database', 'db_pass') + 
+                       '@' +  config.get('Database', 'host') + '/' + config.get('Database', 'db'))
+Base = declarative_base()
+Session = sessionmaker(bind=engine)
+session = Session()
+
+class Dvd(Base):
+  __tablename__ = 'dvds'
+
+  id = Column(Integer, primary_key=True)
+  title = Column(String)
+  created_at = Column(DateTime)
+  created_by = Column(String)
+  rating = Column(Integer)
+  abstract = Column(String)
+  abstract_source = Column(String)
+  abstract_url = Column(String)
+  image_url = Column(String)
+  file_url = Column(String)
+  playback_time = Column(Integer)
 
 
 # Setup Flask app.
