@@ -270,6 +270,34 @@ def allowed_file(filename):
   return '.' in filename and \
     filename.rsplit('.', 1)[1] in config.get('Server', 'allowed_ext')
 
+def jsonable(sql_obj, query_res):
+  """
+  Return a list of dictionaries from query results since SQLAlchemy 
+  query results can't be serialized into JSON evidently.
+  """
+  cols = sql_obj.__table__.columns
+  col_keys = [col.key for col in cols]
+  
+  obj_list = []
+  for obj in query_res:
+    obj_dict = {}
+    for key, value in obj.__dict__.iteritems():
+      if (key in col_keys):
+        if (type(value) == datetime.datetime):
+          value = value.strftime("%Y-%m-%d %H:%M:%S")
+        obj_dict[key] = value 
+    obj_list.append(obj_dict)
+
+  return obj_list
+
+
+def find_all_new(sql_obj):
+  """
+  Return a list of all records in the table.
+  """
+  q = session.query(sql_obj)
+  return jsonable(sql_obj, q)
+
 
 if __name__ == '__main__':
   app.run()
