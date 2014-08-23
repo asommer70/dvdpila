@@ -226,6 +226,17 @@ def find_all():
     dvds = {'dvds': find_all_dvds()}
     return json.dumps(dvds)
   elif (request.method == 'POST'):
+    ## Add new object.
+    #new_dvd = json.loads(request.data)
+    #dvd = Dvd()
+
+    ## Set the SQLAlchemy object's attributes.
+    #for key, value in new_dvd['dvd'].iteritems():
+    #  setattr(dvd, key, value)
+
+    #session.add(dvd)
+    #session.commit()
+
     dvd = add_dvd(json.loads(request.data)['dvd'])
     return json.dumps({"dvd": dvd})
 
