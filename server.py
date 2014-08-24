@@ -288,7 +288,11 @@ def jsonable(sql_obj, query_res):
   """
   cols = sql_obj.__table__.columns
   col_keys = [col.key for col in cols]
-  
+
+  # If not Query object put it in a list.
+  if (query_res.__class__.__name__ != 'Query'):
+    query_res = [query_res]
+
   obj_list = []
   for obj in query_res:
     obj_dict = {}
@@ -297,10 +301,13 @@ def jsonable(sql_obj, query_res):
         if (type(value) == datetime.datetime):
           value = value.strftime("%Y-%m-%d %H:%M:%S")
         obj_dict[key] = value 
-    obj_list.append(obj_dict)
+    if (query_res.__class__.__name__ == 'Query'):
+      obj_list.append(obj_dict)
 
-  return obj_list
-
+  if (query_res.__class__.__name__ != 'Query'):
+    return obj_dict
+  else:
+    return obj_list
 
 def find_all_new(sql_obj):
   """
@@ -309,6 +316,9 @@ def find_all_new(sql_obj):
   q = session.query(sql_obj)
   return jsonable(sql_obj, q)
 
+def find_by_id_new(id):
+  q = session.query(Dvd).get(id)
+  return { "dvd": jsonable(Dvd, q) }
 
 if __name__ == '__main__':
   app.run()
