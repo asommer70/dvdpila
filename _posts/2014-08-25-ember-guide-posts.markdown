@@ -5,7 +5,6 @@ date:   2014-08-25 12:11:00
 excerpt: <p><img alt="ember rest" class="image" src="http://www.thehoick.com/images/ember_rest.jpg"/> </p>
 categories: emberjs
 ---
-<div class="post-inner">
 
 <p><img alt="ember rest" class="image" src="http://www.thehoick.com/images/ember_rest.jpg"/> </p>
 
@@ -30,4 +29,3 @@ It was a lot of fun to write things out step by step a little each day.  Makes m
 Party On!
 </p>
 
-</div>

@@ -5,7 +5,6 @@ date:   2014-08-20 17:00:00
 excerpt: <p><img alt="ember rest" class="image" src="http://www.thehoick.com/images/ember_rest.jpg"/> </p>
 categories: emberjs
 ---
-<div class="post-inner">
 
 <p><img alt="ember rest" class="image" src="http://www.thehoick.com/images/ember_rest.jpg"/> </p>
 
@@ -29,4 +28,3 @@ I guess we'll see how things go.
 Party On!
 </p>
 
-</div>

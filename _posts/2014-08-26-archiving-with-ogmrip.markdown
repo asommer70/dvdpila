@@ -1,11 +1,11 @@
 ---
-layout: post
 title:  "Archiving DVDs with OGMrip"
+layout: post
 date:   2014-08-26 07:11:00
 excerpt: <p><img alt="ember rest" class="image" src="http://www.thehoick.com/images/ogmrip/ogmrip_website.png"/> </p>
 categories: emberjs
 ---
-<div class="post-inner">
+
 
 <p><img alt="ember rest" class="image" src="http://www.thehoick.com/images/ogmrip/ogmrip_website.png"/> </p>
 
@@ -92,4 +92,3 @@ OGMRip is a great tool to archive your DVD collection, and if you select an expo
 
 Party On!
 
-</div>
