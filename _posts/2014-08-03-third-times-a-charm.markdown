@@ -5,7 +5,7 @@ date:   2014-08-03 20:08:58
 excerpt: <p><img alt="dvdpila marketing fun" class="post-image" src="http://www.thehoick.com/images/dvdpila_marketing.jpg"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="dvdpila marketing fun" class="post-image" src="http://www.thehoick.com/images/dvdpila_marketing.jpg" /></p>
 
@@ -22,4 +22,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

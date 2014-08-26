@@ -5,7 +5,7 @@ date:   2014-07-21 17:07:13
 excerpt: <p><img alt="Discourse and PHP Woo" src="http://www.thehoick.com/images/configparser.png" /></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="Discourse and PHP Woo" src="http://www.thehoick.com/images/configparser.png" /></p>
 
@@ -33,4 +33,4 @@ config.readfp(open('config.cfg'))
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

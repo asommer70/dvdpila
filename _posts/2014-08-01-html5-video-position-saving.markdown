@@ -5,7 +5,7 @@ date:   2014-08-01 11:08:12
 excerpt: <p><img alt="playback code screeny" class="post-image" src="http://www.thehoick.com/images/playback_code.png"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="playback code screeny" class="post-image" src="http://www.thehoick.com/images/playback_code.png" /></p>
 
@@ -22,4 +22,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

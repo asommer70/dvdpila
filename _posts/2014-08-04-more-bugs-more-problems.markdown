@@ -5,7 +5,7 @@ date:   2014-08-04 14:08:00
 excerpt: <p><img alt="bugs and bugs and bugs" class="post-image" src="http://www.thehoick.com/images/bugs.png"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="bugs and bugs and bugs" class="post-image" src="http://www.thehoick.com/images/bugs.png" /></p>
 
@@ -20,4 +20,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

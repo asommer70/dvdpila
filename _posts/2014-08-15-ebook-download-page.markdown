@@ -5,7 +5,7 @@ date:   2014-08-15 14:08:46
 excerpt: <p><img alt="ebook download" class="post-image" src="http://www.thehoick.com/images/dvdpila_ebook.png"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="ebook download" class="post-image" src="http://www.thehoick.com/images/dvdpila_ebook.png" /></p>
 
@@ -20,4 +20,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

@@ -5,7 +5,7 @@ date:   2014-07-29 15:07:42
 excerpt: <p><img alt="to search or not to search" class="post-image" src="http://www.thehoick.com/images/search_or_pagination.jpg"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="to search or not to search" class="post-image" src="http://www.thehoick.com/images/search_or_pagination.jpg" /></p>
 
@@ -20,4 +20,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

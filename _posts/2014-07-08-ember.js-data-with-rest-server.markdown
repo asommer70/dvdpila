@@ -5,7 +5,7 @@ date:   2014-07-08 16:07:25
 excerpt: "For whatever reason, maybe I'm just dense, I've been having a very hard time connecting Ember.js Data with a simple REST server written in Flask that queries one table in PostgreSQL."
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p>For whatever reason, maybe I'm just dense, I've been having a very hard time connecting Ember.js Data with a simple REST server written in Flask that queries one table in PostgreSQL.  Sounds simple enough, and I could smash togther some jQuery, or even Angular.js, code to push and pull JSON to and from the Flask server.  I'd like to use Ember Data though.</p>
 
@@ -16,4 +16,4 @@ categories: emberjs
 <p>Thought I'd start a daily development blog and use this platform at least until/if things get crazy.</p>
 
 <p>Party On!</p>
-</div>
+ 

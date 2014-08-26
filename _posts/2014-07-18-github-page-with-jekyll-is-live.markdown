@@ -5,7 +5,7 @@ date:   2014-07-18 10:07:12
 excerpt: <p><img alt="sass website screeny" src="http://www.thehoick.com/images/sass.png" /></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="sass website screeny" src="http://www.thehoick.com/images/sass.png" /></p>
 
@@ -22,4 +22,4 @@ categories: emberjs
 <p>Check out my new project site <a href="http://dvdpila.thehoick.com" rel="nofollow">here</a>.  I'll be releasing the actual code soon.  Just need to add a few last features.</p>
 
 <p>Party On!</p>
-</div>
+ 

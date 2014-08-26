@@ -5,7 +5,7 @@ date:   2014-07-22 14:07:40
 excerpt: <p><img alt="pages" class="post-image" src="http://www.thehoick.com/images/pages.png" /></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="pages" class="post-image" src="http://www.thehoick.com/images/pages.png" /></p>
 
@@ -24,4 +24,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

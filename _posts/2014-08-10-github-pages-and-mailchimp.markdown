@@ -5,7 +5,7 @@ date:   2014-08-10 10:08:19
 excerpt: <p><img alt="photolandia screeny" class="post-image" src="http://www.thehoick.com/images/dvdpila_mailchimp.png"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="photolandia screeny" class="post-image" src="http://www.thehoick.com/images/dvdpila_mailchimp.png" /></p>
 
@@ -22,4 +22,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

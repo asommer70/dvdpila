@@ -5,7 +5,7 @@ date:   2014-08-07 10:08:53
 excerpt: <p><img alt="dvdpila graduation" class="post-image" src="http://www.thehoick.com/images/mortar_board.png"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="dvdpila graduation" class="post-image" src="http://www.thehoick.com/images/mortar_board.png" /></p>
 
@@ -61,4 +61,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

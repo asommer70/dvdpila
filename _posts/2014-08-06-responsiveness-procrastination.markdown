@@ -5,7 +5,7 @@ date:   2014-08-06 09:08:36
 excerpt: <p><img alt="dvdpila responsiveness screeny" class="post-image" src="http://www.thehoick.com/images/dvdpila_responsive.png"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="dvdpila responsiveness screeny" class="post-image" src="http://www.thehoick.com/images/dvdpila_responsive.png" /></p>
 
@@ -20,4 +20,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

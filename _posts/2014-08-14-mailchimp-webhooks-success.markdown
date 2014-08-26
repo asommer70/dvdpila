@@ -5,7 +5,7 @@ date:   2014-08-14 15:08:19
 excerpt: <p><img alt="mailchimp sql table screeny" class="post-image" src="http://www.thehoick.com/images/mailchimp_sql_table.png"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="mailchimp sql table screeny" class="post-image" src="http://www.thehoick.com/images/mailchimp_sql_table.png" /></p>
 
@@ -27,4 +27,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

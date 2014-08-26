@@ -5,7 +5,7 @@ date:   2014-08-13 09:08:24
 excerpt: <p><img alt="mailchimp wbsite screeny" class="post-image" src="http://www.thehoick.com/images/mailchimp_webhooks.png"/></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="mailchimp wbsite screeny" class="post-image" src="http://www.thehoick.com/images/mailchimp_webhooks.png" /></p>
 
@@ -22,4 +22,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 

@@ -5,7 +5,7 @@ date:   2014-07-17 10:07:54
 excerpt: <p><img alt="jekyll default screeny" src="http://www.thehoick.com/images/jekyll_default.png" /></p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="jekyll default screeny" src="http://www.thehoick.com/images/jekyll_default.png" /></p>
 
@@ -20,4 +20,4 @@ categories: emberjs
 <p>Looking forward to finishing the project page, and putting it out there.</p>
 
 <p>Party On!</p>
-</div>
+ 

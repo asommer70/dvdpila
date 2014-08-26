@@ -5,7 +5,7 @@ date:   2014-08-18 17:08:22
 excerpt: <p><img alt="mailchimp edit" class="image" src="http://www.thehoick.com/images/mailchimp_edit.png"/> </p>
 categories: emberjs
 ---
-<div class="post-inner">
+ 
 
 <p><img alt="mailchimp edit" class="image" src="http://www.thehoick.com/images/mailchimp_edit.png" /> </p>
 
@@ -30,4 +30,4 @@ categories: emberjs
 <p>Party On!</p>
 
 <p>[dvdpila]</p>
-</div>
+ 
