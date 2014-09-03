@@ -52,7 +52,6 @@ date:   %s
 excerpt: %s
 categories: emberjs
 ---
-<div class="post-inner">
 
 """   % (post.title, post_date.strftime("%Y-%m-%d %H:%m:%S"), soup.p)
 
@@ -62,7 +61,7 @@ categories: emberjs
         post_file = open("_posts/" + file_name, 'w')
 
         # Change the extra </span> at the end of the description to a </div> and write the file.
-        post_file.write(header + post.description[:-7] + "</div>\n")
+        post_file.write(header + post.description[:-7] + "\n")
 
     #print post.title, post.date
   except ValueError:
