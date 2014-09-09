@@ -401,6 +401,16 @@ App.Video = Ember.View.extend({
   controls: true,
   tagName: 'video',
 
+  keyUp: function(event) {
+    var $vid = $(event.target)[0];
+
+    if (event.keyCode == 32 && $vid.paused == true) {
+          $vid.play();
+    } else if (event.keyCode == 32 && $vid.paused == false) {
+          $vid.pause();
+    }
+  },
+
   didInsertElement: function() {
     //console.log('didInsertElement...');
 
@@ -409,6 +419,7 @@ App.Video = Ember.View.extend({
     var vid = this.$();
 
     this.$().on("pause", function(event) {
+      this.focus();
       //console.log('paused...');
       //console.log(this.currentTime);
       var self = this;
@@ -417,16 +428,21 @@ App.Video = Ember.View.extend({
       $.post('/dvds/playback/' + dvd_id, { playback_time: this.currentTime });
 
       // Play on space.
-      $('body').off('keyup');
+      /*$('body').off('keyup');
       $('body').keyup(function(event) {
+        console.log('playing...');
         event.preventDefault();
         if (event.keyCode == 32 && self.paused == true) {
           self.play();
+        } else {
+          $('body').off('keyup');
         }
-      });
+      });*/
     });
 
     this.$().on("play", function(event) {
+      this.focus();
+
       //console.log('playing...');
 
       var self = this;
@@ -437,13 +453,16 @@ App.Video = Ember.View.extend({
       });
 
       // Pause on space.
-      $('body').off('keyup');
+      /*$('body').off('keyup');
       $('body').keyup(function(event) {
+        console.log('paused...');
         event.preventDefault();
         if (event.keyCode == 32) {
           self.pause();
+        } else {
+          $('body').off('keyup');
         }
-      });
+      });*/
     });
 
   },
