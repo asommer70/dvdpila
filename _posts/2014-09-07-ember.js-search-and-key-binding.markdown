@@ -1,0 +1,23 @@
+---
+layout: post
+title:  "Ember.js Search and Key Binding"
+date:   2014-09-07 12:09:20
+excerpt: <p>A few weeks ago I made a quick change to <a href="http://dvdpila.thehoick.com" rel="nofollow">DVD Pila!</a> to allow the "space" key to play and pause a video.  It took a little trial and error to get things working with the video <strong>view</strong> I created to setup the HTML5 video element.</p>
+categories: emberjs
+---
+
+<p>A few weeks ago I made a quick change to <a href="http://dvdpila.thehoick.com" rel="nofollow">DVD Pila!</a> to allow the "space" key to play and pause a video.  It took a little trial and error to get things working with the video <strong>view</strong> I created to setup the HTML5 video element.</p>
+
+<p>Basically once the element loads and the play button is pressed I'm using:</p>
+
+<pre><code>this.$().on("play", function(event) {
+
+});
+</code></pre>
+
+<p>to bind the <em>"keyup"</em> event and watch for a space bar.  Things work great and it feels good because all other players (except Windows Media Player I think) support pause and play with the space bar.  </p>
+
+<p>Then I noticed that I couldn't search from inside a DVD page after watching a video.  Not that big a deal, but it is frustrating.  I haven't dedicated much time to solving this particular bug, but hopefully I can get to it soon.</p>
+
+<p>Party On!</p>
+

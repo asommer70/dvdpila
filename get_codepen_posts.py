@@ -38,7 +38,7 @@ for post in d.entries:
     if (today == post_date_day and ember_index or jekyll_index or dvdpila_index):
 
       slug = post.title.replace(' ', '-').lower()
-      file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '').replace('!', '').replace('?', '')) + ".markdown"
+      file_name = post_date.strftime("%Y-%m-%d-" + slug.replace('...', '').replace('!', '').replace('?', '').replace('/', '_')) + ".markdown"
       
       #print file_name, slug, post_date
 
