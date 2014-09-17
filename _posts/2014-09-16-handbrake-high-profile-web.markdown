@@ -2,11 +2,11 @@
 layout: post
 title: "Handbrake High Profile With Sound For The Web"
 date:   2014-09-16 17:09:05
-excerpt: <p><img alt="handbrake" class="post-image" src="http://www.thehoick.com/images/handbrake_audio.png"/></p>
+excerpt: <p><img alt="handbrake" class="post-image" src="http://www.thehoick.com/images/handbrake/handbrake_audio.png"/></p>
 categories: emberjs
 ---
 
-<p><img alt="handbrake" class="post-image" src="http://www.thehoick.com/images/handbrake_audio.png"/></p>
+<p><img alt="handbrake" class="post-image" src="http://www.thehoick.com/images/handbrake/handbrake_audio.png"/></p>
 
 The [Handbrake](https://handbrake.fr/) "High
 Profile" creates a great looking video file that
