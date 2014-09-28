@@ -9,6 +9,7 @@ import json
 import psycopg2, psycopg2.extras
 import duckduckgo
 import urllib2
+import decimal
 
 import ConfigParser, os
 
@@ -90,16 +91,19 @@ def find_all_dvds():
   return dvds
 
 def find_by_id(id):
-  db = get_db()
-  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  cursor.execute("""
-                 select id, title, created_by, rating, extract(epoch from created_at) as created_at, 
-                        abstract as abstract_txt, abstract_source, abstract_url, image_url, file_url
-                 from dvds where id = %s;
-                 """ % (id))
-  dvd = cursor.fetchone()
-  cursor.close()
-  return dvd
+  #db = get_db()
+  #cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  #cursor.execute("""
+  #               select id, title, created_by, rating, extract(epoch from created_at) as created_at, 
+  #                      abstract as abstract_txt, abstract_source, abstract_url, image_url, file_url
+  #               from dvds where id = %s;
+  #               """ % (id))
+  #dvd = cursor.fetchone()
+  #cursor.close()
+  #return dvd
+
+  q = session.query(Dvd).get(id)
+  return jsonable(Dvd, q) 
 
 def find_by_title(title):
   db = get_db()
@@ -114,32 +118,51 @@ def find_by_title(title):
   return dvds
 
 def add_dvd(data):
-  db = get_db()
-  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  # Add new object.
+  new_dvd = json.loads(request.data)
+  dvd = Dvd()
 
-  ddg_info = get_ddg_info(data) 
+  # Set the SQLAlchemy object's attributes.
+  for key, value in new_dvd['dvd'].iteritems():
+    setattr(dvd, key, value)
 
-  try:
-    cursor.execute("""
-                   insert into dvds (title, created_at, created_by, rating, 
-                                     abstract, abstract_source, abstract_url, image_url) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                   returning id, title, created_by, rating, extract(epoch from created_at) as created_at
-                   """, (data['title'], datetime.datetime.now(), data['created_by'], data['rating'],
-                         ddg_info.abstract.text, ddg_info.abstract.source, ddg_info.abstract.url, ddg_info.image.url) )
-    dvd = cursor.fetchone()
-    db.commit()
-    cursor.close()
-    return dvd
-  except psycopg2.IntegrityError as e:
-    db.rollback()
-    cursor.close()
-    if (e.pgcode == '23505'):
-      return {"created_by": "error", "title": data['title'] + " already exists."}
-    else:
-      return False
+  ddg_info = get_ddg_info(data)
+  dvd.abstract = ddg_info.abstract.text
+  dvd.abstract_source = ddg_info.abstract.source
+  dvd.abstract_url = ddg_info.abstract.url
+  dvd.image_url = ddg_info.image.url
+
+  dvd.created_at = datetime.datetime.now()
+
+  session.add(dvd)
+  session.commit()
+
+  # Might find a better way to return the new DVD.
+  return {"dvd": {
+      "id": dvd.id, 
+      "title": dvd.title, 
+      "created_at": dvd.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+      "created_by": dvd.created_by,
+      "rating": dvd.rating, 
+      "abstract": dvd.abstract, 
+      "abstract_source": dvd.abstract_source, 
+      "abstract_url": dvd.abstract_url, 
+      "image_url": dvd.image_url, 
+    }
+  }
 
 def get_ddg_info(data):
-  r = duckduckgo.query(data['title'])
+  try: 
+    r = duckduckgo.query(data['title'])
+  except:
+    # Can't connect to the Internet so build a blank object.
+    r = lambda: None
+    r.image = lambda: None
+    r.abstract = lambda: None
+    setattr(r.abstract, 'text', '')
+    setattr(r.abstract, 'source', '')
+    setattr(r.abstract, 'url', '')
+    setattr(r.image, 'url', '')
 
   if (r.image):
     image_file = r.image.url.split('/')[-1]
@@ -210,6 +233,14 @@ def set_playback_location(dvd_id, playback_time):
   cursor.close()
   return True
 
+def find_all(sql_obj):
+  """
+  Return a list of all records in the table.
+  """
+  q = session.query(sql_obj)
+  return jsonable(sql_obj, q)
+
+
 # Routes
 @app.route('/')
 def root():
@@ -221,24 +252,12 @@ def static_proxy(path):
   return app.send_static_file(path)
 
 @app.route('/dvds', methods=['GET', 'POST'])
-def find_all():
+def dvds():
   if (request.method == 'GET'):
-    dvds = {'dvds': find_all_dvds()}
-    return json.dumps(dvds)
+    return json.dumps({"dvds": find_all(Dvd)})
   elif (request.method == 'POST'):
-    ## Add new object.
-    #new_dvd = json.loads(request.data)
-    #dvd = Dvd()
-
-    ## Set the SQLAlchemy object's attributes.
-    #for key, value in new_dvd['dvd'].iteritems():
-    #  setattr(dvd, key, value)
-
-    #session.add(dvd)
-    #session.commit()
-
-    dvd = add_dvd(json.loads(request.data)['dvd'])
-    return json.dumps({"dvd": dvd})
+    dvd = add_dvd(json.loads( request.data)['dvd'])
+    return json.dumps(dvd)
 
 @app.route('/dvds/<int:dvd_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def show_dvd(dvd_id):
@@ -300,6 +319,8 @@ def jsonable(sql_obj, query_res):
       if (key in col_keys):
         if (type(value) == datetime.datetime):
           value = value.strftime("%Y-%m-%d %H:%M:%S")
+        elif (type(value) == decimal.Decimal):
+          value = int(value)
         obj_dict[key] = value 
     if (query_res.__class__.__name__ == 'Query'):
       obj_list.append(obj_dict)
@@ -309,12 +330,12 @@ def jsonable(sql_obj, query_res):
   else:
     return obj_list
 
-def find_all_new(sql_obj):
-  """
-  Return a list of all records in the table.
-  """
-  q = session.query(sql_obj)
-  return jsonable(sql_obj, q)
+#def find_all_new(sql_obj):
+#  """
+#  Return a list of all records in the table.
+#  """
+#  q = session.query(sql_obj)
+#  return jsonable(sql_obj, q)
 
 def find_by_id_new(id):
   q = session.query(Dvd).get(id)

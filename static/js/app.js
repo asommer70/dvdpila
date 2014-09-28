@@ -207,6 +207,7 @@ App.searchResultsController = Ember.ArrayController.create({
   //hasPages: false,
 
   search: function(query) {
+    console.log('searching...');
     if (query == '') {
       this.set('searchResults', false);
       return;
@@ -220,6 +221,8 @@ App.searchResultsController = Ember.ArrayController.create({
       self.set('content', JSON.parse(dvd).dvds);
       self.set('searchResults', true);
       self.set('isSearching', false);
+      console.log(self);
+      window.location = '/';
     });
 
   },
@@ -265,6 +268,8 @@ App.IndexRoute = Ember.Route.extend({
 
 App.DvdRoute = Ember.Route.extend({
   model: function(params) {
+    console.log(params.dvd_id)
+    console.log(this.store.find('dvd', params.dvd_id));
     return this.store.find('dvd', params.dvd_id);
   },
   actions: {
@@ -403,6 +408,8 @@ App.Video = Ember.View.extend({
 
   keyUp: function(event) {
     var $vid = $(event.target)[0];
+
+    console.log('keyUp play/pause...');
 
     if (event.keyCode == 32 && $vid.paused == true) {
           $vid.play();
