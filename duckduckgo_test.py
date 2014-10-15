@@ -11,9 +11,12 @@ import duckduckgo
 import urllib2
 
 
-#r = duckduckgo.query('Superbad (film)')
+r = duckduckgo.query('Superbad (film)')
 #print r.type
-#print r.heading
+print dir(r)
+print r.heading
+print dir(r.results)
+print r.redirect.url
 ## Results page: https://duckduckgo.com/?q=Superbad
 #print r.abstract.text
 #print r.abstract.source
@@ -81,4 +84,4 @@ dvd = {
   "rating": 5
 }
 
-get_ddg_info("Inglourius Basterds")
+#get_ddg_info("Inglourius Basterds")

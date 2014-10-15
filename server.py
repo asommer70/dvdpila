@@ -10,6 +10,7 @@ import psycopg2, psycopg2.extras
 import duckduckgo
 import urllib2
 import decimal
+from bs4 import BeautifulSoup
 
 import ConfigParser, os
 
@@ -41,7 +42,7 @@ class Dvd(Base):
   created_at = Column(DateTime)
   created_by = Column(String)
   rating = Column(Integer)
-  abstract = Column(String)
+  abstract_txt = Column(String)
   abstract_source = Column(String)
   abstract_url = Column(String)
   image_url = Column(String)
@@ -83,7 +84,7 @@ def find_all_dvds():
   cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   cursor.execute("""
                  select id, title, created_by, rating, extract(epoch from created_at) as created_at,
-                        abstract as abstract_txt, abstract_source, abstract_url, image_url, file_url
+                        abstract, abstract_source, abstract_url, image_url, file_url
                  from dvds
                  """)
   dvds = cursor.fetchall()
@@ -106,16 +107,13 @@ def find_by_id(id):
   return jsonable(Dvd, q) 
 
 def find_by_title(title):
-  db = get_db()
-  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  cursor.execute("""
-                 select id, title, created_by, rating, extract(epoch from created_at) as created_at, 
-                        abstract as abstract_txt, abstract_source, abstract_url, image_url, file_url
-                 from dvds where title ~* '%s';
-                 """ % (title))
-  dvds = cursor.fetchall()
-  cursor.close()
-  return dvds
+  # Search by regex.
+  dvds = session.query(Dvd).filter("title ~* '%s'" % (title)).all()
+  json_dvds = []
+  for dvd in dvds:
+    json_dvds.append(jsonable(Dvd, dvd))
+
+  return json_dvds
 
 def add_dvd(data):
   # Add new object.
@@ -127,7 +125,7 @@ def add_dvd(data):
     setattr(dvd, key, value)
 
   ddg_info = get_ddg_info(data)
-  dvd.abstract = ddg_info.abstract.text
+  dvd.abstract_txt = ddg_info.abstract.text
   dvd.abstract_source = ddg_info.abstract.source
   dvd.abstract_url = ddg_info.abstract.url
   dvd.image_url = ddg_info.image.url
@@ -144,7 +142,7 @@ def add_dvd(data):
       "created_at": dvd.created_at.strftime("%Y-%m-%d %H:%M:%S"),
       "created_by": dvd.created_by,
       "rating": dvd.rating, 
-      "abstract": dvd.abstract, 
+      "abstract_txt": dvd.abstract_txt,
       "abstract_source": dvd.abstract_source, 
       "abstract_url": dvd.abstract_url, 
       "image_url": dvd.image_url, 
@@ -185,52 +183,34 @@ def get_ddg_info(data):
   return r
 
 def update_dvd(dvd_id, data):
-  try:
-    db = get_db()
-    cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    cursor.execute("update dvds set rating = %s where id = %s", (data['rating'], dvd_id ));
-    cursor.execute("update dvds set title = %s where id = %s", (data['title'], dvd_id ));
-    cursor.execute("update dvds set created_by = %s where id = %s", (data['created_by'], dvd_id ));
-    cursor.execute("update dvds set abstract = %s where id = %s", (data['abstract_txt'], dvd_id ));
-    cursor.execute("update dvds set abstract_source = %s where id = %s", (data['abstract_source'], dvd_id ));
-    cursor.execute("update dvds set abstract_url = %s where id = %s", (data['abstract_url'], dvd_id ));
-    cursor.execute("update dvds set image_url = %s where id = %s", (data['image_url'], dvd_id ));
-    cursor.execute("update dvds set file_url = %s where id = %s", (data['file_url'], dvd_id ));
-    db.commit()
-    cursor.close()
+  # Rename abstract column:
+  # ALTER TABLE dvds RENAME COLUMN abstract TO abstract_txt;
 
-    return find_by_id(dvd_id)
-  except psycopg2.IntegrityError as e:
-    db.rollback()
-    cursor.close()
-    if (e.pgcode == '23505'):
-      return {"created_by": "error", "title": data['title'] + " already exists.", "rating": data['rating'], "id": dvd_id}
-    else:
-      return False
+  dvd = session.query(Dvd).get(dvd_id)
+
+  for key in data:
+    setattr(dvd, key, data[key])
+
+  session.commit()
+  return find_by_id(dvd_id)
 
 def delete_dvd(dvd_id):
-  db = get_db()
-  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  cursor.execute("delete from dvds where id = %s;", [dvd_id])
-  cursor.close()
-  return db.commit()
+  dvd = session.query(Dvd).get(dvd_id)
+  session.delete(dvd)
+  session.commit()
+
+  return True
 
 def get_playback_location(dvd_id):
-  db = get_db()
-  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  cursor.execute("select playback_time from dvds where id = %s;", [dvd_id])
-  playback_time = cursor.fetchone()['playback_time']
-  if not (playback_time):
-    playback_time = 0
-  cursor.close()
-  return playback_time
+  dvd = session.query(Dvd).get(dvd_id)
+
+  return dvd.playback_time
 
 def set_playback_location(dvd_id, playback_time):
-  db = get_db()
-  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  cursor.execute("update dvds set playback_time = %s where id = %s;", (dvd_id, playback_time))
-  db.commit()
-  cursor.close()
+  dvd = session.query(Dvd).get(dvd_id)
+  dvd.playback_time = playback_time
+
+  session.commit()
   return True
 
 def find_all(sql_obj):
@@ -240,9 +220,26 @@ def find_all(sql_obj):
   q = session.query(sql_obj)
   return jsonable(sql_obj, q)
 
+def get_yoopsie(barcode):
+  """
+  Query the Yoopsie website and grab the image for the barcode.
+  """
+  url = "http://www.yoopsie.com/query.php?query=" + barcode
+  
+  response = urllib2.urlopen(url)
+  
+  html = response.read()
+  
+  soup = BeautifulSoup(html)
+  
+  items = soup.find_all("td", class_='info_image')
+  
+  return (items[0].a.img['src'], "https://duckduckgo.com/?q=" + items[0].a['title'])
+
+
 
 # Routes
-@app.route('/')
+@app.route('/', methods=['GET'])
 def root():
   return app.send_static_file('index.html')
 
@@ -250,6 +247,26 @@ def root():
 def static_proxy(path):
   # send_static_file will guess the correct MIME type
   return app.send_static_file(path)
+
+@app.route('/barcode/', methods=['POST'])
+def barcode():
+  if (request.method == 'GET'):
+    return json.dumps(True)
+  elif (request.method == 'POST'):
+    data = json.loads(request.data)
+
+    #yoopsie_data = get_yoopsie(data['barcode'])
+
+    return_data = {
+      "status": "DVD Created...",
+      #"yoopsieImage": yoopsie_data[0],
+      #"yoopsieUrl": yoopsie_data[1],
+      "openUrl": "http://192.168.1.22:5000/#/6"
+    }
+
+    print return_data
+
+    return json.dumps(return_data)
 
 @app.route('/dvds', methods=['GET', 'POST'])
 def dvds():
@@ -293,7 +310,7 @@ def play_dvd(dvd_id):
     playback_time = get_playback_location(dvd_id)
     return json.dumps(int(get_playback_location(dvd_id)))
   elif (request.method == 'POST'):
-    return json.dumps(set_playback_location(request.form.get('playback_time'), dvd_id))
+    return json.dumps(set_playback_location(dvd_id, request.form.get('playback_time')))
 
 
 def allowed_file(filename):
@@ -342,5 +359,5 @@ def find_by_id_new(id):
   return { "dvd": jsonable(Dvd, q) }
 
 if __name__ == '__main__':
-  app.run()
+  app.run(host='0.0.0.0')
 
