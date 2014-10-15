@@ -55,54 +55,9 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = config.get('Server', 'upload_folder')
 app.debug = config.getboolean('Server', 'debug')
 
-# Connect to PostgreSQL.
-def connect_db():
-  """Connects to the specific database."""
-  conn = psycopg2.connect(database=config.get('Database', 'db'), user=config.get('Database', 'db_user'), 
-                          password=config.get('Database', 'db_pass'), host=config.get('Database', 'host'))
-  return conn
-
-def get_db():
-  """
-  Opens a new database connection if there is none yet for the current application context.
-  """
-  if not hasattr(g, 'pg_db'):
-    g.pg_db = connect_db()
-  return g.pg_db
-
-
-@app.teardown_appcontext
-def close_db(error):
-  """Closes the database again at the end of the request."""
-  if hasattr(g, 'pg_db'):
-    g.pg_db.close()
-
 
 # 'Model' functions.
-def find_all_dvds():
-  db = get_db()
-  cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  cursor.execute("""
-                 select id, title, created_by, rating, extract(epoch from created_at) as created_at,
-                        abstract, abstract_source, abstract_url, image_url, file_url
-                 from dvds
-                 """)
-  dvds = cursor.fetchall()
-  cursor.close()
-  return dvds
-
 def find_by_id(id):
-  #db = get_db()
-  #cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  #cursor.execute("""
-  #               select id, title, created_by, rating, extract(epoch from created_at) as created_at, 
-  #                      abstract as abstract_txt, abstract_source, abstract_url, image_url, file_url
-  #               from dvds where id = %s;
-  #               """ % (id))
-  #dvd = cursor.fetchone()
-  #cursor.close()
-  #return dvd
-
   q = session.query(Dvd).get(id)
   return jsonable(Dvd, q) 
 
@@ -149,39 +104,6 @@ def add_dvd(data):
     }
   }
 
-def get_ddg_info(data):
-  try: 
-    r = duckduckgo.query(data['title'])
-  except:
-    # Can't connect to the Internet so build a blank object.
-    r = lambda: None
-    r.image = lambda: None
-    r.abstract = lambda: None
-    setattr(r.abstract, 'text', '')
-    setattr(r.abstract, 'source', '')
-    setattr(r.abstract, 'url', '')
-    setattr(r.image, 'url', '')
-
-  if (r.image):
-    image_file = r.image.url.split('/')[-1]
-  else:
-    image_file = ''
-
-  try:
-    response = urllib2.urlopen(r.image.url)
-    image_output = open(os.path.join(__location__, app.config['UPLOAD_FOLDER'], image_file), 'w')
-    image_output.write(response.read())
-    image_output.close()
-  
-    r.image.url = 'images/' + image_file
-  except ValueError:
-    r.image.url = ''
-  except AttributeError:
-    r.image = lambda: None
-    setattr(r.image, 'url', '')
-
-  return r
-
 def update_dvd(dvd_id, data):
   # Rename abstract column:
   # ALTER TABLE dvds RENAME COLUMN abstract TO abstract_txt;
@@ -219,22 +141,6 @@ def find_all(sql_obj):
   """
   q = session.query(sql_obj)
   return jsonable(sql_obj, q)
-
-def get_yoopsie(barcode):
-  """
-  Query the Yoopsie website and grab the image for the barcode.
-  """
-  url = "http://www.yoopsie.com/query.php?query=" + barcode
-  
-  response = urllib2.urlopen(url)
-  
-  html = response.read()
-  
-  soup = BeautifulSoup(html)
-  
-  items = soup.find_all("td", class_='info_image')
-  
-  return (items[0].a.img['src'], "https://duckduckgo.com/?q=" + items[0].a['title'])
 
 
 
@@ -313,6 +219,7 @@ def play_dvd(dvd_id):
     return json.dumps(set_playback_location(dvd_id, request.form.get('playback_time')))
 
 
+# Helpers
 def allowed_file(filename):
   return '.' in filename and \
     filename.rsplit('.', 1)[1] in config.get('Server', 'allowed_ext')
@@ -347,16 +254,56 @@ def jsonable(sql_obj, query_res):
   else:
     return obj_list
 
-#def find_all_new(sql_obj):
-#  """
-#  Return a list of all records in the table.
-#  """
-#  q = session.query(sql_obj)
-#  return jsonable(sql_obj, q)
+def get_yoopsie(barcode):
+  """
+  Query the Yoopsie website and grab the image for the barcode.
+  """
+  url = "http://www.yoopsie.com/query.php?query=" + barcode
+  
+  response = urllib2.urlopen(url)
+  
+  html = response.read()
+  
+  soup = BeautifulSoup(html)
+  
+  items = soup.find_all("td", class_='info_image')
+  
+  return (items[0].a.img['src'], "https://duckduckgo.com/?q=" + items[0].a['title'])
 
-def find_by_id_new(id):
-  q = session.query(Dvd).get(id)
-  return { "dvd": jsonable(Dvd, q) }
+def get_ddg_info(data):
+  try: 
+    r = duckduckgo.query(data['title'])
+  except:
+    # Can't connect to the Internet so build a blank object.
+    r = lambda: None
+    r.image = lambda: None
+    r.abstract = lambda: None
+    setattr(r.abstract, 'text', '')
+    setattr(r.abstract, 'source', '')
+    setattr(r.abstract, 'url', '')
+    setattr(r.image, 'url', '')
+
+  if (r.image):
+    image_file = r.image.url.split('/')[-1]
+  else:
+    image_file = ''
+
+  try:
+    response = urllib2.urlopen(r.image.url)
+    image_output = open(os.path.join(__location__, app.config['UPLOAD_FOLDER'], image_file), 'w')
+    image_output.write(response.read())
+    image_output.close()
+  
+    r.image.url = 'images/' + image_file
+  except ValueError:
+    r.image.url = ''
+  except AttributeError:
+    r.image = lambda: None
+    setattr(r.image, 'url', '')
+
+  return r
+
+
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0')
