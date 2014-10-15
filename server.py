@@ -161,13 +161,42 @@ def barcode():
   elif (request.method == 'POST'):
     data = json.loads(request.data)
 
-    #yoopsie_data = get_yoopsie(data['barcode'])
+    yoopsie_data = get_yoopsie(data['barcode'])
+
+    #get_ddg_info(data):
+
+    dvd = Dvd()
+
+
+    ddg_info = get_ddg_info(yoopsie_data[1])
+    dvd.abstract_txt = ddg_info.abstract.text
+    dvd.abstract_source = ddg_info.abstract.source
+    dvd.abstract_url = ddg_info.abstract.url
+    dvd.image_url = ddg_info.image.url
+
+    dvd.created_at = datetime.datetime.now()
+
+    dvd.title = yoopsie_data[1]
+    dvd.created_by = "barcode"
+
+    # Use the Yoopsie image if Duck Duck Go doesn't find anything.
+    if (dvd.image_url == ''):
+      image_file = yoopsie_data[0].split('/')[-1]
+      response = urllib2.urlopen(yoopsie_data[0])
+      image_output = open(os.path.join(__location__, app.config['UPLOAD_FOLDER'], image_file), 'w')
+      image_output.write(response.read())
+      image_output.close()
+  
+      dvd.image_url = 'images/' + image_file
+
+    session.add(dvd)
+    session.commit()
 
     return_data = {
       "status": "DVD Created...",
       #"yoopsieImage": yoopsie_data[0],
       #"yoopsieUrl": yoopsie_data[1],
-      "openUrl": "http://192.168.1.22:5000/#/6"
+      "openUrl": "http://192.168.1.22:5000/#/" + str(dvd.id)
     }
 
     print return_data
@@ -267,12 +296,15 @@ def get_yoopsie(barcode):
   soup = BeautifulSoup(html)
   
   items = soup.find_all("td", class_='info_image')
+  #items[0].a.img['src']
+  #items[0].a['title']
   
-  return (items[0].a.img['src'], "https://duckduckgo.com/?q=" + items[0].a['title'])
+  #return (items[0].a.img['src'], "https://duckduckgo.com/?q=" + items[0].a['title'])
+  return (items[0].a.img['src'], items[0].a['title'])
 
-def get_ddg_info(data):
+def get_ddg_info(title):
   try: 
-    r = duckduckgo.query(data['title'])
+    r = duckduckgo.query(title)
   except:
     # Can't connect to the Internet so build a blank object.
     r = lambda: None
