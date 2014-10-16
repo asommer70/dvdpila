@@ -397,7 +397,7 @@ App.Video = Ember.View.extend({
   keyUp: function(event) {
     var $vid = $(event.target)[0];
 
-    //console.log('keyUp play/pause...');
+    console.log('keyUp play/pause...');
 
     if (event.keyCode == 32 && $vid.paused == true) {
           $vid.play();
