@@ -199,15 +199,26 @@ App.SearchBox = Ember.TextField.extend({
     var query = this.get('value');
     App.searchResultsController.search(query);
   },
+
+  focusIn: function(event) {
+    //console.log("Search focussed...");
+    var $search = $(event.target);
+
+    if ($search.val() != '') {
+      App.searchResultsController.set('searchResults', true);
+      App.searchResultsController.set('searchResults', false);
+    }
+  },
 });
 
 App.searchResultsController = Ember.ArrayController.create({
+//App.searchResultsController = Ember.ArrayController.extend({
   searchResults: false,
   isSearching: false,
   //hasPages: false,
 
   search: function(query) {
-    console.log('searching...');
+    //console.log('searching...');
     if (query == '') {
       this.set('searchResults', false);
       return;
@@ -215,14 +226,11 @@ App.searchResultsController = Ember.ArrayController.create({
 
     var self = this;
     this.set('isSearching', true);
-    this.set('content', []);
 
     $.get('/dvds/search/' + query).then(function(dvd) {
       self.set('content', JSON.parse(dvd).dvds);
       self.set('searchResults', true);
       self.set('isSearching', false);
-      console.log(self);
-      window.location = '/';
     });
 
   },
@@ -235,22 +243,6 @@ App.IndexRoute = Ember.Route.extend({
   },
 
   actions: {
-    /*search: function(controller, query) {
-      console.log("IndexRoute.actions.search...");
-      var self = this;
-      //this.transitionTo('searchresults', $('#query').val());
-      $.get('/dvds/search/' + $('#query').val()).then(function(dvd) {
-        console.log(JSON.parse(dvd));
-        //return JSON.parse(dvd);
-        //self.transitionTo('searchresults');
-        //self.modelFor('index').set('content') = JSON.parse(dvd);
-        self.transitionTo('index');
-        //self.transitionTo('index', JSON.parse(dvd));
-        console.log("self: ", self.modelFor('index'))
-        //self.get('model').set('content', JSON.parse(dvd));
-        //self.modelFor('index') = JSON.parse(dvd);
-      });
-    },*/
     pageOne: function() {
       // Clear search results if there are any.
       if ($('.search').val() != '') {
@@ -268,8 +260,6 @@ App.IndexRoute = Ember.Route.extend({
 
 App.DvdRoute = Ember.Route.extend({
   model: function(params) {
-    console.log(params.dvd_id)
-    console.log(this.store.find('dvd', params.dvd_id));
     return this.store.find('dvd', params.dvd_id);
   },
   actions: {
@@ -290,16 +280,14 @@ App.DvdController = Ember.ObjectController.extend({
   }).property('number', 'currentPage'),
 
   searchResults: (function() {
-    this.transitionToRoute('index');
+    if (App.searchResultsController.isSearching) {
+      this.transitionToRoute('index');
+    }
   }).observes('App.searchResultsController.searchResults'),
 
   actions: {
     edit: function() {
       this.set('isEditing', true);
-    },
-
-    search: function() {
-      return this.store.find('search', params.title);
     },
 
     cancelEditing: function() {
@@ -409,7 +397,7 @@ App.Video = Ember.View.extend({
   keyUp: function(event) {
     var $vid = $(event.target)[0];
 
-    console.log('keyUp play/pause...');
+    //console.log('keyUp play/pause...');
 
     if (event.keyCode == 32 && $vid.paused == true) {
           $vid.play();
