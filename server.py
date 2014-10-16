@@ -15,9 +15,10 @@ from bs4 import BeautifulSoup
 import ConfigParser, os
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import relationship, backref
 
 
 # Read the config.cfg file.
@@ -48,6 +49,15 @@ class Dvd(Base):
   image_url = Column(String)
   file_url = Column(String)
   playback_time = Column(Integer)
+  children = relationship("Episode", lazy="joined")
+
+class Episode(Base):
+  __tablename__ = 'episodes'
+
+  id = Column(Integer, primary_key=True)
+  name = Column(String)
+  file_url = Column(String)
+  dvd_id = Column(Integer, ForeignKey('dvds.id'))
 
 
 # Setup Flask app.
@@ -56,7 +66,7 @@ app.config['UPLOAD_FOLDER'] = config.get('Server', 'upload_folder')
 app.debug = config.getboolean('Server', 'debug')
 
 
-# 'Model' functions.
+# Model functions.
 def find_by_id(id):
   q = session.query(Dvd).get(id)
   return jsonable(Dvd, q) 
@@ -259,6 +269,7 @@ def jsonable(sql_obj, query_res):
   query results can't be serialized into JSON evidently.
   """
   cols = sql_obj.__table__.columns
+  print cols
   col_keys = [col.key for col in cols]
 
   # If not Query object put it in a list.

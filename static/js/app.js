@@ -36,6 +36,8 @@ App.Dvd = DS.Model.extend({
   image_url: attr('string'),
   file_url: attr('string'),
   search: attr('string'),
+  episodes: DS.hasMany('episode'),
+
   ddg_url: function() {
     return 'https://duckduckgo.com/?q=' + this.get('title');
   }.property('title'),
@@ -78,6 +80,12 @@ App.Dvd = DS.Model.extend({
     return this.get('uploadPromise');
   },
 
+});
+
+App.Episode = DS.Model.extend({
+  name: attr('string'),
+  file_url: attr('string'),
+  dvd: DS.belongsTo('dvd')
 });
 
 App.IndexController = Ember.ArrayController.extend({
