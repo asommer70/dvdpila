@@ -1,0 +1,32 @@
+---
+layout: post
+title:  "Ember.js and Searching Again"
+date:   2014-10-16 17:10:53
+excerpt: <p><img alt="code screeny" class="post-image" src="http://www.thehoick.com/images/dvdpila_property_bounce.png"/></p>
+categories: emberjs
+---
+
+<p><img alt="code screeny" class="post-image" src="http://www.thehoick.com/images/dvdpila_property_bounce.png" /></p>
+
+<p>So there was a small problem with searching in <a href="http://dvdpila.thehoick.com" rel="nofollow">DVD Pila!</a> while in a DVD page.  I thought I'd locked it down, but noticed that, though you can now search from inside a DVD page, if you do a second search from a DVD page it won't take you to the results until you click the DVD Pila! icon.  Not ideal.</p>
+
+<p>After some re-familiarization with the DVD Pila! Ember.js code, I think I understand how the search functionality works better than when I initially wrote it.  If I remember correclty I changed the search function to fix the bug after moving onto another project so I might not have focussed as much as I should have on it.</p>
+
+<p>There's an Ember <strong>observer</strong> on the <em>searchResults</em> property which actually performs the transition to the <em>index</em> route which displays the filtered results.  I tested out a few different ways to make things work, but in the end I found that just bouncing the poperty when the search field is focussed allows searches to every time all the time:</p>
+
+<pre><code>focusIn: function(event) {
+  var $search = $(event.target);
+
+   if ($search.val() != '') {
+     App.searchResultsController.set('searchResults', true);
+     App.searchResultsController.set('searchResults', false);
+   }
+},
+</code></pre>
+
+<p>Might not be the most elegant solution, but it works for now.  Now on to displaying multiple "episode/disc" videos on a DVD page...</p>
+
+<p>Party On!</p>
+
+<p>[dvdpila]</p>
+
