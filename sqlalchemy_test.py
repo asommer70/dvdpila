@@ -110,16 +110,9 @@ def jsonable(sql_obj, query_res):
   if (query_res.__class__.__name__ != 'Query'):
     query_res = [query_res]
 
-  try:
-    child_name = sql_obj.children[0].__class__.__name__.lower() + "s"
-  except AttributeError:
-    child_name = False
-
   obj_list = []
   for obj in query_res:
     obj_dict = {}
-    if (child_name):
-      obj_dict[child_name] = []
 
     for key, value in obj.__dict__.iteritems():
       if (key in col_keys):
@@ -128,13 +121,6 @@ def jsonable(sql_obj, query_res):
         elif (type(value) == decimal.Decimal):
           value = int(value)
         obj_dict[key] = value 
-
-    try:
-      for child in sql_obj.children:
-        obj_dict[child_name].append(jsonable(Episode, child))
-    except AttributeError:
-      pass
-
 
     if (query_res.__class__.__name__ == 'Query'):
       obj_list.append(obj_dict)
@@ -146,6 +132,15 @@ def jsonable(sql_obj, query_res):
     return obj_list
 
 
+def jsonable_children(obj_json, sql_class, sql_obj):
+  child_name = sql_obj.children[0].__class__.__name__.lower() + "s"
+
+  obj_json[child_name] = []
+  for child in sql_obj.children:
+    obj_json[child_name].append(jsonable(sql_class, child))
+
+  return obj_json
+
 ### Querying 1 by id
 #dvd = session.query(Dvd).join(Episode)
 dvd = session.query(Dvd).get(41)
@@ -156,10 +151,10 @@ print dir(dvd.children)
 print
 print dvd.children[0].__class__.__name__.lower() + "s"
 print
-for child in dvd.children:
-  print jsonable(Episode, child)
 print
-print jsonable(Dvd, dvd)
+dvd_json = jsonable(Dvd, dvd)
+dvd_json = jsonable_children(dvd_json, Episode, dvd)
+print dvd_json
 
 
 #title = "game"

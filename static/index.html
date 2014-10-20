@@ -163,7 +163,7 @@
       </div>
     {{else}}
       <br/>
-      <button class="success edit" {{action 'edit'}}>Edit</button>
+      <button class="success edit" {{action 'edit'}}>Edit DVD</button>
 
     {{/if}}
 
@@ -176,18 +176,46 @@
       </div>
 
     {{else}}
-        <div class="col-four episodes">
-          Episodes
-
-          {{#each episodes}}
-            <strong>Name:</strong>{{name}}
-          {{/each}}
-
-          {{partial 'episode/add'}}
-            
-        </div>
 
     {{/if}}
+        <div class="col-four episodes">
+          <h4>Episodes</h4>
+          <br/>
+
+          {{#if isAddingEpisodes}}
+            <br/>
+            {{partial 'episode/add'}}
+          {{/if}}
+
+          {{#if isAddingEpisodes}}
+            <button class="success edit" {{action 'saveNewEpisode'}}>Save Episode</button>
+            <button class="default" {{action 'cancelAddingEpisode'}}>Cancel</button>
+          {{else}}
+            <button class="success edit" {{action 'addEpisode'}}>Add Episode</button>
+          {{/if}}
+
+          <br/><br/>
+ 
+            {{#each episodes itemController="episode"}}
+          <div class="eps" style="border: 1px solid #000000; padding: 10px;">
+            <strong>Name:</strong> &nbsp; {{name}}
+
+            <br/>
+            <br/>
+
+            {{#if isEditingEpisode}}
+              {{partial 'episode/edit'}}
+              <button class="success edit" {{action 'saveEpisode'}}>Save Episode</button>
+              <button class="default" {{action 'cancelEditingEpisode'}}>Cancel</button>
+              <button style="float: right;" class="danger" {{action 'deleteEpisode'}}>Delete</button>
+            {{else}}
+              <button class="success edit" {{action 'editEpisode'}}>Edit Episode</button>
+            {{/if}}
+
+          </div>
+            {{/each}}
+
+        </div>
 
   </script>
 
@@ -283,20 +311,31 @@
 
   <script type="text/x-handlebars" id="episode/_add">
     <p>
-      <label for="add-name">Name</label>
-      {{input type="text" id="add-name" value=model.name}}
+      <label for="add-name">Name:</label>
+      {{input type="text" id="add-name"}}
     </p>
     <p>
       <label for="add-file_url">File URL:</label>
-      {{input type="text" id="add-file_url" value=model.file_url}}
+      {{input type="text" id="add-file_url"}}
+    </p>
+  </script>
+
+  <script type="text/x-handlebars" id="episode/_edit">
+    <p>
+      <label for="edit-name">Name:</label>
+      {{input type="text" id="edit-name" value=name}}
+    </p>
+    <p>
+      <label for="edit-file_url">File URL:</label>
+      {{input type="text" id="edit-file_url" value=file_url}}
     </p>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="bower_components/moment/moment.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
-  <script src="js/libs/ember-1.5.1.js"></script>
-  <script src="js/libs/ember-data.js"></script>
+  <script src="js/libs/ember-1.7.0.js"></script>
+  <script src="js/libs/ember-data-1.0.0-beta.11.js"></script>
   <script type="text/javascript" src="js/libs/jquery.fancybox.js"></script>
   <script src="js/app.js"></script>
   <script src="js/flash.js"></script>

@@ -19,6 +19,12 @@ App.Router.map(function() {
   this.route("search", { path: "/dvds/search/:query" })
 });
 
+App.ApplicationSerializer = DS.RESTSerializer.extend({
+  keyForRelationship: function(key, relationship) {
+    return 'dvd_id';
+  }
+});
+
 
 App.Dvd = DS.Model.extend({
   init: function() {
@@ -36,6 +42,7 @@ App.Dvd = DS.Model.extend({
   image_url: attr('string'),
   file_url: attr('string'),
   search: attr('string'),
+  //episodes: DS.hasMany('episode', {async:true}),
   episodes: DS.hasMany('episode'),
 
   ddg_url: function() {
@@ -85,6 +92,7 @@ App.Dvd = DS.Model.extend({
 App.Episode = DS.Model.extend({
   name: attr('string'),
   file_url: attr('string'),
+  dvd_id: attr('number'),
   dvd: DS.belongsTo('dvd')
 });
 
@@ -268,7 +276,9 @@ App.IndexRoute = Ember.Route.extend({
 
 App.DvdRoute = Ember.Route.extend({
   model: function(params) {
-    return this.store.find('dvd', params.dvd_id);
+    var dvd = this.store.find('dvd', params.dvd_id);
+    console.log(dvd);
+    return dvd;
   },
   actions: {
     pageOne: function() {
@@ -281,6 +291,7 @@ App.DvdRoute = Ember.Route.extend({
 
 App.DvdController = Ember.ObjectController.extend({
   isEditing: false,
+  isAddingEpisodes: false,
   currentPage: Ember.computed.alias('parentController.page'),
         
   activePage: (function() {
@@ -300,6 +311,15 @@ App.DvdController = Ember.ObjectController.extend({
 
     cancelEditing: function() {
       this.set('isEditing', false);
+    },
+
+    addEpisode: function() {
+      this.set('isAddingEpisodes', true);
+      $('#add-name').focus();
+    },
+
+    cancelAddingEpisode: function() {
+      this.set('isAddingEpisodes', false);
     },
 
     saveDvd: function() {
@@ -333,6 +353,33 @@ App.DvdController = Ember.ObjectController.extend({
         this.transitionToRoute('index');
       });
     },
+
+  }
+});
+
+App.EpisodeController = Ember.ObjectController.extend({
+  isEditing: false,
+  isEditingEpisode: false,
+  actions: {
+    editEpisode: function() {
+      console.log("Edit Episode...");
+      console.log(this.isEditingEpisode);
+      this.set('isEditingEpisode', true);
+      console.log(this.isEditingEpisode);
+    },
+
+    cancelEditingEpisode: function() {
+      this.set('isEditingEpisode', false);
+    },
+
+    saveEpisode: function() {
+      console.log("Saving Episode...");
+      console.log(this.model);
+      console.log(this.get("file_url"));
+      this.model.save().then(function(episode) {
+        console.log("Episode saved...");
+      });
+    }
 
   }
 });

@@ -69,7 +69,16 @@ app.debug = config.getboolean('Server', 'debug')
 # Model functions.
 def find_by_id(id):
   q = session.query(Dvd).get(id)
-  return jsonable(Dvd, q) 
+  dvd_json = jsonable(Dvd, q) 
+  episodes = []
+  for child in q.children:
+    epi_json = jsonable(Episode, child)
+    #epi_json['dvd'] = epi_json['dvd_id']
+    episodes.append(epi_json)
+
+  dvd_json["episodes"] = [child.id for child in q.children]
+
+  return {"dvd": dvd_json, "episodes": episodes}
 
 def find_by_title(title):
   # Search by regex.
@@ -125,6 +134,15 @@ def update_dvd(dvd_id, data):
 
   session.commit()
   return find_by_id(dvd_id)
+
+  #q = session.query(Dvd).get(id)
+  #dvd_json = jsonable(Dvd, q)
+  #print dvd_json
+  #episodes = []
+  #for child in q.children:
+  #  episodes.append(jsonable(Episode, child))
+  #return {"dvd": dvd_json, "episodes": episodes}
+  ##return json.dumps(find_by_id(dvd_id))
 
 def delete_dvd(dvd_id):
   dvd = session.query(Dvd).get(dvd_id)
@@ -225,11 +243,14 @@ def dvds():
 def show_dvd(dvd_id):
   if (request.method == 'GET'):
     # Show the DVD with the given id, the id is an integer.
-    return json.dumps({ "dvd": find_by_id(dvd_id) })
+    #return json.dumps(find_by_id(dvd_id))
+    return app.response_class(json.dumps(find_by_id(dvd_id)), mimetype='application/json')
   elif (request.method == 'PUT'):
 
     status = update_dvd(dvd_id, json.loads(request.data)['dvd'])
-    return json.dumps({"dvd": status})
+    print status
+    #return json.dumps({"dvd": status})
+    return json.dumps(status)
   elif (request.method == 'POST'):
     # Handle the image file upload.
     file = request.files['file']
@@ -289,10 +310,20 @@ def jsonable(sql_obj, query_res):
     if (query_res.__class__.__name__ == 'Query'):
       obj_list.append(obj_dict)
 
+
   if (query_res.__class__.__name__ != 'Query'):
     return obj_dict
   else:
     return obj_list
+
+def jsonable_children(obj_json, sql_class, sql_obj):
+  child_name = sql_obj.children[0].__class__.__name__.lower() + "s"
+
+  obj_json[child_name] = []
+  for child in sql_obj.children:
+    obj_json[child_name].append(jsonable(sql_class, child))
+
+  return obj_json
 
 def get_yoopsie(barcode):
   """
