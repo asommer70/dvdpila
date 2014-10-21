@@ -56,7 +56,7 @@ class Episode(Base):
 
   id = Column(Integer, primary_key=True)
   name = Column(String)
-  file_url = Column(String)
+  episode_file_url = Column(String)
   dvd_id = Column(Integer, ForeignKey('dvds.id'))
 
 
@@ -79,6 +79,12 @@ def find_by_id(id):
   dvd_json["episodes"] = [child.id for child in q.children]
 
   return {"dvd": dvd_json, "episodes": episodes}
+
+def find_episode(id):
+  q = session.query(Episode).get(id)
+  epi_json = jsonable(Episode, q) 
+
+  return {"episode": epi_json}
 
 def find_by_title(title):
   # Search by regex.
@@ -135,15 +141,6 @@ def update_dvd(dvd_id, data):
   session.commit()
   return find_by_id(dvd_id)
 
-  #q = session.query(Dvd).get(id)
-  #dvd_json = jsonable(Dvd, q)
-  #print dvd_json
-  #episodes = []
-  #for child in q.children:
-  #  episodes.append(jsonable(Episode, child))
-  #return {"dvd": dvd_json, "episodes": episodes}
-  ##return json.dumps(find_by_id(dvd_id))
-
 def delete_dvd(dvd_id):
   dvd = session.query(Dvd).get(dvd_id)
   session.delete(dvd)
@@ -170,7 +167,46 @@ def find_all(sql_obj):
   q = session.query(sql_obj)
   return jsonable(sql_obj, q)
 
+def add_episode(data):
+  # Add new object.
+  episode = Episode()
 
+  # Set the SQLAlchemy object's attributes.
+  #print data
+  episode.name = data['name']
+  episode.episode_file_url = data['episode_file_url']
+  episode.dvd_id = data['dvd_id']
+
+  session.add(episode)
+  session.commit()
+
+  return {"episode": {
+      "id": episode.id, 
+      "name": episode.name, 
+      "episode_file_url": episode.episode_file_url, 
+      "dvd_id": episode.dvd_id,
+    }
+  }
+
+def update_episode(episode_id, data):
+  """
+  Update episode.
+  """
+  episode = session.query(Episode).get(episode_id)
+  #print data
+
+  for key in data['episode']:
+    setattr(episode, key, data['episode'][key])
+
+  session.commit()
+  return find_episode(episode_id)
+
+def delete_episode(episode_id):
+  episode = session.query(Episode).get(episode_id)
+  session.delete(episode)
+  session.commit()
+
+  return True
 
 # Routes
 @app.route('/', methods=['GET'])
@@ -227,7 +263,7 @@ def barcode():
       "openUrl": "http://192.168.1.22:5000/#/" + str(dvd.id)
     }
 
-    print return_data
+    #print return_data
 
     return json.dumps(return_data)
 
@@ -248,7 +284,7 @@ def show_dvd(dvd_id):
   elif (request.method == 'PUT'):
 
     status = update_dvd(dvd_id, json.loads(request.data)['dvd'])
-    print status
+    #print status
     #return json.dumps({"dvd": status})
     return json.dumps(status)
   elif (request.method == 'POST'):
@@ -278,6 +314,28 @@ def play_dvd(dvd_id):
   elif (request.method == 'POST'):
     return json.dumps(set_playback_location(dvd_id, request.form.get('playback_time')))
 
+@app.route('/episodes', methods=['GET', 'POST'])
+def episodes():
+  if (request.method == 'GET'):
+    return json.dumps({"episodes": find_all(Episode)})
+  elif (request.method == 'POST'):
+    episode = add_episode(json.loads( request.data)['episode'])
+    return json.dumps(episode)
+
+@app.route('/episodes/<int:episode_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
+def episode(episode_id):
+  if (request.method == 'GET'):
+    pass
+  elif (request.method == 'POST'):
+    pass
+  elif (request.method == 'PUT'):
+    episode = update_episode(episode_id, json.loads(request.data))
+    return app.response_class(json.dumps(episode), mimetype='application/json')
+  elif (request.method == 'DELETE'):
+    delete_episode(episode_id)
+    return json.dumps(True)
+
+
 
 # Helpers
 def allowed_file(filename):
@@ -290,7 +348,7 @@ def jsonable(sql_obj, query_res):
   query results can't be serialized into JSON evidently.
   """
   cols = sql_obj.__table__.columns
-  print cols
+  #print cols
   col_keys = [col.key for col in cols]
 
   # If not Query object put it in a list.

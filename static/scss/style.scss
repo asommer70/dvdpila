@@ -48,6 +48,11 @@ input {
 
 }
 
+input:disabled { 
+  background: $base-link-color;
+  border: 1px solid $base-border-color; 
+}
+
 .search input {
   //color: white;
   @include placeholder {
@@ -66,6 +71,23 @@ video {
   @include media(max-width $medium-screen) {
     width: 100%;
     margin-top: 20px;
+  }
+}
+
+.eps {
+  margin-top: 30px;
+  border: 1px solid $base-border-color; 
+  padding: 10px;
+
+  .episode-name {
+    background: #eeeeee;
+    padding: 3px 5px;
+  }
+}
+
+.episode_player {
+  video {
+    width: 100%;
   }
 }
 
@@ -137,6 +159,14 @@ video {
     margin-top: 30px;
     width: 100%;
   }
+}
+
+.col-six {
+  @include span-columns(6);
+}
+
+.col-eight {
+  @include span-columns(8);
 }
 
 .search {

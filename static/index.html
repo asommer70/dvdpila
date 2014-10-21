@@ -176,38 +176,53 @@
       </div>
 
     {{else}}
+      {{partial "dvd/episodes"}}
 
     {{/if}}
-        <div class="col-four episodes">
+
+  </script>
+
+  <script type="text/x-handlebars" id="dvd/episodes">
+    <div class="row">
           <h4>Episodes</h4>
           <br/>
 
-          {{#if isAddingEpisodes}}
-            <br/>
-            {{partial 'episode/add'}}
-          {{/if}}
+          <div class="col-four">
+            {{#if isAddingEpisodes}}
+              <br/>
+              {{partial "episode/add"}}
+            {{/if}}
 
-          {{#if isAddingEpisodes}}
-            <button class="success edit" {{action 'saveNewEpisode'}}>Save Episode</button>
-            <button class="default" {{action 'cancelAddingEpisode'}}>Cancel</button>
-          {{else}}
-            <button class="success edit" {{action 'addEpisode'}}>Add Episode</button>
-          {{/if}}
+            {{#if isAddingEpisodes}}
+              <button class="success edit" {{action 'saveNewEpisode'}}>Save Episode</button>
+              <button class="default" {{action 'cancelAddingEpisode'}}>Cancel</button>
+            {{else}}
+              <button class="success edit" {{action 'addEpisode'}}>Add Episode</button>
+            {{/if}}
+            <br/>
+          </div>
 
           <br/><br/>
- 
+
             {{#each episodes itemController="episode"}}
-          <div class="eps" style="border: 1px solid #000000; padding: 10px;">
-            <strong>Name:</strong> &nbsp; {{name}}
+
+          <div class="col-four eps">
+            <span class="episode-name"><strong>Name:</strong> &nbsp; {{name}}</span>
 
             <br/>
             <br/>
 
+            <div class="episode_player">
+              {{view App.Video controllerBinding="App.videoController"}}
+            </div>
+
+            <br/>
+            <br/>
             {{#if isEditingEpisode}}
               {{partial 'episode/edit'}}
               <button class="success edit" {{action 'saveEpisode'}}>Save Episode</button>
               <button class="default" {{action 'cancelEditingEpisode'}}>Cancel</button>
-              <button style="float: right;" class="danger" {{action 'deleteEpisode'}}>Delete</button>
+              <button style="float: right;" class="danger" {{action 'deleteEpisode' id}}>Delete</button>
             {{else}}
               <button class="success edit" {{action 'editEpisode'}}>Edit Episode</button>
             {{/if}}
@@ -215,8 +230,7 @@
           </div>
             {{/each}}
 
-        </div>
-
+      </div>
   </script>
 
   <script type="text/x-handlebars" id="dvd/_edit">
@@ -246,7 +260,11 @@
     </p>
     <p>
       <label for="edit-file_url">File URL:</label>
-      {{input type="text" id="edit-file_url" value=file_url}}
+      {{#if episodes}}
+        {{input type="text" id="edit-file_url" value=file_url disabled="true"}}
+      {{else}}
+        {{input type="text" id="edit-file_url" value=file_url}}
+      {{/if}}
     </p>
     <p>
       <label for="edit-image_url">DVD Image:</label>
@@ -309,14 +327,14 @@
     {{/each}}
   </script>
 
-  <script type="text/x-handlebars" id="episode/_add">
+  <script type="text/x-handlebars" id="episode/add">
     <p>
       <label for="add-name">Name:</label>
-      {{input type="text" id="add-name"}}
+      {{input type="text" id="add-name" valueBinding="name"}}
     </p>
     <p>
-      <label for="add-file_url">File URL:</label>
-      {{input type="text" id="add-file_url"}}
+      <label for="add-episode_file_url">File URL:</label>
+      {{input type="text" id="add-episode_file_url" valueBinding="episode_file_url"}}
     </p>
   </script>
 
@@ -326,8 +344,8 @@
       {{input type="text" id="edit-name" value=name}}
     </p>
     <p>
-      <label for="edit-file_url">File URL:</label>
-      {{input type="text" id="edit-file_url" value=file_url}}
+      <label for="edit-episode_file_url">File URL:</label>
+      {{input type="text" id="edit-episode_file_url" value=episode_file_url}}
     </p>
   </script>
 

@@ -19,11 +19,11 @@ App.Router.map(function() {
   this.route("search", { path: "/dvds/search/:query" })
 });
 
-App.ApplicationSerializer = DS.RESTSerializer.extend({
+/*App.ApplicationSerializer = DS.RESTSerializer.extend({
   keyForRelationship: function(key, relationship) {
     return 'dvd_id';
   }
-});
+});*/
 
 
 App.Dvd = DS.Model.extend({
@@ -91,8 +91,13 @@ App.Dvd = DS.Model.extend({
 
 App.Episode = DS.Model.extend({
   name: attr('string'),
-  file_url: attr('string'),
+  episode_file_url: attr('string'),
+  //dvds_id: attr('number'),
   dvd_id: attr('number'),
+  file_url: function() {
+    return this.get('episode_file_url');
+  }.property('file_url'),
+  //dvd: DS.belongsTo('dvd', {key: "dvd_id"})
   dvd: DS.belongsTo('dvd')
 });
 
@@ -277,7 +282,7 @@ App.IndexRoute = Ember.Route.extend({
 App.DvdRoute = Ember.Route.extend({
   model: function(params) {
     var dvd = this.store.find('dvd', params.dvd_id);
-    console.log(dvd);
+    //console.log(dvd);
     return dvd;
   },
   actions: {
@@ -344,6 +349,27 @@ App.DvdController = Ember.ObjectController.extend({
       }
     },
 
+    saveNewEpisode: function() {
+      console.log("Saving New Episode...");
+      
+      var self = this;
+      var episode = this.get('store').createRecord('episode', {
+          name: this.get('name'),
+          episode_file_url: this.get('episode_file_url'),
+          dvd_id: this.get('id')
+          //dvds_id: this.get('id'),
+      });
+
+      episode.save().then(function(new_episode) {
+        //console.log(new_episode);
+        self.set('name', '');
+        self.set('episode_file_url', '');
+        self.set('isAddingEpisodes', false);
+        self.get('episodes').pushObject(new_episode); 
+        App.FlashQueue.pushFlash('notice', new_episode.get('name') + " added to your Pila.");
+      });
+    },
+
     delete: function(context) {
       var dvd = this.get('content');
       this.get('model').destroyRecord();
@@ -354,6 +380,21 @@ App.DvdController = Ember.ObjectController.extend({
       });
     },
 
+    deleteEpisode: function(episode_id) {
+      console.log("episode id:", episode_id);
+      //var episode = this.get('episodes').get('content')[episode_id];
+      var episode = this.get('episodes').get('content').findBy("id", episode_id);
+      console.log(episode);
+
+      //console.log(episode.get("episodes").get('content'));
+      
+      episode.destroyRecord();
+
+      episode.one('didDelete', this, function () {
+        App.FlashQueue.pushFlash('notice', episode.get('name') + " successfully deleted.");
+      });
+    }
+
   }
 });
 
@@ -363,9 +404,7 @@ App.EpisodeController = Ember.ObjectController.extend({
   actions: {
     editEpisode: function() {
       console.log("Edit Episode...");
-      console.log(this.isEditingEpisode);
       this.set('isEditingEpisode', true);
-      console.log(this.isEditingEpisode);
     },
 
     cancelEditingEpisode: function() {
@@ -374,12 +413,14 @@ App.EpisodeController = Ember.ObjectController.extend({
 
     saveEpisode: function() {
       console.log("Saving Episode...");
-      console.log(this.model);
-      console.log(this.get("file_url"));
+      var self = this;
+
       this.model.save().then(function(episode) {
         console.log("Episode saved...");
+        App.FlashQueue.pushFlash('notice', episode.get('name') + " successfully updated.");
+        self.set('isEditingEpisode', false);
       });
-    }
+    },
 
   }
 });
