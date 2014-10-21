@@ -160,12 +160,25 @@ def set_playback_location(dvd_id, playback_time):
   session.commit()
   return True
 
-def find_all(sql_obj):
+def find_all():
   """
   Return a list of all records in the table.
   """
-  q = session.query(sql_obj)
-  return jsonable(sql_obj, q)
+  q = session.query(Dvd)
+  dvds = []
+  episodes = []
+
+  # Sideload the episodes.
+  for dvd in q:
+    dvd_json = jsonable(Dvd, dvd)
+    for child in dvd.children:
+      epi_json = jsonable(Episode, child)
+      episodes.append(epi_json)
+
+    dvd_json["episodes"] = [child.id for child in dvd.children]
+    dvds.append(dvd_json)
+
+  return {"dvds": dvds, "episodes": episodes}
 
 def add_episode(data):
   # Add new object.
@@ -270,7 +283,9 @@ def barcode():
 @app.route('/dvds', methods=['GET', 'POST'])
 def dvds():
   if (request.method == 'GET'):
-    return json.dumps({"dvds": find_all(Dvd)})
+    #return json.dumps({"dvds": find_all(Dvd)})
+    #return json.dumps(find_all(Dvd))
+    return json.dumps(find_all())
   elif (request.method == 'POST'):
     dvd = add_dvd(json.loads( request.data)['dvd'])
     return json.dumps(dvd)
@@ -279,7 +294,6 @@ def dvds():
 def show_dvd(dvd_id):
   if (request.method == 'GET'):
     # Show the DVD with the given id, the id is an integer.
-    #return json.dumps(find_by_id(dvd_id))
     return app.response_class(json.dumps(find_by_id(dvd_id)), mimetype='application/json')
   elif (request.method == 'PUT'):
 

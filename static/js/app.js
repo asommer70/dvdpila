@@ -16,6 +16,9 @@ App.Search = DS.Model.extend({
 App.Router.map(function() {
   this.resource('about');
   this.resource('dvd', { path: ':dvd_id' });
+  //this.resource("dvds", function() {
+  //  this.route("dvd", { path: ':dvd_id' });
+  //});
   this.route("search", { path: "/dvds/search/:query" })
 });
 
