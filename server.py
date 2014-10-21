@@ -57,6 +57,7 @@ class Episode(Base):
   id = Column(Integer, primary_key=True)
   name = Column(String)
   episode_file_url = Column(String)
+  playback_time = Column(Integer)
   dvd_id = Column(Integer, ForeignKey('dvds.id'))
 
 
@@ -148,14 +149,14 @@ def delete_dvd(dvd_id):
 
   return True
 
-def get_playback_location(dvd_id):
-  dvd = session.query(Dvd).get(dvd_id)
+def get_playback_location(sql_obj, vid_id):
+  vid = session.query(sql_obj).get(vid_id)
 
-  return dvd.playback_time
+  return vid.playback_time
 
-def set_playback_location(dvd_id, playback_time):
-  dvd = session.query(Dvd).get(dvd_id)
-  dvd.playback_time = playback_time
+def set_playback_location(sql_obj, vid_id, playback_time):
+  vid = session.query(sql_obj).get(vid_id)
+  vid.playback_time = playback_time
 
   session.commit()
   return True
@@ -323,10 +324,10 @@ def search(query):
 @app.route('/dvds/playback/<int:dvd_id>', methods=['GET', 'POST'])
 def play_dvd(dvd_id):
   if (request.method == 'GET'):
-    playback_time = get_playback_location(dvd_id)
-    return json.dumps(int(get_playback_location(dvd_id)))
+    #playback_time = get_playback_location(Dvd, dvd_id)
+    return json.dumps(int(get_playback_location(Dvd, dvd_id)))
   elif (request.method == 'POST'):
-    return json.dumps(set_playback_location(dvd_id, request.form.get('playback_time')))
+    return json.dumps(set_playback_location(Dvd, dvd_id, request.form.get('playback_time')))
 
 @app.route('/episodes', methods=['GET', 'POST'])
 def episodes():
@@ -348,6 +349,15 @@ def episode(episode_id):
   elif (request.method == 'DELETE'):
     delete_episode(episode_id)
     return json.dumps(True)
+
+@app.route('/episodes/playback/<int:episode_id>', methods=['GET', 'POST'])
+def play_episode(episode_id):
+  if (request.method == 'GET'):
+    playback_time = get_playback_location(Episode, episode_id)
+    return json.dumps(int(get_playback_location(Episode, episode_id)))
+  elif (request.method == 'POST'):
+    return json.dumps(set_playback_location(Episode, episode_id, request.form.get('playback_time')))
+
 
 
 

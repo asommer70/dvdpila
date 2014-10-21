@@ -489,7 +489,8 @@ App.StarRating = Ember.View.extend({
 App.Video = Ember.View.extend({
   attributeBindings: ['src', 'controls'],
   src: Ember.computed.alias('context.file_url'),
-  dvdId: Ember.computed.alias('context.id'),
+  vidId: Ember.computed.alias('context.id'),
+  dvd_id: Ember.computed.alias('context.dvd_id'),
   controls: true,
   tagName: 'video',
 
@@ -509,7 +510,8 @@ App.Video = Ember.View.extend({
     //console.log('didInsertElement...');
 
     // Get the DVD id.
-    var dvd_id = this.get('dvdId');
+    var vid_id = this.get('vidId');
+    var dvd_id = this.get('dvd_id');
     var vid = this.$();
 
     this.$().on("pause", function(event) {
@@ -519,7 +521,11 @@ App.Video = Ember.View.extend({
       var self = this;
 
       // Send time location to server.
-      $.post('/dvds/playback/' + dvd_id, { playback_time: this.currentTime });
+      if (dvd_id == undefined) {
+        $.post('/dvds/playback/' + vid_id, { playback_time: this.currentTime });
+      } else {
+        $.post('/episodes/playback/' + vid_id, { playback_time: this.currentTime });
+      }
 
       // Play on space.
       /*$('body').off('keyup');
@@ -540,11 +546,19 @@ App.Video = Ember.View.extend({
       //console.log('playing...');
 
       var self = this;
-      $.get('/dvds/playback/' + dvd_id).then(function(data) {
-        //console.log(data);
-        self.currentTime = data;
-        self.play();
-      });
+      if (dvd_id == undefined) {
+        $.get('/dvds/playback/' + vid_id).then(function(data) {
+          //console.log(data);
+          self.currentTime = data;
+          self.play();
+        });
+      } else {
+        $.get('/episodes/playback/' + vid_id).then(function(data) {
+          //console.log(data);
+          self.currentTime = data;
+          self.play();
+        });
+      }
 
       // Pause on space.
       /*$('body').off('keyup');
