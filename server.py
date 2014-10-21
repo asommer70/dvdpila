@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 import ConfigParser, os
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship, backref
@@ -35,6 +35,12 @@ Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
 
+association_table = Table(
+  'dvds_tags', Base.metadata,
+  Column('dvd_id', Integer, ForeignKey('dvds.id')),
+  Column('tag_id', Integer, ForeignKey('tags.id'))
+)
+
 class Dvd(Base):
   __tablename__ = 'dvds'
 
@@ -49,7 +55,8 @@ class Dvd(Base):
   image_url = Column(String)
   file_url = Column(String)
   playback_time = Column(Integer)
-  children = relationship("Episode", lazy="joined")
+  episodes = relationship("Episode", lazy="joined")
+  tags = relationship("Tag", secondary=association_table, backref="dvds")
 
 class Episode(Base):
   __tablename__ = 'episodes'
@@ -60,6 +67,12 @@ class Episode(Base):
   playback_time = Column(Integer)
   dvd_id = Column(Integer, ForeignKey('dvds.id'))
 
+class Tag(Base):
+  __tablename__ = 'tags'
+
+  id = Column(Integer, primary_key=True)
+  name = Column(String)
+
 
 # Setup Flask app.
 app = Flask(__name__)
@@ -69,17 +82,23 @@ app.debug = config.getboolean('Server', 'debug')
 
 # Model functions.
 def find_by_id(id):
-  q = session.query(Dvd).get(id)
-  dvd_json = jsonable(Dvd, q) 
+  dvd = session.query(Dvd).get(id)
+  dvd_json = jsonable(Dvd, dvd)
   episodes = []
-  for child in q.children:
-    epi_json = jsonable(Episode, child)
-    #epi_json['dvd'] = epi_json['dvd_id']
+  tags = []
+
+  for episode in dvd.episodes:
+    epi_json = jsonable(Episode, episode)
     episodes.append(epi_json)
 
-  dvd_json["episodes"] = [child.id for child in q.children]
+  for tag in dvd.tags:
+    tag_json = jsonable(Tag, tag)
+    tags.append(tag_json)
 
-  return {"dvd": dvd_json, "episodes": episodes}
+  dvd_json["episodes"] = [episode.id for episode in dvd.episodes]
+  dvd_json["tags"] = [tag.id for tag in dvd.tags]
+
+  return {"dvd": dvd_json, "episodes": episodes, "tags": tags}
 
 def find_episode(id):
   q = session.query(Episode).get(id)
@@ -168,18 +187,26 @@ def find_all():
   q = session.query(Dvd)
   dvds = []
   episodes = []
+  tags = []
 
   # Sideload the episodes.
   for dvd in q:
     dvd_json = jsonable(Dvd, dvd)
-    for child in dvd.children:
-      epi_json = jsonable(Episode, child)
+    for episode in dvd.episodes:
+      epi_json = jsonable(Episode, episode)
       episodes.append(epi_json)
 
-    dvd_json["episodes"] = [child.id for child in dvd.children]
+    dvd_json["episodes"] = [episode.id for episode in dvd.episodes]
+
+    for tag in dvd.tags:
+      tag_json = jsonable(Tag, tag)
+      tags.append(tag_json)
+
+    dvd_json["episodes"] = [episode.id for episode in dvd.episodes]
+    dvd_json["tags"] = [tag.id for tag in dvd.tags]
     dvds.append(dvd_json)
 
-  return {"dvds": dvds, "episodes": episodes}
+  return {"dvds": dvds, "episodes": episodes, "tags": tags}
 
 def add_episode(data):
   # Add new object.
@@ -399,10 +426,10 @@ def jsonable(sql_obj, query_res):
     return obj_list
 
 def jsonable_children(obj_json, sql_class, sql_obj):
-  child_name = sql_obj.children[0].__class__.__name__.lower() + "s"
+  child_name = sql_obj.episodes[0].__class__.__name__.lower() + "s"
 
   obj_json[child_name] = []
-  for child in sql_obj.children:
+  for child in sql_obj.episodes:
     obj_json[child_name].append(jsonable(sql_class, child))
 
   return obj_json

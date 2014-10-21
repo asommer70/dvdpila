@@ -7,7 +7,7 @@
 import datetime
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship, backref
@@ -30,6 +30,11 @@ class DictSerializable(object):
       result[key] = getattr(self, key)
       return result
 
+association_table = Table(
+  'dvds_tags', Base.metadata,
+  Column('dvd_id', Integer, ForeignKey('dvds.id')),
+  Column('tag_id', Integer, ForeignKey('tags.id'))
+)
 
 class Dvd(Base):
   __tablename__ = 'dvds'
@@ -45,15 +50,22 @@ class Dvd(Base):
   image_url = Column(String)
   file_url = Column(String)
   playback_time = Column(Integer)
-  children = relationship("Episode", lazy="joined")
+  episodes = relationship("Episode", lazy="joined")
+  tags = relationship("Tag", secondary=association_table, backref="dvds")
 
 class Episode(Base):
   __tablename__ = 'episodes'
 
   id = Column(Integer, primary_key=True)
   name = Column(String)
-  file_url = Column(String)
+  episode_file_url = Column(String)
   dvd_id = Column(Integer, ForeignKey('dvds.id'))
+
+class Tag(Base):
+  __tablename__ = 'tags'
+
+  id = Column(Integer, primary_key=True)
+  name = Column(String)
 
 # Add new object.
 #super_bad = Dvd(title='Super Bad', created_at=datetime.datetime.now(), created_by='adam', rating=5, file_url='')
@@ -132,30 +144,38 @@ def jsonable(sql_obj, query_res):
     return obj_list
 
 
-def jsonable_children(obj_json, sql_class, sql_obj):
-  child_name = sql_obj.children[0].__class__.__name__.lower() + "s"
+def jsonable_episodes(obj_json, sql_class, sql_obj):
+  child_name = sql_obj.episodes[0].__class__.__name__.lower() + "s"
 
   obj_json[child_name] = []
-  for child in sql_obj.children:
+  for child in sql_obj.episodes:
     obj_json[child_name].append(jsonable(sql_class, child))
 
   return obj_json
 
 ### Querying 1 by id
 #dvd = session.query(Dvd).join(Episode)
-dvd = session.query(Dvd).get(41)
 
-print dir(dvd)
-print 
-print dir(dvd.children)
-print
-print dvd.children[0].__class__.__name__.lower() + "s"
-print
-print
-dvd_json = jsonable(Dvd, dvd)
-dvd_json = jsonable_children(dvd_json, Episode, dvd)
-print dvd_json
+dvd = session.query(Dvd).get(29)
 
+print dvd.title, dvd.id, dvd.tags[0].name
+
+tag = session.query(Tag).get(1)
+print tag.name, tag.dvds[0].title
+
+#dvd = session.query(Dvd).get(41)
+#
+#print dir(dvd)
+#print 
+#print dir(dvd.episodes)
+#print
+#print dvd.episodes[0].__class__.__name__.lower() + "s"
+#print
+#print
+#dvd_json = jsonable(Dvd, dvd)
+#dvd_json = jsonable_episodes(dvd_json, Episode, dvd)
+#print dvd_json
+#
 
 #title = "game"
 #dvds = session.query(Dvd).filter("title ~* '%s'" % (title)).all()
