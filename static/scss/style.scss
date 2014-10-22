@@ -93,6 +93,38 @@ video {
 
 .tags {
   margin: 20px 0px;
+  line-height: 35px;
+}
+
+.tag {
+  padding: 5px 5px;
+  background-color: $blue;
+  color: white;
+  font-size: 14px;
+  margin: 5px 0px;
+  display: inline-block;
+  position: relative;
+
+  &:hover {
+    //padding-right: 15px;
+    .x-icon {
+      display: inline-block;
+    }
+  }
+
+  .x-icon {
+    display: none;
+    position:absolute;
+    //padding-left: 5px;
+    //padding-right: 5px;
+    top: 5px;
+    right: 5px;
+    &:hover {
+      display: inline-block;
+      cursor: pointer;
+      color: darken(white, 20);
+    }
+  }
 }
 
 :-webkit-full-screen {
@@ -114,6 +146,13 @@ video {
 .danger {
   @include button(simple, #ff0000);
   margin: 4px;
+  padding: 5px 5px 5px 5px;
+  font-size: 12px;
+}
+
+.add-tag {
+  @include button(simple, $base-link-color);
+  //margin: 4px;
   padding: 5px 5px 5px 5px;
   font-size: 12px;
 }

@@ -418,19 +418,12 @@ App.DvdController = Ember.ObjectController.extend({
       console.log("Saving Tag...");
       var self = this;
       var tag_field = this.get('tag');
-      console.log("tag_field:", tag_field);
-
-      console.log("tags", this.get('tags'));
-
-      // Save the new tag, then apply it to the Dvd.
-      //var tag_store = App.Tag.store.find('tag');
-      //console.log("tag_store:", tag_store);
 
       // Find new tag.
       this.store.find('tag', { name: tag_field }).then(function(tag) {
         //var tag_in_store = this.store.find('tag', 5);
         console.log("tag_in_store:", tag);
-        if (tag.objectAt(0).get('name') != false) {
+        if (tag.objectAt(0).get('name') != "false") {
           self.get('tags').pushObject(tag.objectAt(0));
             self.model.save().then(function(tag) {
               console.log("Tag saved...");
@@ -440,6 +433,7 @@ App.DvdController = Ember.ObjectController.extend({
               self.set('isAddingTag', false);
             });
         } else {
+          // If tag isn't in database add it then update the DVD.
           var new_tag_record = self.get('store').createRecord('tag', {
               name: tag_field,
           });
@@ -451,20 +445,19 @@ App.DvdController = Ember.ObjectController.extend({
             self.model.save().then(function(tag) {
               console.log("Tag saved...");
 
-              App.FlashQueue.pushFlash('notice', tag.get('name') + " successfully added.");
+              App.FlashQueue.pushFlash('notice', "Tag: " + new_tag.get('name') + " successfully added.");
               self.set('tag', '');
               self.set('isAddingTag', false);
             });
           });
         }
-        console.log("tag_in_store:", tag.objectAt(0).get('id'));
       });
+    },
 
-
-      //console.log("new_tag.id:", new_tag.id);
-
-      //console.log("new_tag:", new_tag);
-
+    removeTag: function(tag_id) {
+      console.log("Removing tag_id: ", tag_id);
+      this.get('tags').removeAt(tag_id);
+      this.model.save();
     },
   }
 });

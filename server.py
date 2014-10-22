@@ -20,6 +20,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import InvalidRequestError
 
 
 # Read the config.cfg file.
@@ -156,11 +157,8 @@ def update_dvd(dvd_id, data):
 
   dvd = session.query(Dvd).get(dvd_id)
 
-  print
   del data['search']
-  print data
   for key in data:
-    print key
     if (key != 'tags'):
       setattr(dvd, key, data[key])
     else:
@@ -376,8 +374,6 @@ def show_dvd(dvd_id):
     # Show the DVD with the given id, the id is an integer.
     return app.response_class(json.dumps(find_by_id(dvd_id)), mimetype='application/json')
   elif (request.method == 'PUT'):
-
-    print request.data
 
     status = update_dvd(dvd_id, json.loads(request.data)['dvd'])
     #print status

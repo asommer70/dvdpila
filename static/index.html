@@ -145,21 +145,27 @@
                 </a>
               </div>
 
-              <div class="badges tags">
+              <div class=" tags">
                 <h4>Tags</h4>
 
+                <br/>
+                {{#each tags}}
+                  <span class="tag">
+                    &nbsp; {{name}} &nbsp;&nbsp;
+                    <i class="x-icon" {{action "removeTag" _view.contentIndex}}>&#10006;</i>
+                  </span>
+                {{/each}}
+                <br/>
+
                 {{#if isAddingTag}}
+                  <br/>
                   {{input type="text" id="add-tagName" value=tag}}
                   <button class="small success" {{action 'saveTag'}}>Save Tag</button>
                   <button class="default" {{action 'cancelAddingTag'}}>Cancel</button>
                 {{else}}
-                  <button class="success" {{action 'addTag'}}>Add Tag</button>
+                  <button class="add-tag success" {{action 'addTag'}}>Add Tag</button>
                 {{/if}}
 
-                <br/>
-                {{#each tags}}
-                  <span class="badge success">{{name}}</span>
-                {{/each}}
               </div>
 
             </span>
