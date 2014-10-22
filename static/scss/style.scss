@@ -48,9 +48,9 @@ input {
 
 }
 
-input:disabled { 
+input:disabled {
   background: $base-link-color;
-  border: 1px solid $base-border-color; 
+  border: 1px solid $base-border-color;
 }
 
 .search input {
@@ -76,7 +76,7 @@ video {
 
 .eps {
   margin-top: 30px;
-  border: 1px solid $base-border-color; 
+  border: 1px solid $base-border-color;
   padding: 10px;
 
   .episode-name {
@@ -89,6 +89,10 @@ video {
   video {
     width: 100%;
   }
+}
+
+.tags {
+  margin: 20px 0px;
 }
 
 :-webkit-full-screen {
@@ -230,14 +234,14 @@ video {
 .star-empty {
   width: 16px;
   height: 16px;
-  color: #cccccc; 
+  color: #cccccc;
 }
 
 .fancybox-close {
   border-bottom: none;
 }
 
-//:star-rating :icon 
+//:star-rating :icon
 //full:star
 //:star-empty
 
@@ -647,6 +651,51 @@ header.navigation {
       &:active {
         background: $pagination-background;
       }
+    }
+  }
+}
+
+// Badges
+.badges {
+  $badge-background: $medium-gray;
+  $badge-dark-color: $dark-gray;
+  $badge-error-color: $error-color;
+  $badge-notice-color: $notice-color;
+  $badge-success-color: $success-color;
+  $badge-font-color: #fff;
+  $badge-font-size: $base-font-size * .75;
+
+  display: block;
+  margin-bottom: $base-line-height;
+
+  .badge {
+    @include inline-block;
+    background: $badge-background;
+    border-radius: 2em;
+    color: $badge-font-color;
+    font-size: $badge-font-size;
+    font-weight: 600;
+    line-height: 1;
+    padding: .25em 1em;
+    text-align: center;
+
+    &.dark {
+      background: $badge-dark-color;
+    }
+
+    &.error {
+      background: $badge-error-color;
+      color: darken($badge-error-color, 60);
+    }
+
+    &.notice {
+      background: $badge-notice-color;
+      color: darken($badge-notice-color, 60);
+    }
+
+    &.success {
+      background: $badge-success-color;
+      color: darken($badge-success-color, 60);
     }
   }
 }

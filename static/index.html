@@ -145,6 +145,23 @@
                 </a>
               </div>
 
+              <div class="badges tags">
+                <h4>Tags</h4>
+
+                {{#if isAddingTag}}
+                  {{input type="text" id="add-tagName" value=tag}}
+                  <button class="small success" {{action 'saveTag'}}>Save Tag</button>
+                  <button class="default" {{action 'cancelAddingTag'}}>Cancel</button>
+                {{else}}
+                  <button class="success" {{action 'addTag'}}>Add Tag</button>
+                {{/if}}
+
+                <br/>
+                {{#each tags}}
+                  <span class="badge success">{{name}}</span>
+                {{/each}}
+              </div>
+
             </span>
           </div>
         </li>
@@ -306,11 +323,6 @@
           <br/>
           {{title}} 
         {{/link-to}}
-        <!--<a href='#/{{id}}' class="dvd-image">
-          <img {{bind-attr src="image_url"}}/>
-          <br/>
-          {{title}}
-        </a>-->
         <br/>
         {{view App.StarRating maxRating=5}}
         <br/>

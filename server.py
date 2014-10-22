@@ -19,6 +19,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy.exc import IntegrityError
 
 
 # Read the config.cfg file.
@@ -155,10 +156,25 @@ def update_dvd(dvd_id, data):
 
   dvd = session.query(Dvd).get(dvd_id)
 
+  print
+  del data['search']
+  print data
   for key in data:
-    setattr(dvd, key, data[key])
+    print key
+    if (key != 'tags'):
+      setattr(dvd, key, data[key])
+    else:
+      # Get tags from ID list.
+      tags = []
+      for tag_id in data['tags']:
+        tags.append(session.query(Tag).get(tag_id))
+      dvd.tags = tags
 
-  session.commit()
+  try:
+    session.commit()
+  except InvalidRequestError:
+    session.rollback()
+
   return find_by_id(dvd_id)
 
 def delete_dvd(dvd_id):
@@ -208,6 +224,14 @@ def find_all():
 
   return {"dvds": dvds, "episodes": episodes, "tags": tags}
 
+def find_all_tags():
+  """
+  Return a list of all Tags.
+  """
+  tags = session.query(Tag)
+  return jsonable(Tag, tags)
+
+
 def add_episode(data):
   # Add new object.
   episode = Episode()
@@ -248,6 +272,34 @@ def delete_episode(episode_id):
   session.commit()
 
   return True
+
+def add_tag(data):
+  # Add new object.
+  tag = Tag()
+
+  # Set the SQLAlchemy object's attributes.
+  tag.name = data['name']
+
+  try:
+    session.add(tag)
+    session.commit()
+  except IntegrityError:
+    session.rollback()
+
+  return {"tag": {
+      "id": tag.id, 
+      "name": tag.name, 
+    }
+  }
+
+def find_tag_by_name(name):
+  # Search by regex.
+  try: 
+    tag = session.query(Tag).filter("name = '%s'" % (name)).all()[0]
+    return jsonable(Tag, tag)
+  except IndexError:
+    return { "id": 0, "name": False }
+
 
 # Routes
 @app.route('/', methods=['GET'])
@@ -325,6 +377,8 @@ def show_dvd(dvd_id):
     return app.response_class(json.dumps(find_by_id(dvd_id)), mimetype='application/json')
   elif (request.method == 'PUT'):
 
+    print request.data
+
     status = update_dvd(dvd_id, json.loads(request.data)['dvd'])
     #print status
     #return json.dumps({"dvd": status})
@@ -359,7 +413,7 @@ def play_dvd(dvd_id):
 @app.route('/episodes', methods=['GET', 'POST'])
 def episodes():
   if (request.method == 'GET'):
-    return json.dumps({"episodes": find_all(Episode)})
+    return json.dumps({"episodes": find_all()})
   elif (request.method == 'POST'):
     episode = add_episode(json.loads( request.data)['episode'])
     return json.dumps(episode)
@@ -384,6 +438,18 @@ def play_episode(episode_id):
     return json.dumps(int(get_playback_location(Episode, episode_id)))
   elif (request.method == 'POST'):
     return json.dumps(set_playback_location(Episode, episode_id, request.form.get('playback_time')))
+
+@app.route('/tags', methods=['GET', 'POST'])
+def tags():
+  if (request.method == 'GET'):
+
+    if (request.args.get('name')):
+      return json.dumps({"tags": [find_tag_by_name(request.args.get('name'))] })
+    else:
+      return json.dumps({"tags": find_all_tags()})
+  elif (request.method == 'POST'):
+    tag = add_tag(json.loads( request.data)['tag'])
+    return json.dumps(tag)
 
 
 

@@ -288,6 +288,9 @@ video {
 .episode_player video {
   width: 100%; }
 
+.tags {
+  margin: 20px 0px; }
+
 :-webkit-full-screen {
   border: none; }
 
@@ -854,3 +857,28 @@ header.navigation {
         color: white; }
       .pagination ul li a:active {
         background: #475333; }
+
+.badges {
+  display: block;
+  margin-bottom: 24px; }
+  .badges .badge {
+    display: inline-block;
+    background: #999999;
+    border-radius: 2em;
+    color: white;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1;
+    padding: .25em 1em;
+    text-align: center; }
+    .badges .badge.dark {
+      background: #333333; }
+    .badges .badge.error {
+      background: #fbe3e4;
+      color: #96151b; }
+    .badges .badge.notice {
+      background: #fff6bf;
+      color: #8c7800; }
+    .badges .badge.success {
+      background: #e6efc2;
+      color: #56651a; }

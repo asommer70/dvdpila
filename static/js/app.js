@@ -46,7 +46,6 @@ App.Dvd = DS.Model.extend({
   file_url: attr('string'),
   search: attr('string'),
   //episodes: DS.hasMany('episode', {async:true}),
-  episodes: DS.hasMany('episode'),
 
   ddg_url: function() {
     return 'https://duckduckgo.com/?q=' + this.get('title');
@@ -90,6 +89,8 @@ App.Dvd = DS.Model.extend({
     return this.get('uploadPromise');
   },
 
+  episodes: DS.hasMany('episode'),
+  tags: DS.hasMany('tags'),
 });
 
 App.Episode = DS.Model.extend({
@@ -101,8 +102,14 @@ App.Episode = DS.Model.extend({
     return this.get('episode_file_url');
   }.property('file_url'),
   //dvd: DS.belongsTo('dvd', {key: "dvd_id"})
-  dvd: DS.belongsTo('dvd')
+  dvd: DS.belongsTo('dvd'),
 });
+
+App.Tag = DS.Model.extend({
+  name: attr('string'),
+  dvds: DS.hasMany('dvd'),
+});
+
 
 App.IndexController = Ember.ArrayController.extend({
   isEditing: false,
@@ -396,8 +403,69 @@ App.DvdController = Ember.ObjectController.extend({
       episode.one('didDelete', this, function () {
         App.FlashQueue.pushFlash('notice', episode.get('name') + " successfully deleted.");
       });
-    }
+    },
 
+    addTag: function() {
+      console.log("Adding Tag...");
+      this.set('isAddingTag', true);
+    },
+
+    cancelAddingTag: function() {
+      this.set('isAddingTag', false);
+    },
+
+    saveTag: function() {
+      console.log("Saving Tag...");
+      var self = this;
+      var tag_field = this.get('tag');
+      console.log("tag_field:", tag_field);
+
+      console.log("tags", this.get('tags'));
+
+      // Save the new tag, then apply it to the Dvd.
+      //var tag_store = App.Tag.store.find('tag');
+      //console.log("tag_store:", tag_store);
+
+      // Find new tag.
+      this.store.find('tag', { name: tag_field }).then(function(tag) {
+        //var tag_in_store = this.store.find('tag', 5);
+        console.log("tag_in_store:", tag);
+        if (tag.objectAt(0).get('name') != false) {
+          self.get('tags').pushObject(tag.objectAt(0));
+            self.model.save().then(function(tag) {
+              console.log("Tag saved...");
+
+              App.FlashQueue.pushFlash('notice', tag.get('name') + " successfully added.");
+              self.set('tag', '');
+              self.set('isAddingTag', false);
+            });
+        } else {
+          var new_tag_record = self.get('store').createRecord('tag', {
+              name: tag_field,
+          });
+
+          new_tag_record.save().then(function(new_tag) {
+            //console.log(tag);
+            self.get('tags').pushObject(new_tag);
+
+            self.model.save().then(function(tag) {
+              console.log("Tag saved...");
+
+              App.FlashQueue.pushFlash('notice', tag.get('name') + " successfully added.");
+              self.set('tag', '');
+              self.set('isAddingTag', false);
+            });
+          });
+        }
+        console.log("tag_in_store:", tag.objectAt(0).get('id'));
+      });
+
+
+      //console.log("new_tag.id:", new_tag.id);
+
+      //console.log("new_tag:", new_tag);
+
+    },
   }
 });
 
@@ -422,6 +490,33 @@ App.EpisodeController = Ember.ObjectController.extend({
         console.log("Episode saved...");
         App.FlashQueue.pushFlash('notice', episode.get('name') + " successfully updated.");
         self.set('isEditingEpisode', false);
+      });
+    },
+
+  }
+});
+
+App.TagController = Ember.ObjectController.extend({
+  isAddingTag: false,
+
+  actions: {
+    addTag: function() {
+      console.log("Adding Tag...");
+      this.set('isAddingTag', true);
+    },
+
+    cancelAddingTag: function() {
+      this.set('isAddingTag', false);
+    },
+
+    saveTag: function() {
+      console.log("Saving Tag...");
+      var self = this;
+
+      this.model.save().then(function(tag) {
+        console.log("Tag saved...");
+        App.FlashQueue.pushFlash('notice', tag.get('name') + " successfully added.");
+        self.set('isAddingTag', false);
       });
     },
 
