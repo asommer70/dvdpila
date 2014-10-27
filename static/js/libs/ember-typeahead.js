@@ -57,6 +57,7 @@
     },
     
     selectionObserver: function() {
+      //console.log('selectionObserver...');
       if (Ember.isEmpty(this.get('selection')) === true) {
         return this.typeahead.val('');
       }

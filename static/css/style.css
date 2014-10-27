@@ -294,7 +294,7 @@ video {
 
 .tag {
   padding: 5px 5px;
-  background-color: #2e4272;
+  background-color: #05776d;
   color: white;
   font-size: 14px;
   margin: 5px 0px;
@@ -311,6 +311,19 @@ video {
       display: inline-block;
       cursor: pointer;
       color: #cccccc; }
+
+.tags-list ul {
+  width: 130px;
+  color: white;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; }
+  .tags-list ul li {
+    display: inline;
+    padding: 5px 5px;
+    background-color: #05776d;
+    color: white;
+    font-size: 13px; }
 
 :-webkit-full-screen {
   border: none; }
@@ -614,6 +627,16 @@ video {
   @media screen and (min-width: 700px) {
     .hero-logo img {
       margin-bottom: none; } }
+
+#sort {
+  margin-bottom: 0px; }
+
+.tt-dropdown-menu {
+  background-color: #9f4115;
+  padding: 15px;
+  padding-left: 10px;
+  color: white;
+  box-shadow: 6px 6px 6px -3px #202817; }
 
 header.navigation {
   background-color: #475333;

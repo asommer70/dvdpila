@@ -215,6 +215,8 @@ App.IndexController = Ember.ArrayController.extend({
     pushSort: function(attr) {
       //console.log("pushing sort...");
       //console.log("attr:", attr);
+      
+      //$('#sort').typeahead('close');
 
       var self = this;
       var first_content = self.get('content');

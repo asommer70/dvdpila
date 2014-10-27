@@ -98,7 +98,7 @@ video {
 
 .tag {
   padding: 5px 5px;
-  background-color: $blue;
+  background-color: $base-accent-color;
   color: white;
   font-size: 14px;
   margin: 5px 0px;
@@ -123,6 +123,24 @@ video {
       display: inline-block;
       cursor: pointer;
       color: darken(white, 20);
+    }
+  }
+}
+
+.tags-list {
+  ul {
+    width: 130px;
+    color: white;
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    white-space: nowrap;
+
+    li {
+      display: inline;
+      padding: 5px 5px;
+      background-color: $base-accent-color;
+      color: white;
+      font-size: 13px;
     }
   }
 }
@@ -322,6 +340,19 @@ video {
     margin-bottom: none;
   }
 }
+
+#sort {
+  margin-bottom: 0px;
+}
+
+.tt-dropdown-menu {
+  background-color: $base-link-color;
+  padding: 15px;
+  padding-left: 10px;
+  color: white;
+  box-shadow: 6px 6px 6px -3px $base-border-color;
+}
+
 
 header.navigation {
   $navigation-padding: 1em;

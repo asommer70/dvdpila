@@ -81,8 +81,7 @@
           <button id="add-new-dvd" class="success" {{action 'add'}}>Add New DVD</button>
 
           <div class="col-four">
-            <!--{{input type="text" id="tag-sort" placeholder="sort by tag" value=tags}}-->
-            {{type-ahead placeholder="sort by tag" data=getTags name="name" selection=pushSort enter='pushSort'}}
+            {{type-ahead id="sort" placeholder="sort by tag" data=getTags name="name" selection=pushSort enter='pushSort'}}
           </div>
           <br/>
           <br/>
@@ -153,7 +152,6 @@
               <div class=" tags">
                 <h4>Tags</h4>
 
-                <br/>
                 {{#each tags}}
                   <span class="tag">
                     &nbsp; {{name}} &nbsp;&nbsp;
@@ -163,7 +161,6 @@
                 <br/>
 
                 {{#if isAddingTag}}
-                  <br/>
                   {{input type="text" id="add-tagName" value=tag}}
                   <button class="small success" {{action 'saveTag'}}>Save Tag</button>
                   <button class="default" {{action 'cancelAddingTag'}}>Cancel</button>
@@ -332,9 +329,18 @@
         {{#link-to 'dvd' id class="dvd-image"}}
         <img {{bind-attr src="image_url"}}/>
           <br/>
-          {{title}} 
+          {{title}}
+
         {{/link-to}}
-        <br/>
+
+        <div class="tags-list">
+          <ul>
+            {{#each tags}}
+              <li>{{name}}</li>
+            {{/each}}
+          </ul>
+        </div>
+
         {{view App.StarRating maxRating=5}}
         <br/>
       </li>
