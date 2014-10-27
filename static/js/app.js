@@ -111,15 +111,46 @@ App.Tag = DS.Model.extend({
 });
 
 
+App.IndexRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('dvd');
+  },
+
+  actions: {
+    pageOne: function() {
+      // Clear search results if there are any.
+      if ($('.search').val() != '') {
+        App.searchResultsController.set('searchResults', false);
+        $('.search').val('');
+      }
+
+      //console.log('sending to page 1...');
+      
+      // Go to the first page.
+      this.controller.send('selectPage', 1);
+    },
+
+    getTags: function() {
+      return this.store.find('tag');
+    },
+
+  },
+});
+
 App.IndexController = Ember.ArrayController.extend({
   isEditing: false,
   isAdding: false,
 
-  titleFilter: null,
-
-  sortProperties: ['title'],
+  //sortProperties: ['title', 'tags'],
   sortAscending: true,
   
+  titleFilter: null,
+  
+  getTags: function() {
+    //console.log("getting tags in getTags...");
+    return App.Tag.store.find('tag');
+  },
+
   page: 1,
   perPage: 10,
   totalPages: (function() {
@@ -128,6 +159,8 @@ App.IndexController = Ember.ArrayController.extend({
 
   pages: (function() {
     var collection = Ember.A();
+
+    //this.set('sortProperties', ['tag.name']);
 
     for(var i = 0; i < this.get('totalPages'); i++) {
       collection.pushObject(Ember.Object.create({
@@ -178,6 +211,29 @@ App.IndexController = Ember.ArrayController.extend({
       console.log('sending to page 1...');
       this.send('selectPage', 1);
     },*/
+
+    pushSort: function(attr) {
+      //console.log("pushing sort...");
+      //console.log("attr:", attr);
+
+      var self = this;
+      var first_content = self.get('content');
+      var dvds = self.get('content').get('content');
+      
+      dvds.forEach(function(dvd, di) {
+
+        dvd.get("tags").forEach(function(tag, ti) {
+          if (tag.get('name') == attr) {
+            dvd_i = dvds.splice(di, 1);
+            dvds.unshift(dvd_i[0]);
+          }
+        });
+
+      })
+
+      first_content.set('content', dvds);
+      first_content.arrayContentDidChange();
+    },
 
     add: function() {
       //console.log('adding...');
@@ -268,27 +324,6 @@ App.searchResultsController = Ember.ArrayController.create({
 
 });
 
-App.IndexRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.find('dvd');
-  },
-
-  actions: {
-    pageOne: function() {
-      // Clear search results if there are any.
-      if ($('.search').val() != '') {
-        App.searchResultsController.set('searchResults', false);
-        $('.search').val('');
-      }
-
-      //console.log('sending to page 1...');
-      
-      // Go to the first page.
-      this.controller.send('selectPage', 1);
-    },
-  },
-});
-
 App.DvdRoute = Ember.Route.extend({
   model: function(params) {
     var dvd = this.store.find('dvd', params.dvd_id);
@@ -305,10 +340,18 @@ App.DvdRoute = Ember.Route.extend({
 });
 
 App.DvdController = Ember.ObjectController.extend({
+  /*init: function() {
+    this._super();
+
+    this.set('tagsController', App.TagsController.create({
+      tags: this
+    }));
+  },*/
+
   isEditing: false,
   isAddingEpisodes: false,
   currentPage: Ember.computed.alias('parentController.page'),
-        
+
   activePage: (function() {
     return this.get('number') === this.get('currentPage');
   }).property('number', 'currentPage'),
@@ -492,6 +535,8 @@ App.EpisodeController = Ember.ObjectController.extend({
 App.TagController = Ember.ObjectController.extend({
   isAddingTag: false,
 
+  sortProperties: ['name'],
+
   actions: {
     addTag: function() {
       console.log("Adding Tag...");
@@ -515,6 +560,15 @@ App.TagController = Ember.ObjectController.extend({
 
   }
 });
+
+/*App.TagsController = Ember.ArrayController.extend({
+  sortProperties: ['order'],
+  sortAscending: true,
+
+  content: function() {
+    return this.get('tags.name');
+  }.property('tags.names.[]')
+});*/
 
 
 App.FotoPreview = Ember.View.extend({
