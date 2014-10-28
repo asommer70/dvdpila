@@ -30,7 +30,39 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: dvds; Type: TABLE; Schema: public; Owner: adam; Tablespace: 
+-- Name: bookmarks; Type: TABLE; Schema: public; Tablespace:
+--
+
+CREATE TABLE bookmarks (
+    id integer NOT NULL,
+    name character varying(100),
+    "time" numeric,
+    dvd_id integer,
+    episode_id integer
+);
+
+
+--
+-- Name: bookmarks_id_seq; Type: SEQUENCE; Schema: public;
+--
+
+CREATE SEQUENCE bookmarks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bookmarks_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
+--
+
+ALTER SEQUENCE bookmarks_id_seq OWNED BY bookmarks.id;
+
+
+--
+-- Name: dvds; Type: TABLE; Schema: public; Tablespace: 
 --
 
 CREATE TABLE dvds (
@@ -49,10 +81,8 @@ CREATE TABLE dvds (
 );
 
 
-ALTER TABLE public.dvds OWNER TO adam;
-
 --
--- Name: dvds_id_seq; Type: SEQUENCE; Schema: public; Owner: adam
+-- Name: dvds_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE dvds_id_seq
@@ -63,17 +93,8 @@ CREATE SEQUENCE dvds_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.dvds_id_seq OWNER TO adam;
-
 --
--- Name: dvds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: adam
---
-
-ALTER SEQUENCE dvds_id_seq OWNED BY dvds.id;
-
-
---
--- Name: dvds_tags; Type: TABLE; Schema: public; Owner: adam; Tablespace: 
+-- Name: dvds_tags; Type: TABLE; Schema: public; Tablespace: 
 --
 
 CREATE TABLE dvds_tags (
@@ -83,10 +104,8 @@ CREATE TABLE dvds_tags (
 );
 
 
-ALTER TABLE public.dvds_tags OWNER TO adam;
-
 --
--- Name: dvds_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: adam
+-- Name: dvds_tags_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE dvds_tags_id_seq
@@ -97,17 +116,15 @@ CREATE SEQUENCE dvds_tags_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.dvds_tags_id_seq OWNER TO adam;
-
 --
--- Name: dvds_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: adam
+-- Name: dvds_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE dvds_tags_id_seq OWNED BY dvds_tags.id;
 
 
 --
--- Name: episodes; Type: TABLE; Schema: public; Owner: adam; Tablespace: 
+-- Name: episodes; Type: TABLE; Schema: public; Tablespace: 
 --
 
 CREATE TABLE episodes (
@@ -119,10 +136,8 @@ CREATE TABLE episodes (
 );
 
 
-ALTER TABLE public.episodes OWNER TO adam;
-
 --
--- Name: episodes_id_seq; Type: SEQUENCE; Schema: public; Owner: adam
+-- Name: episodes_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE episodes_id_seq
@@ -133,17 +148,15 @@ CREATE SEQUENCE episodes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.episodes_id_seq OWNER TO adam;
-
 --
--- Name: episodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: adam
+-- Name: episodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE episodes_id_seq OWNED BY episodes.id;
 
 
 --
--- Name: tags; Type: TABLE; Schema: public; Owner: adam; Tablespace: 
+-- Name: tags; Type: TABLE; Schema: public; Tablespace: 
 --
 
 CREATE TABLE tags (
@@ -152,10 +165,8 @@ CREATE TABLE tags (
 );
 
 
-ALTER TABLE public.tags OWNER TO adam;
-
 --
--- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: adam
+-- Name: tags_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE tags_id_seq
@@ -166,45 +177,58 @@ CREATE SEQUENCE tags_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tags_id_seq OWNER TO adam;
-
 --
--- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: adam
+-- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: adam
+-- Name: id; Type: DEFAULT; Schema: public;
+--
+
+ALTER TABLE ONLY bookmarks ALTER COLUMN id SET DEFAULT nextval('bookmarks_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; 
 --
 
 ALTER TABLE ONLY dvds ALTER COLUMN id SET DEFAULT nextval('dvds_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: adam
+-- Name: id; Type: DEFAULT; Schema: public; 
 --
 
 ALTER TABLE ONLY dvds_tags ALTER COLUMN id SET DEFAULT nextval('dvds_tags_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: adam
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE ONLY episodes ALTER COLUMN id SET DEFAULT nextval('episodes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: adam
+-- Name: id; Type: DEFAULT; Schema: public;
 --
 
 ALTER TABLE ONLY tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclass);
 
 
 --
--- Name: dvds_pkey; Type: CONSTRAINT; Schema: public; Owner: adam; Tablespace: 
+-- Name: bookmarks_pkey; Type: CONSTRAINT; Schema: public; Tablespace: 
+--
+
+ALTER TABLE ONLY bookmarks
+    ADD CONSTRAINT bookmarks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dvds_pkey; Type: CONSTRAINT; Schema: public; Tablespace: 
 --
 
 ALTER TABLE ONLY dvds
@@ -212,7 +236,7 @@ ALTER TABLE ONLY dvds
 
 
 --
--- Name: dvds_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: adam; Tablespace: 
+-- Name: dvds_tags_pkey; Type: CONSTRAINT; Schema: public; Tablespace: 
 --
 
 ALTER TABLE ONLY dvds_tags
@@ -220,7 +244,7 @@ ALTER TABLE ONLY dvds_tags
 
 
 --
--- Name: episodes_pkey; Type: CONSTRAINT; Schema: public; Owner: adam; Tablespace: 
+-- Name: episodes_pkey; Type: CONSTRAINT; Schema: public; Tablespace: 
 --
 
 ALTER TABLE ONLY episodes
@@ -228,7 +252,7 @@ ALTER TABLE ONLY episodes
 
 
 --
--- Name: name_unique; Type: CONSTRAINT; Schema: public; Owner: adam; Tablespace: 
+-- Name: name_unique; Type: CONSTRAINT; Schema: public; Tablespace: 
 --
 
 ALTER TABLE ONLY tags
@@ -236,7 +260,7 @@ ALTER TABLE ONLY tags
 
 
 --
--- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Owner: adam; Tablespace: 
+-- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Tablespace: 
 --
 
 ALTER TABLE ONLY tags
@@ -244,7 +268,7 @@ ALTER TABLE ONLY tags
 
 
 --
--- Name: title_unique; Type: CONSTRAINT; Schema: public; Owner: adam; Tablespace: 
+-- Name: title_unique; Type: CONSTRAINT; Schema: public; Tablespace: 
 --
 
 ALTER TABLE ONLY dvds
@@ -252,14 +276,30 @@ ALTER TABLE ONLY dvds
 
 
 --
--- Name: rating; Type: INDEX; Schema: public; Owner: adam; Tablespace: 
+-- Name: rating; Type: INDEX; Schema: public; Tablespace: 
 --
 
 CREATE INDEX rating ON dvds USING btree (rating);
 
 
 --
--- Name: dvds_tags_dvd_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: adam
+-- Name: bookmarks_dvd_id_fkey; Type: FK CONSTRAINT; Schema: public;
+--
+
+ALTER TABLE ONLY bookmarks
+    ADD CONSTRAINT bookmarks_dvd_id_fkey FOREIGN KEY (dvd_id) REFERENCES dvds(id);
+
+
+--
+-- Name: bookmarks_episode_id_fkey; Type: FK CONSTRAINT; Schema: public;
+--
+
+ALTER TABLE ONLY bookmarks
+    ADD CONSTRAINT bookmarks_episode_id_fkey FOREIGN KEY (episode_id) REFERENCES episodes(id);
+
+
+--
+-- Name: dvds_tags_dvd_id_fkey; Type: FK CONSTRAINT; Schema: public;
 --
 
 ALTER TABLE ONLY dvds_tags
@@ -267,7 +307,7 @@ ALTER TABLE ONLY dvds_tags
 
 
 --
--- Name: dvds_tags_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: adam
+-- Name: dvds_tags_tag_id_fkey; Type: FK CONSTRAINT; Schema: public;
 --
 
 ALTER TABLE ONLY dvds_tags
@@ -275,7 +315,7 @@ ALTER TABLE ONLY dvds_tags
 
 
 --
--- Name: episodes_dvd_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: adam
+-- Name: episodes_dvd_id_fkey; Type: FK CONSTRAINT; Schema: public;
 --
 
 ALTER TABLE ONLY episodes
@@ -283,12 +323,10 @@ ALTER TABLE ONLY episodes
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: adam
+-- Name: public; Type: ACL; Schema: -;
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM adam;
-GRANT ALL ON SCHEMA public TO adam;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
