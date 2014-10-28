@@ -59,6 +59,7 @@ class Dvd(Base):
   playback_time = Column(Integer)
   episodes = relationship("Episode", lazy="joined")
   tags = relationship("Tag", secondary=association_table, backref="dvds")
+  bookmarks = relationship("Bookmark", lazy="joined")
 
 class Episode(Base):
   __tablename__ = 'episodes'
@@ -68,12 +69,22 @@ class Episode(Base):
   episode_file_url = Column(String)
   playback_time = Column(Integer)
   dvd_id = Column(Integer, ForeignKey('dvds.id'))
+  bookmarks = relationship("Bookmark", lazy="joined")
 
 class Tag(Base):
   __tablename__ = 'tags'
 
   id = Column(Integer, primary_key=True)
   name = Column(String)
+
+class Bookmark(Base):
+  __tablename__ = 'bookmarks'
+
+  id = Column(Integer, primary_key=True)
+  name = Column(String)
+  time = Column(Integer)
+  dvd_id = Column(Integer, ForeignKey('dvds.id'))
+  episode_id = Column(Integer, ForeignKey('episodes.id'))
 
 
 # Setup Flask app.
@@ -88,6 +99,7 @@ def find_by_id(id):
   dvd_json = jsonable(Dvd, dvd)
   episodes = []
   tags = []
+  bookmarks = []
 
   for episode in dvd.episodes:
     epi_json = jsonable(Episode, episode)
@@ -97,10 +109,15 @@ def find_by_id(id):
     tag_json = jsonable(Tag, tag)
     tags.append(tag_json)
 
+  for bookmark in dvd.bookmarks:
+    bookmark_json = jsonable(Bookmark, bookmark)
+    bookmarks.append(bookmark_json)
+
   dvd_json["episodes"] = [episode.id for episode in dvd.episodes]
   dvd_json["tags"] = [tag.id for tag in dvd.tags]
+  dvd_json["bookmarks"] = [bookmark.id for bookmark in dvd.bookmarks]
 
-  return {"dvd": dvd_json, "episodes": episodes, "tags": tags}
+  return {"dvd": dvd_json, "episodes": episodes, "tags": tags, "bookmarks": bookmarks}
 
 def find_episode(id):
   q = session.query(Episode).get(id)
@@ -229,6 +246,13 @@ def find_all_tags():
   tags = session.query(Tag)
   return jsonable(Tag, tags)
 
+def find_all_bookmarks():
+  """
+  Return a list of all Bookmarks.
+  """
+  bookmarks = session.query(Bookmark)
+  return jsonable(Bookmark, bookmarks)
+
 
 def add_episode(data):
   # Add new object.
@@ -287,6 +311,33 @@ def add_tag(data):
   return {"tag": {
       "id": tag.id, 
       "name": tag.name, 
+    }
+  }
+
+def add_bookmark(data):
+  # Add new object.
+  bookmark = Bookmark()
+
+  print data
+
+  # Set the SQLAlchemy object's attributes.
+  bookmark.name = data['name']
+  bookmark.time = data['time']
+  bookmark.dvd_id = data['dvd_id']
+  bookmark.episode_id = data['episode_id']
+
+  try:
+    session.add(bookmark)
+    session.commit()
+  except IntegrityError:
+    session.rollback()
+
+  return {"bookmark": {
+      "id": bookmark.id,
+      "name": bookmark.name,
+      "time": int(bookmark.time),
+      "dvd_id": bookmark.dvd_id,
+      "episode_id": bookmark.episode_id,
     }
   }
 
@@ -447,7 +498,13 @@ def tags():
     tag = add_tag(json.loads( request.data)['tag'])
     return json.dumps(tag)
 
-
+@app.route('/bookmarks', methods=['GET', 'POST'])
+def bookmarks():
+  if (request.method == 'GET'):
+    return json.dumps({"bookmarks": find_all_bookmarks()})
+  elif (request.method == 'POST'):
+    bookmark = add_bookmark(json.loads( request.data)['bookmark'])
+    return json.dumps(bookmark)
 
 
 # Helpers

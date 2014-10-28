@@ -325,6 +325,10 @@ video {
     color: white;
     font-size: 13px; }
 
+.bookmarks {
+  display: inline-block;
+  margin-top: 10px; }
+
 :-webkit-full-screen {
   border: none; }
 
@@ -956,3 +960,12 @@ header.navigation {
     .badges .badge.success {
       background: #e6efc2;
       color: #56651a; }
+
+#video-controls {
+  padding: 5px; }
+
+#seek-bar {
+  width: 360px; }
+
+#volume-bar {
+  width: 60px; }

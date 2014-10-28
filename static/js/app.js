@@ -16,17 +16,8 @@ App.Search = DS.Model.extend({
 App.Router.map(function() {
   this.resource('about');
   this.resource('dvd', { path: ':dvd_id' });
-  //this.resource("dvds", function() {
-  //  this.route("dvd", { path: ':dvd_id' });
-  //});
   this.route("search", { path: "/dvds/search/:query" })
 });
-
-/*App.ApplicationSerializer = DS.RESTSerializer.extend({
-  keyForRelationship: function(key, relationship) {
-    return 'dvd_id';
-  }
-});*/
 
 
 App.Dvd = DS.Model.extend({
@@ -91,6 +82,7 @@ App.Dvd = DS.Model.extend({
 
   episodes: DS.hasMany('episode'),
   tags: DS.hasMany('tags'),
+  bookmarks: DS.hasMany('bookmarks'),
 });
 
 App.Episode = DS.Model.extend({
@@ -108,6 +100,15 @@ App.Episode = DS.Model.extend({
 App.Tag = DS.Model.extend({
   name: attr('string'),
   dvds: DS.hasMany('dvd'),
+});
+
+App.Bookmark = DS.Model.extend({
+  name: attr('string'),
+  time: attr('number'),
+  dvd_id: attr('number'),
+  episode_id: attr('number'),
+  dvd: DS.belongsTo('dvd'),
+  episode: DS.belongsTo('episode'),
 });
 
 
@@ -342,16 +343,9 @@ App.DvdRoute = Ember.Route.extend({
 });
 
 App.DvdController = Ember.ObjectController.extend({
-  /*init: function() {
-    this._super();
-
-    this.set('tagsController', App.TagsController.create({
-      tags: this
-    }));
-  },*/
-
   isEditing: false,
   isAddingEpisodes: false,
+  isBookmarking: false,
   currentPage: Ember.computed.alias('parentController.page'),
 
   activePage: (function() {
@@ -363,6 +357,13 @@ App.DvdController = Ember.ObjectController.extend({
       this.transitionToRoute('index');
     }
   }).observes('App.searchResultsController.searchResults'),
+
+  gotoBookmark: (function() {
+    console.log("gotoBookmarks...");
+    $('#bookmarks').on('change', function(event) {
+      console.log(".bookmarks.val():", this.val());
+    });
+  }),
 
   actions: {
     edit: function() {
@@ -504,6 +505,52 @@ App.DvdController = Ember.ObjectController.extend({
       this.get('tags').removeAt(tag_id);
       this.model.save();
     },
+
+    addBookmark: function(dvd_id) {
+      this.set('isBookmarking', true);
+    },
+
+    cancelBookmarking: function() {
+      this.set('isBookmarking', false);
+    },
+
+    saveBookmark: function(vid_id, type) {
+      console.log('saving bookmark... id:', vid_id);
+      console.log("new bookmark name:", this.get('name'));
+
+      console.log("first-option:", $('#first-bookmark').val());
+      var self = this;
+
+      // Take care of the id link.
+      if (type == "dvd") {
+        dvd_id = vid_id;
+        episode_id = null;
+      } else if (type == "episode") {
+        dvd_id = null
+        episode_id = vid_id;
+      }
+      var time = $('#first-bookmark').val();
+
+      var new_bookmark = self.get('store').createRecord('bookmark', {
+        name: this.get('name'),
+        time: time,
+        dvd_id: dvd_id,
+        episode_id: episode_id,
+      });
+
+      new_bookmark.save().then(function(bookmark) {
+        //console.log(tag);
+        self.get('bookmarks').pushObject(bookmark);
+
+        self.model.save().then(function(tag) {
+          console.log("Bookmark saved...");
+
+          App.FlashQueue.pushFlash('notice', "Bookmark: " + bookmark.get('name') + " successfully added.");
+              self.set('name', '');
+              self.set('isBookmarking', false);
+          });
+      });
+    },
   }
 });
 
@@ -572,6 +619,24 @@ App.TagController = Ember.ObjectController.extend({
   }.property('tags.names.[]')
 });*/
 
+App.BookmarkSelect = Ember.Select.extend({
+  content: 'bookmarks',
+  optionValuePath: "content.time",
+  optionLabelPath: "content.name",
+  class: "bookmarks",
+  prompt: "Select Bookmark",
+
+  change: function(event) {
+    console.log("BookmarkSelect changed...");
+    console.log("this:", this.get("value"));
+
+    var vid = document.getElementById('vid');
+    vid.currentTime = this.get('value');
+    vid.setAttribute('data-type', 'bookmark');
+    this.send("bookmark-play");
+    vid.play();
+  },
+});
 
 App.FotoPreview = Ember.View.extend({
       attributeBindings: ['src'],
@@ -638,6 +703,7 @@ App.Video = Ember.View.extend({
   controls: true,
   tagName: 'video',
 
+
   keyUp: function(event) {
     var $vid = $(event.target)[0];
 
@@ -652,17 +718,53 @@ App.Video = Ember.View.extend({
 
   didInsertElement: function() {
     //console.log('didInsertElement...');
-
+    //
     // Get the DVD id.
     var vid_id = this.get('vidId');
     var dvd_id = this.get('dvd_id');
     var vid = this.$();
+
+    /*var seek = function(video) {
+      console.log('video.currentTime:', video.currentTime);
+      //video.currentTime = 0;
+      //if(video.paused){ video.play(); }
+    };*/
+
+    //console.log("this video element:", $(vid.children()[0]));
+
+    /*var track = $(vid.children()[0])
+    var vidvid = document.getElementById('vid');
+    // Bookmarks handling.
+    track.on('load', function() {
+      console.log('vid.textTracks:', vidvid.textTracks);
+      var c = vidvid.textTracks[0].cues;
+      for (var i=0; i<c.length; i++) {
+        var s = document.createElement("span");
+        s.innerHTML = c[i].text;
+        s.setAttribute('data-start',c[i].startTime);
+        s.addEventListener("click", seek(vidvid));
+        //controlbar.appendChild(s);
+      }
+    });*/
 
     this.$().on("pause", function(event) {
       this.focus();
       //console.log('paused...');
       //console.log(this.currentTime);
       var self = this;
+
+      var hours = Math.floor(self.currentTime / 3600);
+      var minutes = Math.floor(self.currentTime / 60); 
+      if (minutes > 59) {
+        minutes = Math.floor(self.currentTime / 60) - 60; 
+      } 
+      var seconds = Math.round(self.currentTime - minutes * 60);
+      if (seconds > 3599) {
+        seconds = Math.round(self.currentTime - minutes * 60) - 3600;
+      }
+      //var seconds =  (self.currentTime / 1000) % 60;
+      $('#first-bookmark').html(hours + ":" + minutes + ":" + seconds);
+      $('#first-bookmark').val(self.currentTime);
 
       // Send time location to server.
       if (dvd_id == undefined) {
@@ -671,50 +773,42 @@ App.Video = Ember.View.extend({
         $.post('/episodes/playback/' + vid_id, { playback_time: this.currentTime });
       }
 
-      // Play on space.
-      /*$('body').off('keyup');
-      $('body').keyup(function(event) {
-        console.log('playing...');
-        event.preventDefault();
-        if (event.keyCode == 32 && self.paused == true) {
-          self.play();
-        } else {
-          $('body').off('keyup');
-        }
-      });*/
     });
 
     this.$().on("play", function(event) {
       this.focus();
 
       //console.log('playing...');
-
       var self = this;
-      if (dvd_id == undefined) {
-        $.get('/dvds/playback/' + vid_id).then(function(data) {
-          //console.log(data);
-          self.currentTime = data;
-          self.play();
-        });
-      } else {
-        $.get('/episodes/playback/' + vid_id).then(function(data) {
-          //console.log(data);
-          self.currentTime = data;
-          self.play();
-        });
+    
+      var hours = Math.floor(self.currentTime / 3600);
+      var minutes = Math.floor(self.currentTime / 60); 
+      if (minutes > 59) {
+        minutes = Math.floor(self.currentTime / 60) - 60; 
+      } 
+      var seconds = Math.round(self.currentTime - minutes * 60);
+      if (seconds > 3599) {
+        seconds = Math.round(self.currentTime - minutes * 60) - 3600;
+      }
+      $('#first-bookmark').html(hours + ":" + minutes + ":" + seconds);
+      $('#first-bookmark').val(self.currentTime);
+
+      if ($(event.target).data('type') != 'bookmark') {
+        if (dvd_id == undefined) {
+          $.get('/dvds/playback/' + vid_id).then(function(data) {
+            //console.log(data);
+            self.currentTime = data;
+            self.play();
+          });
+        } else {
+          $.get('/episodes/playback/' + vid_id).then(function(data) {
+            //console.log(data);
+            self.currentTime = data;
+            self.play();
+          });
+        }
       }
 
-      // Pause on space.
-      /*$('body').off('keyup');
-      $('body').keyup(function(event) {
-        console.log('paused...');
-        event.preventDefault();
-        if (event.keyCode == 32) {
-          self.pause();
-        } else {
-          $('body').off('keyup');
-        }
-      });*/
     });
 
   },
@@ -764,4 +858,5 @@ $(document).ready(function() {
     $(this).addClass("active-nav-item");
     $(".nav .more").removeClass("active-nav-item");
   });
+
 });

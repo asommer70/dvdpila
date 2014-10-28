@@ -197,7 +197,31 @@
 
     {{#if file_url}}
       <div class="player">
-        {{view App.Video controllerBinding="App.videoController"}}
+        {{#view App.Video id="vid" controllerBinding="App.videoController"}}
+        {{/view}}
+        <div>
+          {{#view App.BookmarkSelect content=bookmarks
+                               optionValuePath="content.time"
+                               optionLabelPath="content.name" 
+                               class="bookmarks"
+                               prompt="Select Bookmark"
+          }}
+            <option id="first-bookmark" value="0">00:00:00</option>
+            {{#each bookmarks}}
+              <option value="{{time}}">{{name}}</option>
+            {{/each}}
+          {{/view}}
+
+          {{#if isBookmarking}}
+            <div class="col-four" style="margin-top: 10px;">
+              {{input type="text" id="add-name" value=name placeholder="bookmark name"}}
+              <button class="success" {{action 'saveBookmark' id "dvd"}}>Save Bookmark</button>
+              <button class="default" {{action 'cancelBookmarking'}}>Cancel</button>
+            </div>
+          {{else}}
+            <button class="success" {{action 'addBookmark' id}}>Add Bookmark</button>
+          {{/if}}
+        </div>
       </div>
 
     {{else}}
@@ -393,5 +417,6 @@
   <script src="js/libs/ember-typeahead.js"></script> 
   <script src="js/app.js"></script>
   <script src="js/flash.js"></script>
+  <!--<script src="js/video-controls.js"></script>-->
 </body>
 </html>
