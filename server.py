@@ -386,6 +386,7 @@ def barcode():
 
       dvd.title = yoopsie_data[1]
       dvd.created_by = "barcode"
+      dvd.rating = 1
 
       # Use the Yoopsie image if Duck Duck Go doesn't find anything.
       if (dvd.image_url == ''):

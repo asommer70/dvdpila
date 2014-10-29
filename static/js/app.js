@@ -142,7 +142,7 @@ App.IndexController = Ember.ArrayController.extend({
   isEditing: false,
   isAdding: false,
 
-  //sortProperties: ['title', 'tags'],
+  //sortProperties: ['title'],
   sortAscending: true,
   
   titleFilter: null,
