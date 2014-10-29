@@ -369,45 +369,53 @@ def barcode():
 
     yoopsie_data = get_yoopsie(data['barcode'])
 
-    #get_ddg_info(data):
+    if (yoopsie_data[1]):
 
-    dvd = Dvd()
+      #get_ddg_info(data):
+
+      dvd = Dvd()
 
 
-    ddg_info = get_ddg_info(yoopsie_data[1])
-    dvd.abstract_txt = ddg_info.abstract.text
-    dvd.abstract_source = ddg_info.abstract.source
-    dvd.abstract_url = ddg_info.abstract.url
-    dvd.image_url = ddg_info.image.url
+      ddg_info = get_ddg_info(yoopsie_data[1])
+      dvd.abstract_txt = ddg_info.abstract.text
+      dvd.abstract_source = ddg_info.abstract.source
+      dvd.abstract_url = ddg_info.abstract.url
+      dvd.image_url = ddg_info.image.url
 
-    dvd.created_at = datetime.datetime.now()
+      dvd.created_at = datetime.datetime.now()
 
-    dvd.title = yoopsie_data[1]
-    dvd.created_by = "barcode"
+      dvd.title = yoopsie_data[1]
+      dvd.created_by = "barcode"
 
-    # Use the Yoopsie image if Duck Duck Go doesn't find anything.
-    if (dvd.image_url == ''):
-      image_file = yoopsie_data[0].split('/')[-1]
-      response = urllib2.urlopen(yoopsie_data[0])
-      image_output = open(os.path.join(__location__, app.config['UPLOAD_FOLDER'], image_file), 'w')
-      image_output.write(response.read())
-      image_output.close()
+      # Use the Yoopsie image if Duck Duck Go doesn't find anything.
+      if (dvd.image_url == ''):
+        image_file = yoopsie_data[0].split('/')[-1]
+        response = urllib2.urlopen(yoopsie_data[0])
+        image_output = open(os.path.join(__location__, app.config['UPLOAD_FOLDER'], image_file), 'w')
+        image_output.write(response.read())
+        image_output.close()
   
-      dvd.image_url = 'images/' + image_file
+        dvd.image_url = 'images/' + image_file
 
-    session.add(dvd)
-    session.commit()
+      session.add(dvd)
+      session.commit()
 
-    return_data = {
-      "status": "DVD Created...",
-      #"yoopsieImage": yoopsie_data[0],
-      #"yoopsieUrl": yoopsie_data[1],
-      "openUrl": "http://192.168.1.22:5000/#/" + str(dvd.id)
-    }
+      return_data = {
+        "status": "DVD Created...",
+        #"yoopsieImage": yoopsie_data[0],
+        #"yoopsieUrl": yoopsie_data[1],
+        "openUrl": "http://192.168.1.22:5000/#/" + str(dvd.id)
+      }
 
-    #print return_data
+      #print return_data
 
-    return json.dumps(return_data)
+      return json.dumps(return_data)
+    else:
+      return_data = {
+        "status": "DVD *NOT* Created...",
+        "openUrl": "http://192.168.1.22:5000/#/"
+      }
+      return json.dumps(return_data)
 
 @app.route('/dvds', methods=['GET', 'POST'])
 def dvds():
@@ -570,7 +578,10 @@ def get_yoopsie(barcode):
   #items[0].a['title']
   
   #return (items[0].a.img['src'], "https://duckduckgo.com/?q=" + items[0].a['title'])
-  return (items[0].a.img['src'], items[0].a['title'])
+  try:
+    return (items[0].a.img['src'], items[0].a['title'])
+  except IndexError:
+    return (False, False)
 
 def get_ddg_info(title):
   try: 
