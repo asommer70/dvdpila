@@ -398,19 +398,23 @@ def barcode():
   
         dvd.image_url = 'images/' + image_file
 
-      session.add(dvd)
-      session.commit()
+      try:
+        session.add(dvd)
+        session.commit()
 
-      return_data = {
-        "status": "DVD Created...",
-        #"yoopsieImage": yoopsie_data[0],
-        #"yoopsieUrl": yoopsie_data[1],
-        "openUrl": "http://192.168.1.22:5000/#/" + str(dvd.id)
-      }
+        return_data = {
+          "status": "DVD Created...",
+          "openUrl": "http://192.168.1.22:5000/#/" + str(dvd.id)
+        }
+        return json.dumps(return_data)
+      except IntegrityError:
+        session.rollback()
+        return_data = {
+          "status": "DVD Previously Created...",
+          "openUrl": "http://192.168.1.22:5000/#/"
+        }
+        return json.dumps(return_data)
 
-      #print return_data
-
-      return json.dumps(return_data)
     else:
       return_data = {
         "status": "DVD *NOT* Created...",
