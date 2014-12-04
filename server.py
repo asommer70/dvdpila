@@ -413,6 +413,13 @@ def barcode():
           "openUrl": "http://192.168.1.22:5000/#/"
         }
         return json.dumps(return_data)
+      except DataError:
+        session.rollback()
+        return_data = {
+          "status": "DVD info has a problem with the database format...",
+          "openUrl": "http://192.168.1.22:5000/#/"
+        }
+        return json.dumps(return_data)
 
     else:
       return_data = {
