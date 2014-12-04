@@ -67,7 +67,7 @@ ALTER SEQUENCE bookmarks_id_seq OWNED BY bookmarks.id;
 
 CREATE TABLE dvds (
     id integer NOT NULL,
-    title character varying(100),
+    title character varying(300),
     created_at timestamp without time zone,
     created_by character varying(30),
     rating integer,
