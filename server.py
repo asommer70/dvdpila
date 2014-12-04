@@ -30,7 +30,6 @@ config.readfp(open(os.path.join(__location__, 'config.cfg')))
 
 
 # Setup SQLAlchemy database connection and table class.
-engine = create_engine('postgresql://adam:pivo70@localhost/dvdsdb')
 engine = create_engine('postgresql://' + config.get('Database', 'db_user') + ':' + config.get('Database', 'db_pass') + 
                        '@' +  config.get('Database', 'host') + '/' + config.get('Database', 'db'))
 Base = declarative_base()
