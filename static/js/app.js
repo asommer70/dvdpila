@@ -811,6 +811,18 @@ App.Video = Ember.View.extend({
 
     });
 
+    this.$().on("ended", function(event) {
+      this.focus();
+      console.log("Video ended...");
+
+      // Send time location to server.
+      if (dvd_id == undefined) {
+        $.post('/dvds/playback/' + vid_id, { playback_time: 0 });
+      } else {
+        $.post('/episodes/playback/' + vid_id, { playback_time: 0 });
+      }
+    });
+
   },
 });
 
