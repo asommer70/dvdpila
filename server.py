@@ -501,6 +501,7 @@ def episode(episode_id):
 def play_episode(episode_id):
   if (request.method == 'GET'):
     playback_time = get_playback_location(Episode, episode_id)
+    print playback_time
     return json.dumps(int(get_playback_location(Episode, episode_id)))
   elif (request.method == 'POST'):
     return json.dumps(set_playback_location(Episode, episode_id, request.form.get('playback_time')))

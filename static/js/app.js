@@ -697,12 +697,21 @@ App.StarRating = Ember.View.extend({
 
 App.Video = Ember.View.extend({
   attributeBindings: ['src', 'controls'],
-  src: Ember.computed.alias('context.file_url'),
+  //src: Ember.computed.alias('context.file_url'),
+  //poster: "css/images/dvdpila_poster.png",
+  file_url: Ember.computed.alias('context.file_url'),
   vidId: Ember.computed.alias('context.id'),
   dvd_id: Ember.computed.alias('context.dvd_id'),
-  controls: true,
+  //controls: true,
   tagName: 'video',
 
+  click: function(event) {
+    var $vid = $($(event.target)[0]);
+    if ($vid.attr("src") == undefined) {
+      $vid.attr("src", this.get('file_url'));
+      $vid.attr("controls", true);
+    }
+  },
 
   keyUp: function(event) {
     var $vid = $(event.target)[0];
@@ -724,28 +733,7 @@ App.Video = Ember.View.extend({
     var dvd_id = this.get('dvd_id');
     var vid = this.$();
 
-    /*var seek = function(video) {
-      console.log('video.currentTime:', video.currentTime);
-      //video.currentTime = 0;
-      //if(video.paused){ video.play(); }
-    };*/
-
-    //console.log("this video element:", $(vid.children()[0]));
-
-    /*var track = $(vid.children()[0])
-    var vidvid = document.getElementById('vid');
-    // Bookmarks handling.
-    track.on('load', function() {
-      console.log('vid.textTracks:', vidvid.textTracks);
-      var c = vidvid.textTracks[0].cues;
-      for (var i=0; i<c.length; i++) {
-        var s = document.createElement("span");
-        s.innerHTML = c[i].text;
-        s.setAttribute('data-start',c[i].startTime);
-        s.addEventListener("click", seek(vidvid));
-        //controlbar.appendChild(s);
-      }
-    });*/
+    vid.attr("poster", "css/images/dvdpila_poster.png");
 
     this.$().on("pause", function(event) {
       this.focus();
