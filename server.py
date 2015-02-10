@@ -150,8 +150,12 @@ def add_dvd(data):
 
   dvd.created_at = datetime.datetime.now()
 
-  session.add(dvd)
-  session.commit()
+  try:
+    session.add(dvd)
+    session.commit()
+  except Exception as error:
+    print error
+    session.rollback()
 
   # Might find a better way to return the new DVD.
   return {"dvd": {
@@ -263,8 +267,12 @@ def add_episode(data):
   episode.episode_file_url = data['episode_file_url']
   episode.dvd_id = data['dvd_id']
 
-  session.add(episode)
-  session.commit()
+  try:
+    session.add(episode)
+    session.commit()
+  except Exception as error:
+    print error
+    session.rollback()
 
   return {"episode": {
       "id": episode.id, 
@@ -391,9 +399,12 @@ def barcode():
       if (dvd.image_url == ''):
         image_file = yoopsie_data[0].split('/')[-1]
         response = urllib2.urlopen(yoopsie_data[0])
-        image_output = open(os.path.join(__location__, app.config['UPLOAD_FOLDER'], image_file), 'w')
-        image_output.write(response.read())
-        image_output.close()
+        try:
+          image_output = open(os.path.join(__location__, app.config['UPLOAD_FOLDER'], image_file), 'w')
+          image_output.write(response.read())
+          image_output.close()
+        except IOError:
+            print "Couldn't write image file to path..."
   
         dvd.image_url = 'images/' + image_file
 
@@ -406,14 +417,16 @@ def barcode():
           "openUrl": "http://192.168.1.22:5000/#/" + str(dvd.id)
         }
         return json.dumps(return_data)
-      except IntegrityError:
+      except IntegrityError as error:
+        print error
         session.rollback()
         return_data = {
           "status": "DVD Previously Created...",
           "openUrl": "http://192.168.1.22:5000/#/"
         }
         return json.dumps(return_data)
-      except DataError:
+      except DataError as error:
+        print error
         session.rollback()
         return_data = {
           "status": "DVD info has a problem with the database format...",
@@ -422,6 +435,7 @@ def barcode():
         return json.dumps(return_data)
 
     else:
+      print "returning data..."
       return_data = {
         "status": "DVD *NOT* Created...",
         "openUrl": "http://192.168.1.22:5000/#/"

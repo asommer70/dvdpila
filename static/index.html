@@ -65,9 +65,13 @@
   <script type="text/x-handlebars" id="index">
       {{#if App.searchResultsController.searchResults}}
         <div class="dvd-list">
+          {{#if App.searchResultsController }}
           {{#each App.searchResultsController}}
             {{partial "dvds_list"}}
           {{/each}}
+          {{else}}
+            <h4>No results found...</h4>
+          {{/if}}
         </div>
       {{else}}
         {{#if model.isAdding}}
