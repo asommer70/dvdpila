@@ -39,8 +39,8 @@
   <%= image_tag @dvd.image.url if @dvd.image %>
 </p>
 
-<div class="player">
-  <video controls>
+<div class="player-div">
+  <video class="player" data-id="<%= @dvd.id %>" controls>
     <source src="<%= @dvd.file_url %>">
   </video>
 </div>
