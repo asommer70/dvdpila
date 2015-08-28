@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @dvd.title %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @dvd.rating %>
+</p>
+
+<p>
+  <strong>Abstract txt:</strong>
+  <%= @dvd.abstract_txt %>
+</p>
+
+<p>
+  <strong>Abstract source:</strong>
+  <%= @dvd.abstract_source %>
+</p>
+
+<p>
+  <strong>Abstract url:</strong>
+  <%= @dvd.abstract_url %>
+</p>
+
+<p>
+  <strong>File url:</strong>
+  <%= @dvd.file_url %>
+</p>
+
+<p>
+  <strong>Playback time:</strong>
+  <%= @dvd.playback_time %>
+</p>
+
+<%= link_to 'Edit', edit_dvd_path(@dvd) %> |
+<%= link_to 'Back', dvds_path %>
