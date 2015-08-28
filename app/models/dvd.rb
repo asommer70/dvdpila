@@ -5,4 +5,5 @@ class Dvd < ActiveRecord::Base
   validates :playback_time, :numericality => { :greater_than_or_equal_to => 0 }
 
   has_many :episodes
+  has_many :bookmarks
 end

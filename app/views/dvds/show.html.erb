@@ -44,11 +44,41 @@
 </p>
 
 <div class="player-div">
-  <video class="player" data-id="<%= @dvd.id %>" controls>
+  <video class="player" data-id="<%= @dvd.id %>" data-dvd="<%= @dvd.id %>"controls>
     <source src="<%= @dvd.file_url %>">
   </video>
 </div>
 
+<br/><hr><br/>
+
+<div class="bookmarks">
+  <select class="bookmarks-select">
+    <option class="timer"></option>
+    <% @dvd.bookmarks.each do |bookmark| %>
+     <option value="<%= bookmark.id %>" data-dvd="<%= bookmark.dvd.id %>" data-time="<%= bookmark.time %>">
+       <%= bookmark.name %>
+     </option>
+    <% end %>
+  </select>
+  <br/><br/>
+</div>
+
+<%= button_tag 'Add Bookmark', class: 'hider', data: { exposer: 'new_bookmark' } %>
+
+<div id="new_bookmark" class="new-bookmark hidden">
+  <br/>
+
+  <%= form_tag dvd_bookmarks_path(@dvd) do %>
+    <%= text_field_tag 'bookmark[name]', '', placeholder: 'Name' %>
+
+    <br/><br/>
+    <%= hidden_field_tag 'bookmark[time]', '', class: 'timer' %>
+
+    <div class="actions">
+      <%= submit_tag 'Create Bookmark' %>
+    </div>
+  <% end %>
+</div>
 <br/><br/>
 
 <%= button_tag 'Add Episode', class: 'hider', data: { exposer: 'new_episode' } %>
@@ -86,7 +116,7 @@
         </div>
         <br/>
         <div class="player-div">
-          <video class="player episode" data-id="<%= episode.id %>" controls>
+          <video class="player episode" data-id="<%= episode.id %>" data-episode="<%= episode.id %>" controls>
             <source src="<%= episode.file_url %>">
           </video>
         </div>

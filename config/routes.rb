@@ -8,7 +8,9 @@ Rails.application.routes.draw do
 
   resources :dvds do
     resource :episodes
+    resource :bookmarks
   end
 
   resources :episodes, only: [:show, :update, :destroy]
+  resources :bookmarks, only: [:show, :update, :destroy]
 end

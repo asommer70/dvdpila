@@ -15,8 +15,10 @@ ready_dvd = ->
     $player = $(this)
     $player.focus()
 
+    # Do some Maths on the playback time.
     videoTime = getVideoTime(this.currentTime)
 
+    # Determine the put URL.
     if $player.hasClass('episode')
       url = '/episodes/'
       type = 'episode'
@@ -26,6 +28,17 @@ ready_dvd = ->
 
     url += $player.data().id + '.json'
 
+    # Update timer fields.
+    $.each $('.timer'), (idx, timer) ->
+      console.log('timer:', timer)
+      $timer = $(timer)
+      $timer.val(videoTime)
+
+      # Set the first Option in the Bookmark dropdown's text.
+      if $timer.prop('nodeName') == 'OPTION'
+        $timer.text(Math.floor(videoTime))
+
+    # Do the putting.
     $.ajax({
       url: url,
       method: 'put',
@@ -40,14 +53,18 @@ ready_dvd = ->
 
     videoTime = getVideoTime(this.currentTime)
 
-    if $player.hasClass('episode')
-      url = '/episodes/'
-    else
-      url = '/dvds/'
+    console.log('$player.bookmarked:', $player.bookmarked)
+    if $player.bookmarked == undefined
+      if $player.hasClass('episode')
+        url = '/episodes/'
+      else
+        url = '/dvds/'
 
-    $.get(url + $player.data().id + '.json').then (data) ->
-        self.currentTime = data.playback_time;
-        self.play()
+      $.get(url + $player.data().id + '.json').then (data) ->
+          self.currentTime = data.playback_time;
+          self.play()
+    else
+      self.play()
 
   # Play and pause on space bar.
   $('.player').on 'keyup', (e) ->
@@ -76,6 +93,23 @@ ready_dvd = ->
       player.play()
     else if (player.paused == false)
       player.pause()
+
+  # Seek to bookmark and play video.
+  $('.bookmarks-select').on 'change', (e) ->
+    console.log('this:', this)
+    $selected_bookmark = $($(this).find(':selected'))
+    console.log('selected data:', $selected_bookmark.data())
+    if $selected_bookmark.data().dvd?
+      $player = $("*[data-dvd='#{$selected_bookmark.data().dvd}']")[0]
+    else if $selected_bookmark.data().episode?
+      $player = $("*[data-episode='#{$selected_bookmark.data().episode}']")[0]
+
+    $player.currentTime = $selected_bookmark.data().time
+    console.log('$player.currentTime:', $player.currentTime)
+    $player.bookmarked = true
+#    $player.unbind('play')
+#    $player.play()
+
 
   #
   # Toggle elements with an id attribute designated by the event target's data-exposer attribute.
