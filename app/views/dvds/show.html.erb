@@ -35,5 +35,9 @@
   <%= @dvd.playback_time %>
 </p>
 
+<p>
+  <%= image_tag @dvd.image.url if @dvd.image %>
+</p>
+
 <%= link_to 'Edit', edit_dvd_path(@dvd) %> |
 <%= link_to 'Back', dvds_path %>

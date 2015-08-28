@@ -25,6 +25,9 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'quiet_assets', '~> 1.1.0'
   gem 'database_cleaner', '~> 1.4.1'
+  gem 'selenium-webdriver'
+  gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
 end
 
 group :development do
