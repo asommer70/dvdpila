@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828092242) do
+ActiveRecord::Schema.define(version: 20150828184842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,5 +30,16 @@ ActiveRecord::Schema.define(version: 20150828092242) do
     t.string   "image_uid"
     t.string   "image_name"
   end
+
+  create_table "episodes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "file_url"
+    t.integer  "playback_time"
+    t.integer  "dvd_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "episodes", ["dvd_id"], name: "index_episodes_on_dvd_id", using: :btree
 
 end

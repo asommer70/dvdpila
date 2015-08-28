@@ -1,0 +1,18 @@
+<%= form_for(episode) do |f| %>
+  <%=f.label :name %>
+  <br/>
+  <%= f.text_field :name, placeholder: 'Name' %>
+
+  <br/><br/>
+
+  <%=f.label :file_url %>
+  <%= f.text_field :file_url, placeholder: 'File URL' %>
+
+  <br/><br/>
+
+  <div class="actions">
+    <%= f.submit 'Save Episode' %>
+  </div>
+<% end %>
+
+<%= link_to 'Delete Episode', episode_path(episode),  method: :delete, class: 'delete' %>

@@ -6,5 +6,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'dvds#index'
 
-  resources :dvds
+  resources :dvds do
+    resource :episodes
+  end
+
+  resources :episodes, only: [:update, :destroy]
 end

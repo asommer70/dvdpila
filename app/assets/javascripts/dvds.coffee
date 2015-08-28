@@ -63,6 +63,13 @@ ready_dvd = ->
     else if (player.paused == false)
       player.pause()
 
+  #
+  # Toggle elements with an id attribute designated by the event target's data-exposer attribute.
+  #
+  $('.hider').on 'click', (e) ->
+    e.preventDefault()
+    $('#' + $(this).data().exposer).toggle()
+
 
 @getVideoTime = (time) ->
   hours = Math.floor(time / 3600)

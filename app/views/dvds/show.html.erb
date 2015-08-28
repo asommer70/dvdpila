@@ -1,3 +1,7 @@
+<%= link_to 'Edit', edit_dvd_path(@dvd) %> |
+<%= link_to 'Back', dvds_path %>
+<br/><hr/><br/>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -45,5 +49,51 @@
   </video>
 </div>
 
-<%= link_to 'Edit', edit_dvd_path(@dvd) %> |
-<%= link_to 'Back', dvds_path %>
+<br/><br/>
+
+<%= button_tag 'Add Episode', class: 'hider', data: { exposer: 'new_episode' } %>
+
+<div id="new_episode" class="new-episode hidden">
+  <br/>
+
+  <%= form_tag dvd_episodes_path(@dvd) do %>
+    <%= text_field_tag 'episode[name]', '', placeholder: 'Name' %>
+
+    <br/><br/>
+
+    <%= text_field_tag 'episode[file_url]', '', placeholder: 'File URL' %>
+
+    <br/><br/>
+
+    <div class="actions">
+      <%= submit_tag 'Create Episode' %>
+    </div>
+  <% end %>
+</div>
+
+<br/><br/>
+
+<ul class="episodes">
+  <% @dvd.episodes.each do |episode| %>
+    <li>
+      <div class="episode">
+        <p><strong>Name:</strong> <%= episode.name %></p>
+        <br/>
+        <%= button_tag 'Edit Episode', class: 'hider', data: { exposer: "edit_#{dom_id(episode)}" } %>
+
+        <div id="edit_<%= dom_id(episode) %>" class="edit-episode hidden">
+          <%= render 'episode_edit_form', episode: episode %>
+        </div>
+        <br/>
+        <div class="player-div">
+          <video class="player episode" data-id="<%= episode.id %>" controls>
+            <source src="<%= episode.file_url %>">
+          </video>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+
+
