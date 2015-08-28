@@ -39,5 +39,11 @@
   <%= image_tag @dvd.image.url if @dvd.image %>
 </p>
 
+<div class="player">
+  <video controls>
+    <source src="<%= @dvd.file_url %>">
+  </video>
+</div>
+
 <%= link_to 'Edit', edit_dvd_path(@dvd) %> |
 <%= link_to 'Back', dvds_path %>
