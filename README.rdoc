@@ -1,28 +1,13 @@
-== README
+DVD Pila!
+=======
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A web app that helps you keep track of your archived DVDs.  Now converted to a Ruby on Rails web application.
 
-Things you may want to cover:
+##Features
+ * Organize your DVD backup files.
+ * If the file format is supported by the HTML5 video element you can play your videos.
+ * Simple database schema.
 
-* Ruby version
+##Installation
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+See the [wiki page](https://github.com/asommer70/dvdpila/wiki/Installation).
