@@ -1,9 +1,0 @@
-*.swp
-*.swo
-.DS_Store
-.sass-cache/*
-.sass-cache
-config.cfg
-*.pyc
-static/images/*
-static/videos/*
