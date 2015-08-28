@@ -1,8 +1,15 @@
 class EpisodesController < ApplicationController
-  before_action :set_episode, only: [:edit, :update, :destroy]
+  before_action :set_episode, only: [:show, :edit, :update, :destroy]
+
+  # Get /episodes/1.json
+  def show
+    respond_to do |format|
+      format.json { render :show, location: @episode }
+    end
+  end
   
-  # POST /Episodes
-  # POST /Episodes.json
+  # POST /episodes
+  # POST /episodes.json
   def create
     @episode = Episode.new(episode_params)
     dvd = Dvd.find(params[:dvd_id])
@@ -19,8 +26,8 @@ class EpisodesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /Episodes/1
-  # PATCH/PUT /Episodes/1.json
+  # PATCH/PUT /episodes/1
+  # PATCH/PUT /episodes/1.json
   def update
     respond_to do |format|
       if @episode.update(episode_params)
@@ -33,8 +40,8 @@ class EpisodesController < ApplicationController
     end
   end
 
-  # DELETE /Episodes/1
-  # DELETE /Episodes/1.json
+  # DELETE /episodes/1
+  # DELETE /episodes/1.json
   def destroy
     @episode.destroy
     respond_to do |format|

@@ -10,5 +10,5 @@ Rails.application.routes.draw do
     resource :episodes
   end
 
-  resources :episodes, only: [:update, :destroy]
+  resources :episodes, only: [:show, :update, :destroy]
 end

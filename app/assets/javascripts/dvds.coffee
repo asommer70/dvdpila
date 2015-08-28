@@ -17,10 +17,19 @@ ready_dvd = ->
 
     videoTime = getVideoTime(this.currentTime)
 
+    if $player.hasClass('episode')
+      url = '/episodes/'
+      type = 'episode'
+    else
+      url = '/dvds/'
+      type = 'dvd'
+
+    url += $player.data().id + '.json'
+
     $.ajax({
-      url: '/dvds/' + $player.data().id + '.json',
+      url: url,
       method: 'put',
-      data: 'dvd[playback_time]=' + videoTime
+      data: type + '[playback_time]=' + videoTime
     })
 
   # Start playing at the playback_time.
@@ -31,7 +40,12 @@ ready_dvd = ->
 
     videoTime = getVideoTime(this.currentTime)
 
-    $.get('/dvds/' + $player.data().id + '.json').then (data) ->
+    if $player.hasClass('episode')
+      url = '/episodes/'
+    else
+      url = '/dvds/'
+
+    $.get(url + $player.data().id + '.json').then (data) ->
         self.currentTime = data.playback_time;
         self.play()
 
