@@ -4,7 +4,14 @@ class DvdsController < ApplicationController
   # GET /dvds
   # GET /dvds.json
   def index
-    @dvds = Dvd.all
+    @dvds = Dvd.all.order('updated_at DESC')
+  end
+
+  # GET /search
+  def search
+    @search = params[:search]
+    @dvds = Dvd.where("title ~* ?", @search)
+    render :index
   end
 
   # GET /dvds/1
