@@ -1,3 +1,17 @@
-.hidden {
-  display: none;
+
+.dvd-title {
+  margin-top: 10px;
+}
+
+.dvd-attr li:nth-child(odd) {
+  background: #eeeeee;
+}
+.dvd-attr li {
+  margin: 10px 0;
+  padding: 5px;
+}
+
+.abstract-src {
+  vertical-align: bottom;
+  padding-top: 40px;
 }

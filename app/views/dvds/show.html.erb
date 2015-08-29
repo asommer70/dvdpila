@@ -1,110 +1,122 @@
-<%= link_to 'Edit', edit_dvd_path(@dvd) %> |
-<%= link_to 'Back', dvds_path %>
-<br/><hr/><br/>
-
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @dvd.title %>
-</p>
-
-<p>
-  <strong>Rating:</strong>
-  <%= @dvd.rating %>
-</p>
-
-<p>
-  <strong>Abstract txt:</strong>
-  <%= @dvd.abstract_txt %>
-</p>
-
-<p>
-  <strong>Abstract source:</strong>
-  <%= @dvd.abstract_source %>
-</p>
-
-<p>
-  <strong>Abstract url:</strong>
-  <%= @dvd.abstract_url %>
-</p>
-
-<p>
-  <strong>File url:</strong>
-  <%= @dvd.file_url %>
-</p>
-
-<p>
-  <strong>Created:</strong>
-  <%= time_ago_in_words @dvd.created_at %> ago
-</p>
-
-<p>
-  <%= image_tag @dvd.image.url if @dvd.image %>
-</p>
-
-<% unless @dvd.file_url.blank? %>
-  <div class="player-div">
-    <video class="player" data-id="<%= @dvd.id %>" data-dvd="<%= @dvd.id %>"controls>
-      <source src="<%= @dvd.file_url %>">
-    </video>
-  </div>
-
-  <br/><hr><br/>
-  <%= render 'bookmark', dvd: @dvd, episode: nil %>
-<% end %>
 
 <br/><br/>
 
-<% if @dvd.file_url.blank? %>
-  <%= button_tag 'Add Episode', class: 'hider', data: { exposer: 'new_episode' } %>
+<div class="row">
+  <div class="large-4 columns">
 
-  <div id="new_episode" class="new-episode hidden">
-    <br/>
+    <%= image_tag @dvd.image.url, class: 'th' if @dvd.image %>
 
-    <%= form_tag dvd_episodes_path(@dvd) do %>
-      <%= text_field_tag 'episode[name]', '', placeholder: 'Name' %>
+    <br/><br/>
 
-      <br/><br/>
+    <ul class="dvd-attr no-bullet">
+      <li>
+        <strong>Title:</strong>
+        <%= @dvd.title %>
+      </li>
+      <li>
+        <strong>Created:</strong>
+        <%= time_ago_in_words @dvd.created_at %> ago
+      </li>
+      <li>
+        <strong>Rating:</strong>
+        <%= @dvd.rating %>
+      </li>
+      <li>
+        <strong>Info:</strong>
+        <%= @dvd.abstract_txt %>
+      </li>
+    </ul>
 
-      <%= text_field_tag 'episode[file_url]', '', placeholder: 'File URL' %>
+    <br/><br/>
 
-      <br/><br/>
-
-      <div class="actions">
-        <%= submit_tag 'Create Episode' %>
+    <div class="row">
+      <div class="columns large-6 abstract-src">
+        <%= link_to @dvd.abstract_source, @dvd.abstract_url %>
       </div>
+      <div class="columns large-6">
+        <a href="https://duckduckgo.com/?q=<%= @dvd.title %>" class="ddg" target="_blank">
+          <img src="/img/ddg_logo.svg" width="80" height="80">
+        </a>
+      </div>
+    </div>
+
+    <br/><br/>
+
+    <%= link_to edit_dvd_path(@dvd), class: 'button small' do %>
+      <i class="fi-pencil"></i>
+      &nbsp;
+      Edit DVD
     <% end %>
+
   </div>
 
-  <br/><br/>
+  <div class="large-6 columns">
+    <% unless @dvd.file_url.blank? %>
+      <div class="player-div">
+        <video class="player" data-id="<%= @dvd.id %>" data-dvd="<%= @dvd.id %>"controls>
+          <source src="<%= @dvd.file_url %>">
+        </video>
+      </div>
 
-  <ul class="episodes">
-    <% @dvd.episodes.each do |episode| %>
-      <li>
-        <div class="episode">
-          <p><strong>Name:</strong> <%= episode.name %></p>
-          <br/>
-          <%= button_tag 'Edit Episode', class: 'hider', data: { exposer: "edit_#{dom_id(episode)}" } %>
-
-          <div id="edit_<%= dom_id(episode) %>" class="edit-episode hidden">
-            <%= render 'episode_edit_form', episode: episode %>
-          </div>
-          <br/>
-          <div class="player-div">
-            <video class="player episode" data-id="<%= episode.id %>" data-episode="<%= episode.id %>" controls>
-              <source src="<%= episode.file_url %>">
-            </video>
-
-            <br/><hr><br/>
-            <%= render 'bookmark', dvd: nil, episode: episode %>
-
-            <%= render 'tags', dvd: nil, episode: episode %>
-          </div>
-        </div>
-      </li>
+      <br/><hr><br/>
+      <%= render 'bookmark', dvd: @dvd, episode: nil %>
     <% end %>
-  </ul>
-<% end %>
 
-<%= render 'tags', dvd: @dvd, episode: nil %>
+    <br/><br/>
+
+    <% if @dvd.file_url.blank? %>
+      <%= button_tag 'Add Episode', class: 'hider', data: { exposer: 'new_episode' } %>
+
+      <div id="new_episode" class="new-episode hide">
+        <br/>
+
+        <%= form_tag dvd_episodes_path(@dvd) do %>
+          <%= text_field_tag 'episode[name]', '', placeholder: 'Name' %>
+
+          <br/><br/>
+
+          <%= text_field_tag 'episode[file_url]', '', placeholder: 'File URL' %>
+
+          <br/><br/>
+
+          <div class="actions">
+            <%= submit_tag 'Create Episode' %>
+          </div>
+        <% end %>
+      </div>
+
+      <br/>
+
+      <ul class="episodes">
+        <% @dvd.episodes.each do |episode| %>
+          <li>
+            <div class="episode">
+              <p><strong>Name:</strong> <%= episode.name %></p>
+              <br/>
+              <%= button_tag 'Edit Episode', class: 'hider', data: { exposer: "edit_#{dom_id(episode)}" } %>
+
+              <div id="edit_<%= dom_id(episode) %>" class="edit-episode hide">
+                <%= render 'episode_edit_form', episode: episode %>
+              </div>
+
+              <div class="player-div">
+                <video class="player episode" data-id="<%= episode.id %>" data-episode="<%= episode.id %>" controls>
+                  <source src="<%= episode.file_url %>">
+                </video>
+
+                <br/><hr><br/>
+                <%= render 'bookmark', dvd: nil, episode: episode %>
+
+                <%= render 'tags', dvd: nil, episode: episode %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <%= render 'tags', dvd: @dvd, episode: nil %>
+  </div>
+</div>
+
+<br/><br/><br/>

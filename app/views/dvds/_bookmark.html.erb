@@ -1,4 +1,5 @@
 <div class="bookmarks">
+  <h5>Bookmarks:</h5>
   <select class="bookmarks-select">
     <option class="timer"></option>
     <% if dvd %>
@@ -15,40 +16,45 @@
       <% end %>
     <% end %>
   </select>
-  <br/><br/>
+  <br/>
 </div>
 
 <% if dvd %>
-  <%= button_tag 'Add Bookmark', class: 'hider', data: { exposer: "new_bookmark" } %>
-  <div id="new_bookmark" class="new-bookmark hidden">
+  <%= button_tag class: 'hider tiny', data: { exposer: "new_bookmark" } do %>
+    <i class="fi-bookmark"></i> &nbsp; Add Bookmark
+  <% end %>
+  <div id="new_bookmark" class="new-bookmark hide">
 <% elsif episode %>
-  <%= button_tag 'Add Bookmark', class: 'hider', data: { exposer: "new_bookmark_#{episode.id}" } %>
-  <div id="new_bookmark_<%= episode.id %>" class="new-bookmark hidden">
+  <%= button_tag class: 'hider tiny', data: { exposer: "new_bookmark_#{episode.id}" } do %>
+    <i class="fi-bookmark"></i> &nbsp; Add Bookmark
+  <% end %>
+  <div id="new_bookmark_<%= episode.id %>" class="new-bookmark hide">
 <% end %>
-  <br/>
 
-  <% if dvd %>
+<% if dvd %>
 
-    <%= form_tag dvd_bookmarks_path(dvd) do %>
-      <%= text_field_tag 'bookmark[name]', '', placeholder: 'Name' %>
+  <%= form_tag dvd_bookmarks_path(dvd) do %>
+    <%= text_field_tag 'bookmark[name]', '', placeholder: 'Name' %>
 
-      <br/><br/>
-      <%= hidden_field_tag 'bookmark[time]', '', class: 'timer' %>
+    <%= hidden_field_tag 'bookmark[time]', '', class: 'timer' %>
 
-      <div class="actions">
-        <%= submit_tag 'Create Bookmark' %>
-      </div>
-    <% end %>
-  <% elsif episode %>
-    <%= form_tag episode_bookmarks_path(episode) do %>
-      <%= text_field_tag 'bookmark[name]', '', placeholder: 'Name' %>
-
-      <br/><br/>
-      <%= hidden_field_tag 'bookmark[time]', '', class: 'timer' %>
-
-      <div class="actions">
-        <%= submit_tag 'Create Bookmark' %>
-      </div>
+    <%= button_tag type: 'submit', class: 'button small success' do %>
+      <i class="fi-save"></i>
+      &nbsp;
+      Create Bookmark
     <% end %>
   <% end %>
+<% elsif episode %>
+  <%= form_tag episode_bookmarks_path(episode) do %>
+    <%= text_field_tag 'bookmark[name]', '', placeholder: 'Name' %>
+
+    <%= hidden_field_tag 'bookmark[time]', '', class: 'timer' %>
+
+    <%= button_tag type: 'submit', class: 'button small success' do %>
+      <i class="fi-save"></i>
+      &nbsp;
+      Create Bookmark
+    <% end %>
+  <% end %>
+<% end %>
 </div>

@@ -16,6 +16,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'dragonfly', '~> 1.0.8'
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'foundation-rails'
+gem 'foundation-icons-sass-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

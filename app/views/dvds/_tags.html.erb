@@ -1,45 +1,53 @@
-<br/><br/>
-<p>
+<br/>
+<div>
   <% if dvd %>
     <% dvd.tag_list.each do |tag| %>
-      <em><%= tag %></em> |
+      <span class="label info"><%= tag %></span>
     <% end %>
   <% elsif episode %>
     <% episode.tag_list.each do |tag| %>
-      <em><%= tag %></em> |
+      <span class="label info"><%= tag %></span>
     <% end %>
   <% end %>
-</p>
+</div>
+<br/>
 
 <% if dvd %>
-  <%= button_tag 'Add Tag', class: 'hider', data: { exposer: 'new_tag' } %>
+  <%= button_tag class: 'hider tiny', data: { exposer: 'new_tag' } do %>
+    <i class="fi-price-tag"></i>
+    &nbsp;
+    Add Tag
+  <% end %>
 <% elsif episode %>
-  <%= button_tag 'Add Tag', class: 'hider', data: { exposer: "new_tag_#{episode.id}" } %>
+  <%= button_tag 'Add Tag', class: 'hider tiny', data: { exposer: "new_tag_#{episode.id}" } %>
 <% end %>
 
 <% if dvd %>
-  <div id="new_tag" class="new-tag hidden">
-    <br/>
+  <div id="new_tag" class="new-tag hide">
 
     <%= form_tag dvd_path(dvd), method: :put do %>
       <%= text_area_tag 'dvd[tag_list]', dvd.tag_list.join(','), placeholder: 'Tag name' %>
 
-      <div class="actions">
-        <%= submit_tag 'Save Tags' %>
-      </div>
+      <%= button_tag type: 'submit', class: 'button small success' do %>
+        <i class="fi-save"></i>
+        &nbsp;
+        Submit Tags
+      <% end %>
     <% end %>
   </div>
 
 <% elsif episode %>
-  <div id="new_tag_<%= episode.id %>" class="new-tag hidden">
+  <div id="new_tag_<%= episode.id %>" class="new-tag hide">
     <br/>
 
     <%= form_tag episode_path(episode), method: :put do %>
       <%= text_area_tag 'episode[tag_list]', episode.tag_list.join(','), placeholder: 'Tag name' %>
 
-      <div class="actions">
-        <%= submit_tag 'Save Tags' %>
-      </div>
+      <%= button_tag type: 'submit', class: 'button small success' do %>
+        <i class="fi-save"></i>
+        &nbsp;
+        Submit Tags
+      <% end %>
     <% end %>
   </div>
 <% end %>
