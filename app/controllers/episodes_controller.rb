@@ -13,14 +13,17 @@ class EpisodesController < ApplicationController
   def create
     @episode = Episode.new(episode_params)
     dvd = Dvd.find(params[:dvd_id])
-    @episode.dvd = dvd
+    @episode.dvd = dvd if dvd
 
     respond_to do |format|
       if @episode.save
         format.html { redirect_to dvd_path(@episode.dvd.id), notice: 'Episode was successfully created.' }
         format.json { render :show, status: :created, location: dvd_path(@episode.dvd.id) }
       else
-        format.html { render :new }
+        puts "@episode.errors: #{@episode.errors.full_messages}"
+        puts "dvd.errors: #{dvd.errors.full_messages}"
+
+        format.html { redirect_to dvd_path(@episode.dvd.id), error: 'There was a problem creating the episode.' }
         format.json { render json: @episode.errors, status: :unprocessable_entity }
       end
     end

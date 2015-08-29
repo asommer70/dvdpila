@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     resource :bookmarks
   end
 
-  resources :episodes, only: [:show, :update, :destroy]
+  resources :episodes, only: [:show, :update, :destroy] do
+    resource :bookmarks
+  end
+
   resources :bookmarks, only: [:show, :update, :destroy]
 end

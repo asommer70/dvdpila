@@ -1,0 +1,54 @@
+<div class="bookmarks">
+  <select class="bookmarks-select">
+    <option class="timer"></option>
+    <% if dvd %>
+      <% dvd.bookmarks.each do |bookmark| %>
+        <option value="<%= bookmark.id %>" data-dvd="<%= bookmark.dvd.id %>" data-time="<%= bookmark.time %>">
+          <%= bookmark.name %>
+        </option>
+      <% end %>
+    <% elsif episode && episode.bookmarks %>
+      <% episode.bookmarks.each do |bookmark| %>
+        <option value="<%= bookmark.id %>" data-episode="<%= bookmark.episode.id %>" data-time="<%= bookmark.time %>">
+          <%= bookmark.name %>
+        </option>
+      <% end %>
+    <% end %>
+  </select>
+  <br/><br/>
+</div>
+
+<% if dvd %>
+  <%= button_tag 'Add Bookmark', class: 'hider', data: { exposer: "new_bookmark" } %>
+  <div id="new_bookmark" class="new-bookmark hidden">
+<% elsif episode %>
+  <%= button_tag 'Add Bookmark', class: 'hider', data: { exposer: "new_bookmark_#{episode.id}" } %>
+  <div id="new_bookmark_<%= episode.id %>" class="new-bookmark hidden">
+<% end %>
+  <br/>
+
+  <% if dvd %>
+
+    <%= form_tag dvd_bookmarks_path(dvd) do %>
+      <%= text_field_tag 'bookmark[name]', '', placeholder: 'Name' %>
+
+      <br/><br/>
+      <%= hidden_field_tag 'bookmark[time]', '', class: 'timer' %>
+
+      <div class="actions">
+        <%= submit_tag 'Create Bookmark' %>
+      </div>
+    <% end %>
+  <% elsif episode %>
+    <%= form_tag episode_bookmarks_path(episode) do %>
+      <%= text_field_tag 'bookmark[name]', '', placeholder: 'Name' %>
+
+      <br/><br/>
+      <%= hidden_field_tag 'bookmark[time]', '', class: 'timer' %>
+
+      <div class="actions">
+        <%= submit_tag 'Create Bookmark' %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

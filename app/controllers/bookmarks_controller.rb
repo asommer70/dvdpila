@@ -19,10 +19,19 @@ class BookmarksController < ApplicationController
 
     respond_to do |format|
       if @bookmark.save
+        if @bookmark.dvd
         format.html { redirect_to dvd_path(@bookmark.dvd.id), notice: 'Bookmark was successfully created.' }
         format.json { render :show, status: :created, location: dvd_path(@bookmark.dvd.id) }
+        elsif @bookmark.episode
+          format.html { redirect_to dvd_path(@bookmark.episode.dvd.id), notice: 'Bookmark was successfully created.' }
+          format.json { render :show, status: :created, location: dvd_path(@bookmark.episode.dvd.id) }
+        end
       else
-        format.html { render :new }
+        if @bookmark.dvd
+          format.html { redirect_to dvd_path(@bookmark.dvd.id), alert: 'Problem creating bookmark.' }
+        elsif @bookmark.episode
+          format.html { redirect_to dvd_path(@bookmark.episode.dvd.id), alert: 'Problem creating bookmark.' }
+        end
         format.json { render json: @bookmark.errors, status: :unprocessable_entity }
       end
     end

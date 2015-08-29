@@ -4,9 +4,9 @@
       <h2><%= pluralize(@dvd.errors.count, "error") %> prohibited this dvd from being saved:</h2>
 
       <ul>
-      <% @dvd.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @dvd.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :abstract_txt %><br>
-    <%= f.text_field :abstract_txt %>
+    <%= f.text_area :abstract_txt %>
   </div>
   <div class="field">
     <%= f.label :abstract_source %><br>
@@ -33,11 +33,11 @@
   </div>
   <div class="field">
     <%= f.label :file_url %><br>
-    <%= f.text_field :file_url %>
-  </div>
-  <div class="field">
-    <%= f.label :playback_time %><br>
-    <%= f.number_field :playback_time %>
+    <% if @dvd.episodes.blank? %>
+      <%= f.text_field :file_url %>
+    <% else %>
+      <%= f.text_field :file_url, disabled: true %>
+    <% end %>
   </div>
   <div class="field">
     <div class="image_to_upload hide"></div>
