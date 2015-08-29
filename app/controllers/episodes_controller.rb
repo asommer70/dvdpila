@@ -63,7 +63,8 @@ class EpisodesController < ApplicationController
     def episode_params
       params.require(:episode).permit(:name,
                                       :file_url,
-                                      :playback_time
+                                      :playback_time,
+                                      :tag_list
       )
     end
 end

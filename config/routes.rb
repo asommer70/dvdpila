@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'dvds#index'
 
+  #resources :dvds
   resources :dvds do
     resource :episodes
     resource :bookmarks

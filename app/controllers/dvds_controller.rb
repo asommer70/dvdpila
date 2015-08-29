@@ -83,7 +83,8 @@ class DvdsController < ApplicationController
                                   :abstract_url,
                                   :file_url,
                                   :playback_time,
-                                  :image
+                                  :image,
+                                  :tag_list
       )
     end
 end

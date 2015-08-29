@@ -1,4 +1,6 @@
 class Episode < ActiveRecord::Base
+  acts_as_taggable_on :tags
+
   belongs_to :dvd
   has_many :bookmarks
 

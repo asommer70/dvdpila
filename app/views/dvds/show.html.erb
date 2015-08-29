@@ -105,5 +105,23 @@
   </ul>
 <% end %>
 
+<br/><br/>
+<p>
+  <% @dvd.tag_list.each do |tag| %>
+    <%= tag %>
+  <% end %>
+</p>
 
+<%= button_tag 'Add Tag', class: 'hider', data: { exposer: 'new_tag' } %>
 
+<div id="new_tag" class="new-tag hidden">
+  <br/>
+
+  <%= form_tag dvd_path(@dvd), method: :put do %>
+    <%= text_field_tag 'dvd[tag_list]', '', placeholder: 'Tag name' %>
+
+    <div class="actions">
+      <%= submit_tag 'Add Tag' %>
+    </div>
+  <% end %>
+</div>

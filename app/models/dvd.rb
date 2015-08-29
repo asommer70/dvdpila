@@ -1,5 +1,6 @@
 class Dvd < ActiveRecord::Base
   dragonfly_accessor :image
+  acts_as_taggable_on :tags
 
   validates :rating, allow_nil: true, :numericality => { :greater_than => 0, :less_than_or_equal_to => 5 }
   validates :playback_time, allow_nil: true, :numericality => { :greater_than_or_equal_to => 0 }
