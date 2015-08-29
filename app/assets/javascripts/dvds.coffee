@@ -30,7 +30,6 @@ ready_dvd = ->
 
     # Update timer fields.
     $.each $('.timer'), (idx, timer) ->
-      console.log('timer:', timer)
       $timer = $(timer)
       $timer.val(videoTime)
 
@@ -53,18 +52,15 @@ ready_dvd = ->
 
     videoTime = getVideoTime(this.currentTime)
 
-    console.log('$player.bookmarked:', $player.bookmarked)
-    if $player.bookmarked == undefined
-      if $player.hasClass('episode')
-        url = '/episodes/'
-      else
-        url = '/dvds/'
-
-      $.get(url + $player.data().id + '.json').then (data) ->
-          self.currentTime = data.playback_time;
-          self.play()
+    if $player.hasClass('episode')
+      url = '/episodes/'
     else
-      self.play()
+      url = '/dvds/'
+
+    $.get(url + $player.data().id + '.json').then (data) ->
+        self.currentTime = data.playback_time;
+        self.play()
+
 
   # Play and pause on space bar.
   $('.player').on 'keyup', (e) ->
@@ -96,19 +92,16 @@ ready_dvd = ->
 
   # Seek to bookmark and play video.
   $('.bookmarks-select').on 'change', (e) ->
-    console.log('this:', this)
     $selected_bookmark = $($(this).find(':selected'))
-    console.log('selected data:', $selected_bookmark.data())
+
     if $selected_bookmark.data().dvd?
       $player = $("*[data-dvd='#{$selected_bookmark.data().dvd}']")[0]
     else if $selected_bookmark.data().episode?
       $player = $("*[data-episode='#{$selected_bookmark.data().episode}']")[0]
 
     $player.currentTime = $selected_bookmark.data().time
-    console.log('$player.currentTime:', $player.currentTime)
-    $player.bookmarked = true
-#    $player.unbind('play')
-#    $player.play()
+    $($player).unbind('play')
+    $player.play()
 
 
   #
@@ -139,8 +132,6 @@ ready_dvd = ->
     reader = new FileReader()
 
     reader.onload = (e) ->
-      console.log('e.target:', e.target)
-
       $img = $('<img id="dynamic">')
       $img.attr('src', e.target.result)
       $img.appendTo('.image_to_upload')
