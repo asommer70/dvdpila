@@ -47,6 +47,13 @@ class DvdsController < ApplicationController
   # PATCH/PUT /dvds/1
   # PATCH/PUT /dvds/1.json
   def update
+
+    # if dvd_params[:tag_list]
+    #   tag_list = params[:dvd].delete :lat
+    #   @dvd.tag_list.add(tag_list, parse: true)
+    #   @dvd.save
+    # end
+
     respond_to do |format|
       if @dvd.update(dvd_params)
         format.html { redirect_to @dvd, notice: 'Dvd was successfully updated.' }

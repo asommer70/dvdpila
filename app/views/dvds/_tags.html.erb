@@ -1,0 +1,45 @@
+<br/><br/>
+<p>
+  <% if dvd %>
+    <% dvd.tag_list.each do |tag| %>
+      <em><%= tag %></em> |
+    <% end %>
+  <% elsif episode %>
+    <% episode.tag_list.each do |tag| %>
+      <em><%= tag %></em> |
+    <% end %>
+  <% end %>
+</p>
+
+<% if dvd %>
+  <%= button_tag 'Add Tag', class: 'hider', data: { exposer: 'new_tag' } %>
+<% elsif episode %>
+  <%= button_tag 'Add Tag', class: 'hider', data: { exposer: "new_tag_#{episode.id}" } %>
+<% end %>
+
+<% if dvd %>
+  <div id="new_tag" class="new-tag hidden">
+    <br/>
+
+    <%= form_tag dvd_path(dvd), method: :put do %>
+      <%= text_area_tag 'dvd[tag_list]', dvd.tag_list.join(','), placeholder: 'Tag name' %>
+
+      <div class="actions">
+        <%= submit_tag 'Save Tags' %>
+      </div>
+    <% end %>
+  </div>
+
+<% elsif episode %>
+  <div id="new_tag_<%= episode.id %>" class="new-tag hidden">
+    <br/>
+
+    <%= form_tag episode_path(episode), method: :put do %>
+      <%= text_area_tag 'episode[tag_list]', episode.tag_list.join(','), placeholder: 'Tag name' %>
+
+      <div class="actions">
+        <%= submit_tag 'Save Tags' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
