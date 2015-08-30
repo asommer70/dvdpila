@@ -109,8 +109,8 @@ ready_dvd = ->
 
     if $selected_bookmark.data().dvd?
       player = $("*[data-dvd='#{$selected_bookmark.data().dvd}']")[0]
-    else if $selected_bookmark.data().episode?
-      player = $("*[data-episode='#{$selected_bookmark.data().episode}']")[0]
+    else if $selected_bookmark.data().episode_id?
+      player = $("*[data-episode='#{$selected_bookmark.data().episode_id}']")[0]
 
     $player = $(player)
     player.currentTime = $selected_bookmark.data().time

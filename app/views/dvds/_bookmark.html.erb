@@ -10,7 +10,7 @@
       <% end %>
     <% elsif episode && episode.bookmarks %>
       <% episode.bookmarks.each do |bookmark| %>
-        <option value="<%= bookmark.id %>" data-episode="<%= bookmark.episode.id %>" data-time="<%= bookmark.time %>">
+        <option value="<%= bookmark.id %>" data-episode_id="<%= bookmark.episode.id %>" data-time="<%= bookmark.time %>">
           <%= bookmark.name %>
         </option>
       <% end %>
