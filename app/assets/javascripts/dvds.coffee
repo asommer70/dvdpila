@@ -44,24 +44,13 @@ ready_dvd = ->
       url: url,
       method: 'put',
       data: type + '[playback_time]=' + videoTime
-    })
+    }).then () ->
+      $('.player').on 'play', (e) ->
+        play_location(this)
 
   # Start playing at the playback_time.
   $('.player').on 'play', (e) ->
-    self = this
-    self.focus()
-    $player = $(this)
-
-    videoTime = getVideoTime(this.currentTime)
-
-    if $player.hasClass('episode')
-      url = '/episodes/' + $player.data().episode + '.json'
-    else
-      url = '/dvds/' + $player.data().dvd + '.json'
-
-    $.get(url).then (data) ->
-        self.currentTime = data.playback_time;
-        self.play()
+    play_location(this)
 
 
   # Play and pause on space bar.
@@ -105,7 +94,6 @@ ready_dvd = ->
     $.ajax({
       url: url,
     }).then (data) ->
-      console.log(data)
       $player.prop('controls', true)
       $player.prop('src', data.file_url)
       $player.removeAttr('poster')
@@ -120,13 +108,29 @@ ready_dvd = ->
     $selected_bookmark = $($(this).find(':selected'))
 
     if $selected_bookmark.data().dvd?
-      $player = $("*[data-dvd='#{$selected_bookmark.data().dvd}']")[0]
+      player = $("*[data-dvd='#{$selected_bookmark.data().dvd}']")[0]
     else if $selected_bookmark.data().episode?
-      $player = $("*[data-episode='#{$selected_bookmark.data().episode}']")[0]
+      player = $("*[data-episode='#{$selected_bookmark.data().episode}']")[0]
 
-    $player.currentTime = $selected_bookmark.data().time
-    $($player).unbind('play')
-    $player.play()
+    $player = $(player)
+    player.currentTime = $selected_bookmark.data().time
+    $player.unbind('play')
+
+    if $player.attr('src')?
+      player.play()
+    else
+      if $player.hasClass('episode')
+        url ='/episodes/' + $player.data().episode + '.json'
+      else
+        url = '/dvds/' + $player.data().dvd + '.json'
+
+      $.ajax({
+        url: url,
+      }).then (data) ->
+        $player.prop('controls', true)
+        $player.prop('src', data.file_url)
+        $player.removeAttr('poster')
+        player.play()
 
 
   #
@@ -168,6 +172,21 @@ ready_dvd = ->
 
     reader.readAsDataURL(input.files[0]);
 
+@play_location = (video) ->
+  self = video
+  self.focus()
+  $player = $(video)
+
+  videoTime = getVideoTime(video.currentTime)
+
+  if $player.hasClass('episode')
+    url = '/episodes/' + $player.data().episode + '.json'
+  else
+    url = '/dvds/' + $player.data().dvd + '.json'
+
+  $.get(url).then (data) ->
+    self.currentTime = data.playback_time;
+    self.play()
 
 
 # Fire the ready function on load and refresh.
