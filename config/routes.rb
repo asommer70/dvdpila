@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   post '/search', to: 'dvds#search', as: 'search'
+  post '/barcode', to: 'dvds#barcode', as: 'barcode'
 
   resources :episodes, only: [:show, :update, :destroy] do
     resource :bookmarks

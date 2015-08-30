@@ -1,5 +1,6 @@
 class DvdsController < ApplicationController
   before_action :set_dvd, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery :except => :barcode
 
   # GET /dvds
   # GET /dvds.json
@@ -38,6 +39,28 @@ class DvdsController < ApplicationController
       if @dvd.save
         format.html { redirect_to @dvd, success: 'DVD was successfully created.' }
         format.json { render :show, status: :created, location: @dvd }
+      else
+        format.html { render :new }
+        format.json { render json: @dvd.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def barcode
+    yoopsie_data = Dvd.get_yoopsie(params[:barcode])
+
+    if (yoopsie_data[:title])
+        @dvd = Dvd.new(title: yoopsie_data[:title], image_url: yoopsie_data[:image_url])
+    end
+
+    respond_to do |format|
+      if @dvd.save
+        format.html { redirect_to @dvd, success: 'DVD was successfully created.' }
+        return_data = {
+            "status": "DVD *NOT* Created...",
+            "openUrl": "http://192.168.1.22:5000/#/"
+        }
+        format.json { render json: { status: 'DVD created...', openUrl: dvd_path(@dvd) } }
       else
         format.html { render :new }
         format.json { render json: @dvd.errors, status: :unprocessable_entity }

@@ -7,4 +7,13 @@ class Dvd < ActiveRecord::Base
 
   has_many :episodes
   has_many :bookmarks
+
+  def self.get_yoopsie(barcode)
+    #barcode = '717951000842'
+    url = "http://www.yoopsie.com/query.php?query=" + barcode
+    doc = Nokogiri::HTML(open(url))
+
+    td = doc.css('.info_image').search('td')[0]
+    return { title: td.search('a')[0]['title'], image_url: td.children.children[0]['src'] }
+  end
 end
