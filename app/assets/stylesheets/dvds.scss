@@ -1,4 +1,6 @@
 
+@import 'foundation_and_overrides';
+
 .dvd-title {
   margin-top: 10px;
 }
@@ -14,4 +16,18 @@
 .abstract-src {
   vertical-align: bottom;
   padding-top: 40px;
+}
+
+video {
+  width: 548px;
+}
+
+.episodes  {
+  li {
+    margin-top: 40px;
+  }
+}
+
+.delete {
+  color: $alert-color;
 }

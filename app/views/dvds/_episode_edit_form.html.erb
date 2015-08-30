@@ -1,18 +1,28 @@
 <%= form_for(episode) do |f| %>
-  <%=f.label :name %>
-  <br/>
-  <%= f.text_field :name, placeholder: 'Name' %>
 
-  <br/><br/>
+  <div class="row">
+    <div class="columns large-6">
+      <%=f.label :name %>
+      <%= f.text_field :name, placeholder: 'Name' %>
+    </div>
+  </div>
 
-  <%=f.label :file_url %>
-  <%= f.text_field :file_url, placeholder: 'File URL' %>
+  <div class="row">
+    <div class="columns large-6">
+      <%=f.label :file_url %>
+      <%= f.text_field :file_url, placeholder: 'File URL' %>
+    </div>
+  </div>
 
-  <br/><br/>
-
-  <div class="actions">
-    <%= f.submit 'Save Episode' %>
+  <div class="row">
+    <div class="columns large-6">
+      <%= button_tag type: 'submit', class: 'button tiny success' do %>
+        <i class="fi-save"></i>
+        &nbsp;
+        Save Episode
+      <% end %>
+    </div>
   </div>
 <% end %>
 
-<%= link_to 'Delete Episode', episode_path(episode),  method: :delete, class: 'delete' %>
+<small><%= link_to 'Delete Episode', episode_path(episode),  method: :delete, class: 'delete' %></small>

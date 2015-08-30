@@ -35,7 +35,7 @@ class DvdsController < ApplicationController
 
     respond_to do |format|
       if @dvd.save
-        format.html { redirect_to @dvd, notice: 'Dvd was successfully created.' }
+        format.html { redirect_to @dvd, success: 'DVD was successfully created.' }
         format.json { render :show, status: :created, location: @dvd }
       else
         format.html { render :new }
@@ -56,7 +56,7 @@ class DvdsController < ApplicationController
 
     respond_to do |format|
       if @dvd.update(dvd_params)
-        format.html { redirect_to @dvd, notice: 'Dvd was successfully updated.' }
+        format.html { redirect_to @dvd, success: 'DVD was successfully updated.' }
         format.json { render :show, status: :ok, location: @dvd }
       else
         format.html { render :edit }
@@ -70,7 +70,7 @@ class DvdsController < ApplicationController
   def destroy
     @dvd.destroy
     respond_to do |format|
-      format.html { redirect_to dvds_url, notice: 'Dvd was successfully destroyed.' }
+      format.html { redirect_to dvds_url, success: 'DVD was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

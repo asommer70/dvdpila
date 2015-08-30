@@ -6,6 +6,9 @@ ready_dvd = ->
   $('#dvd_image').on 'change', (e) ->
     readURL(this);
 
+  # Set the abstract_txt field hieght to match the text.
+  $('#dvd_abstract_txt').height($('#dvd_abstract_txt').prop('scrollHeight'))
+
 
   #
   # Handle Player actions.

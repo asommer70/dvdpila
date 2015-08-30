@@ -2,5 +2,14 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @dvd %> |
-<%= link_to 'Back', dvds_path %>
+<div class="row">
+  <div class="columns large-4">
+    <%= link_to 'Cancel', dvd_path(@dvd) %>
+  </div>
+  <div class="columns large-4 right">
+    <small><%= link_to 'Delete DVD', dvd_path(@dvd),  method: :delete, class: 'delete' %></small>
+  </div>
+</div>
+
+
+<br/><br/><br/>
