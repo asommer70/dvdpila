@@ -17,15 +17,15 @@
  */
 
 @import 'foundation-icons';
+@import 'colors';
 
-$base-accent-color: #05776D;
-$base-text-color: #475333;
-$base-font-color: $base-text-color;
-$base-link-color: rgba(159, 65, 21, 1); // #9F4115;
-$base-footer-color: #477478;
-$base-bg-color: #ECECD1;
-$base-body-color: #CBF8EF;
-$base-border-color: #202817;
-$dark-green: #475333;
-$light-gray: #cccccc;
-$blue: #2e4272;
+body {
+  background: $tan;
+}
+
+.container {
+  background: #ffffff;
+  //height: 100%;
+
+    padding: 0 30px;
+}

@@ -1,5 +1,6 @@
 
 @import 'foundation_and_overrides';
+@import 'colors';
 
 .dvd-title {
   margin-top: 10px;
@@ -19,12 +20,12 @@
 }
 
 video {
-  width: 548px;
+  width: 450px;
 }
 
 .episodes  {
   li {
-    margin-top: 40px;
+    margin-bottom: 40px;
   }
 }
 
