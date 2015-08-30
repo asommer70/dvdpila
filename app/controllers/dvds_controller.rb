@@ -4,7 +4,8 @@ class DvdsController < ApplicationController
   # GET /dvds
   # GET /dvds.json
   def index
-    @dvds = Dvd.all.order('updated_at DESC')
+    #@dvds = Dvd.all.order('updated_at DESC')
+    @dvds = Dvd.order('updated_at DESC').paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /search

@@ -1,8 +1,9 @@
+<br/>
 
 <% if @search %>
   <h3>Results for:</h3> <%= @search %>
 <% end %>
-<br/>
+<br/><br/>
 
 <ul class="small-block-grid-5">
   <% @dvds.each do |dvd| %>
@@ -19,15 +20,26 @@
       <div class="dvd-title">
         <%= link_to  dvd.title, dvd_path(dvd) %>
       </div>
-      <% dvd.tag_list[0..1].each do |tag| %>
-        <span class="label info"><%= tag %></span>
+      <% unless dvd.tag_list.blank? %>
+        <% dvd.tag_list[0..1].each do |tag| %>
+          <span class="label info"><%= tag %></span>
+        <% end %>
+        <% if dvd.tag_list.count > 2 %>
+          <span class="label info">...</span>
+        <% end %>
       <% end %>
-      <span class="label info">...</span>
     </li>
   <% end %>
 </ul>
 
-
+<br/>
+<div class="row">
+  <div class="columns large-11 text-center">
+    <% if action_name == 'index' %>
+      <%= will_paginate @dvds, renderer: FoundationPagination::Rails %>
+    <% end %>
+  </div>
+</div>
 
 
 <br>
