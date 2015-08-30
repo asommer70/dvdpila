@@ -41,3 +41,6 @@ rerun.txt
 pickle-email-*.html
 
 Gemfile.lock
+
+public/posters
+lib/tasks/not_created.list
