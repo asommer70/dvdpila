@@ -9,7 +9,10 @@
     <li>
       <% if dvd.image %>
         <%= link_to dvd_path(dvd) do %>
-          <%= image_tag dvd.image.url, class: 'th' %>
+          <%= image_tag dvd.image.url, class: 'th has-tip',
+                        id: dom_id(dvd),
+                        data: { tooltip: true, options: 'hover_delay: 500;' },
+                        title: dvd.abstract_txt %>
         <% end %>
       <% end %>
 
