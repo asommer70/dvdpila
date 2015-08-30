@@ -15,6 +15,7 @@ ready_dvd = ->
   #
   # Save playback_time when paused.
   $('.player').on 'pause', (e) ->
+    this.focus()
     $player = $(this)
     $player.focus()
 
@@ -23,13 +24,11 @@ ready_dvd = ->
 
     # Determine the put URL.
     if $player.hasClass('episode')
-      url = '/episodes/'
+      url = '/episodes/' + $player.data().episode + '.json'
       type = 'episode'
     else
-      url = '/dvds/'
+      url = '/dvds/' + $player.data().dvd + '.json'
       type = 'dvd'
-
-    url += $player.data().id + '.json'
 
     # Update timer fields.
     $.each $('.timer'), (idx, timer) ->
@@ -56,17 +55,20 @@ ready_dvd = ->
     videoTime = getVideoTime(this.currentTime)
 
     if $player.hasClass('episode')
-      url = '/episodes/'
+      url = '/episodes/' + $player.data().episode + '.json'
     else
-      url = '/dvds/'
+      url = '/dvds/' + $player.data().dvd + '.json'
 
-    $.get(url + $player.data().id + '.json').then (data) ->
+    $.get(url).then (data) ->
         self.currentTime = data.playback_time;
         self.play()
 
 
   # Play and pause on space bar.
   $('.player').on 'keyup', (e) ->
+    this.focus()
+    e.preventDefault()
+    e.stopPropagation()
     player = $('.player')[0]
 
     if (e.keyCode == 32 && player.paused == true)
@@ -78,15 +80,35 @@ ready_dvd = ->
   $('.player').on 'ended', (e) ->
     $player = $(this)
 
+    if $player.hasClass('episode')
+      url = '/episodes/' + $player.data().episode + '.json'
+    else
+      url = '/dvds/' + $player.data().dvd + '.json'
+
     $.ajax({
-      url: '/dvds/' + $player.data().id + '.json',
+      url: url,
       method: 'put',
       data: 'dvd[playback_time]=' + 0
     })
 
   # Play and Pause when video element is clicked.
   $('.player').on 'click', (e) ->
+    this.focus()
     player = $(this)[0]
+    $player = $(player)
+
+    if $player.hasClass('episode')
+      url ='/episodes/' + $player.data().episode + '.json'
+    else
+      url = '/dvds/' + $player.data().dvd + '.json'
+
+    $.ajax({
+      url: url,
+    }).then (data) ->
+      console.log(data)
+      $player.prop('controls', true)
+      $player.prop('src', data.file_url)
+      $player.removeAttr('poster')
 
     if (player.paused == true)
       player.play()
@@ -114,6 +136,11 @@ ready_dvd = ->
     e.preventDefault()
     $('#' + $(this).data().exposer).toggle()
 
+  #
+  # Disable spacebar paging.
+  #
+  $(window).on 'keydown', (e) ->
+    return !(e.keyCode == 32);
 
 @getVideoTime = (time) ->
   hours = Math.floor(time / 3600)
