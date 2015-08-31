@@ -15,7 +15,9 @@
     <!-- Right Nav Section -->
     <ul class="right">
       <li>
-        <%= link_to new_dvd_path, class: "button" do %>
+        <%= link_to new_dvd_path, class: 'button has-tip',
+                    data: { tooltip: true },
+                    title: 'Add DVD' do %>
           <i class="fi-plus"></i>
         <% end %>
       </li>

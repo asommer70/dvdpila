@@ -17,6 +17,8 @@
 //= require_tree .
 
 $(function(){
+    $(document).foundation('tooltip', 'reflow');
+
     $(document).foundation({
         tooltip: {
             selector: '.has-tip',
@@ -32,4 +34,9 @@ $(function(){
             }
         }
     });
+
+});
+
+$(window).on('page:load', function() {
+    $(document).foundation('tooltip', 'reflow');
 });

@@ -5,15 +5,22 @@
 <% end %>
 <br/><br/>
 
-<ul class="small-block-grid-5">
-  <% @dvds.each do |dvd| %>
+<ul class="dvds-list small-block-grid-5">
+  <% @dvds.each_with_index do |dvd, idx| %>
     <li>
       <% if dvd.image %>
         <%= link_to dvd_path(dvd) do %>
-          <%= image_tag dvd.image.url, class: 'th has-tip',
-                        id: dom_id(dvd),
-                        data: { tooltip: true, options: 'hover_delay: 500;' },
-                        title: dvd.abstract_txt %>
+          <% if idx < 5 %>
+            <%= image_tag dvd.image.url, class: 'th has-tip',
+                          id: dom_id(dvd),
+                          data: { tooltip: true, options: 'hover_delay: 900;' },
+                          title: dvd.abstract_txt %>
+          <% else %>
+            <%= image_tag dvd.image.url, class: 'th has-tip tip-top',
+                          id: dom_id(dvd),
+                          data: { tooltip: true, options: 'hover_delay: 900;' },
+                          title: dvd.abstract_txt %>
+          <% end %>
         <% end %>
       <% end %>
 
