@@ -16,4 +16,23 @@ class Dvd < ActiveRecord::Base
     td = doc.css('.info_image').search('td')[0]
     return { title: td.search('a')[0]['title'], image_url: td.children.children[0]['src'] }
   end
+
+  def self.get_ddg(title)
+    require 'duck_duck_go'
+
+    ddg = DuckDuckGo.new
+    res = ddg.zeroclickinfo(title)
+    if res.heading.nil?
+      res = ddg.zeroclickinfo(title + ' (film)')
+    else
+      res = ddg.zeroclickinfo(title + ' (movie)')
+    end
+
+    return {
+        abstract_txt: res.abstract_text,
+        abstract_source: res.abstract_source,
+        abstract_url: res.abstract_url.to_s,
+        image_url: res.image.to_s
+    }
+  end
 end

@@ -33,7 +33,8 @@ class DvdsController < ApplicationController
   # POST /dvds
   # POST /dvds.json
   def create
-    @dvd = Dvd.new(dvd_params)
+    ddg = Dvd.get_ddg(dvd_params[:title])
+    @dvd = Dvd.new(dvd_params.merge!(ddg))
 
     respond_to do |format|
       if @dvd.save

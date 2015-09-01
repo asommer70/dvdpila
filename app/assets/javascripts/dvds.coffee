@@ -143,8 +143,9 @@ ready_dvd = ->
   #
   # Disable spacebar paging.
   #
-  $(window).on 'keydown', (e) ->
-    return !(e.keyCode == 32);
+  if $('video').length != 0
+    $(window).on 'keydown', (e) ->
+      return !(e.keyCode == 32);
 
 @getVideoTime = (time) ->
   hours = Math.floor(time / 3600)

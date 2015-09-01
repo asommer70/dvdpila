@@ -21,6 +21,7 @@ gem 'foundation-icons-sass-rails'
 gem 'will_paginate'
 gem 'will_paginate-foundation'
 gem 'nokogiri'
+gem 'duck-duck-go'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
