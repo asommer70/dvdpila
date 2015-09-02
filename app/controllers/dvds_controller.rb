@@ -49,9 +49,16 @@ class DvdsController < ApplicationController
 
   def barcode
     yoopsie_data = Dvd.get_yoopsie(params[:barcode])
+    ddg = nil
 
     if (yoopsie_data[:title])
-        @dvd = Dvd.new(title: yoopsie_data[:title], image_url: yoopsie_data[:image_url])
+      ddg = Dvd.get_ddg(yoopsie_data[:title])
+    end
+
+    if ddg
+      @dvd = Dvd.new(ddg)
+    else
+      @dvd = nil
     end
 
     respond_to do |format|

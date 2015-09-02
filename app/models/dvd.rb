@@ -14,7 +14,12 @@ class Dvd < ActiveRecord::Base
     doc = Nokogiri::HTML(open(url))
 
     td = doc.css('.info_image').search('td')[0]
-    return { title: td.search('a')[0]['title'], image_url: td.children.children[0]['src'] }
+    title = td.search('a')[0]['title']
+
+    # Remove parantheses and everything between them.
+    while title.gsub!(/\([^()]*\)/,""); end
+
+    return { title: title, image_url: td.children.children[0]['src'] }
   end
 
   def self.get_ddg(title)
