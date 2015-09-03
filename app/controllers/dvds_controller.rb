@@ -55,23 +55,35 @@ class DvdsController < ApplicationController
       ddg = Dvd.get_ddg(yoopsie_data[:title])
     end
 
+    puts "ddg: #{ddg}"
+
     if ddg
-      @dvd = Dvd.new(ddg)
+      @dvd = Dvd.new(yoopsie_data.merge(ddg))
     else
       @dvd = nil
+    end
+
+    if @dvd.image.nil?
+      @dvd.image_url = yoopsie_data[:image_url]
     end
 
     respond_to do |format|
       if @dvd.save
         format.html { redirect_to @dvd, success: 'DVD was successfully created.' }
+
+        return_data = {
+            status: "DVD created...",
+            openUrl: dvd_path(@dvd)
+        }
+        puts "return_data: #{return_data}"
+        format.json { render json: return_data }
+      else
         return_data = {
             "status": "DVD *NOT* Created...",
-            "openUrl": "http://192.168.1.22:5000/#/"
+            "openUrl": dvd_path(@dvd)
         }
-        format.json { render json: { status: 'DVD created...', openUrl: dvd_path(@dvd) } }
-      else
         format.html { render :new }
-        format.json { render json: @dvd.errors, status: :unprocessable_entity }
+        format.json { render json: return_data }
       end
     end
   end
