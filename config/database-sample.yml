@@ -79,7 +79,10 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: thehoick
   database: dvdpila
-  username: dvdpila-rails
-  password: <%= ENV['DVDPILA-RAILS_DATABASE_PASSWORD'] %>
+  username: <YOURNAME>
+  password: <YOURPASSWORD>

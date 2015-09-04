@@ -21,6 +21,7 @@ learning
 
 config/initializers/secret_token.rb
 config/secrets.yml
+config/database.yml
 /vendor/assets/bower_components
 *.bowerrc
 bower.json
@@ -42,5 +43,5 @@ pickle-email-*.html
 
 Gemfile.lock
 
-public/posters
+public/img/posters
 lib/tasks/not_created.list
