@@ -12,13 +12,11 @@
         <%= link_to dvd_path(dvd) do %>
           <% if idx < 5 %>
             <%= image_tag dvd.image.url, class: 'th has-tip',
-                          id: dom_id(dvd),
-                          data: { tooltip: true, options: 'hover_delay: 900;' },
+                          data: { tooltip: '', options: 'hover_delay: 900;' },
                           title: dvd.abstract_txt %>
           <% else %>
             <%= image_tag dvd.image.url, class: 'th has-tip tip-top',
-                          id: dom_id(dvd),
-                          data: { tooltip: true, options: 'hover_delay: 900;' },
+                          data: { tooltip: '', options: 'hover_delay: 900;' },
                           title: dvd.abstract_txt %>
           <% end %>
         <% end %>
