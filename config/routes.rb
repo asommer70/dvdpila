@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   post '/search', to: 'dvds#search', as: 'search'
   post '/barcode', to: 'dvds#barcode', as: 'barcode'
+  post '/ddg', to: 'dvds#ddg', as: 'ddg'
 
   resources :episodes, only: [:show, :update, :destroy] do
     resource :bookmarks

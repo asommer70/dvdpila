@@ -13,6 +13,23 @@ ready_dvd = ->
   $('#dvd_image').on 'change', (e) ->
     readURL(this);
 
+  $('#dvd_title').on 'blur', ->
+    console.log('Getting info...')
+    if (window.location.pathname.split('/')[window.location.pathname.split('/').length - 1] != 'edit')
+      $.ajax({
+        url: '/ddg'
+        method: 'post',
+        data: 'title=' + $('#dvd_title').val()
+      }).success (data) ->
+        console.log('data:', data)
+        if (data.status == 'success')
+          $('#dvd_abstract_source').val(data.ddg.abstract_source)
+          $('#dvd_abstract_txt').val(data.ddg.abstract_txt).height($('#dvd_abstract_txt').prop('scrollHeight'))
+          $('#dvd_abstract_url').val(data.ddg.abstract_url)
+          $('.image_to_upload').attr('src', data.ddg.image_url)
+          $preview = $('.preview')
+          if $preview.hasClass('hide')
+            $preview.toggleClass('hide');
 
   #
   # Handle Player actions.

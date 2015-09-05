@@ -16,6 +16,16 @@ class DvdsController < ApplicationController
     render :index
   end
 
+  # POST /ddg/
+  def ddg
+    ddg = Dvd.get_ddg(params[:title])
+    if ddg
+      render json: {status: 'success', ddg: ddg }
+    else
+      render json: {status: 'failure', ddg: {} }
+    end
+  end
+
   # GET /dvds/1
   # GET /dvds/1.json
   def show
