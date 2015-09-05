@@ -126,6 +126,19 @@ ready_dvd = ->
           else if (player.paused == false)
             player.pause()
 
+    # Seek the video on scroll.
+    .on 'wheel', (e) ->
+      e.preventDefault()
+      e.stopPropagation()
+      player = $(this)[0]
+      $player = $(player)
+      $player.focus()
+
+      if e.originalEvent.wheelDelta > 0
+        player.currentTime += 1
+      else
+        player.currentTime -= 1
+
     # Reset the playback_time to 0 when the movie has reached the end.
     .on 'ended', (e) ->
       $player = $(this)
