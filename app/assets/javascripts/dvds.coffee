@@ -9,6 +9,10 @@ ready_dvd = ->
   # Set the abstract_txt field hieght to match the text.
   $('#dvd_abstract_txt').height($('#dvd_abstract_txt').prop('scrollHeight'))
 
+  # Display the image to be uploaded.
+  $('#dvd_image').on 'change', (e) ->
+    readURL(this);
+
 
   #
   # Handle Player actions.
@@ -178,19 +182,6 @@ ready_dvd = ->
 
   return time
 
-@readURL = (input) ->
-#
-# Read the contents of the image file to be uploaded and display it.
-#
-  if (input.files && input.files[0])
-    reader = new FileReader()
-
-    reader.onload = (e) ->
-      $img = $('<img id="dynamic">')
-      $img.attr('src', e.target.result)
-      $img.appendTo('.image_to_upload')
-
-    reader.readAsDataURL(input.files[0]);
 
 @play_location = (video) ->
   video.focus()
@@ -208,6 +199,21 @@ ready_dvd = ->
     self.currentTime = data.playback_time;
     self.play()
 
+
+@readURL = (input) ->
+  #
+  # Read the contents of the image file to be uploaded and display it.
+  #
+  if (input.files && input.files[0])
+    reader = new FileReader()
+
+    reader.onload = (e) ->
+      $('.image_to_upload').attr('src', e.target.result)
+      $preview = $('.preview')
+      if $preview.hasClass('hide')
+        $preview.toggleClass('hide');
+
+    reader.readAsDataURL(input.files[0]);
 
 # Fire the ready function on load and refresh.
 $(document).ready(ready_dvd)
