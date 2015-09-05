@@ -73,14 +73,14 @@ class DvdsController < ApplicationController
 
         return_data = {
             status: "DVD created...",
-            openUrl: dvd_path(@dvd)
+            openUrl: request.base_url + dvd_path(@dvd)
         }
         puts "return_data: #{return_data}"
         format.json { render json: return_data }
       else
         return_data = {
             "status": "DVD *NOT* Created...",
-            "openUrl": dvd_path(@dvd)
+            "openUrl": request.base_url + dvd_path(@dvd)
         }
         format.html { render :new }
         format.json { render json: return_data }

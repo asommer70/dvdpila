@@ -13,95 +13,107 @@ ready_dvd = ->
   #
   # Handle Player actions.
   #
-  # Save playback_time when paused.
-  $('.player').on 'pause', (e) ->
-    this.focus()
-    $player = $(this)
-    $player.focus()
+  if $('.player').length > 0
+    # Save playback_time when paused.
+    $('.player').on 'pause', (e) ->
+      this.focus()
+      $player = $(this)
+      $player.focus()
 
-    # Do some Maths on the playback time.
-    videoTime = getVideoTime(this.currentTime)
+      # Do some Maths on the playback time.
+      videoTime = getVideoTime(this.currentTime)
 
-    # Determine the put URL.
-    if $player.hasClass('episode')
-      url = '/episodes/' + $player.data().episode + '.json'
-      type = 'episode'
-    else
-      url = '/dvds/' + $player.data().dvd + '.json'
-      type = 'dvd'
+      # Determine the put URL.
+      if $player.hasClass('episode')
+        url = '/episodes/' + $player.data().episode + '.json'
+        type = 'episode'
+      else
+        url = '/dvds/' + $player.data().dvd + '.json'
+        type = 'dvd'
 
-    # Update timer fields.
-    $.each $('.timer'), (idx, timer) ->
-      $timer = $(timer)
-      $timer.val(videoTime)
+      # Update timer fields.
+      $.each $('.timer'), (idx, timer) ->
+        $timer = $(timer)
+        $timer.val(videoTime)
 
-      # Set the first Option in the Bookmark dropdown's text.
-      if $timer.prop('nodeName') == 'OPTION'
-        $timer.text(Math.floor(videoTime))
+        # Set the first Option in the Bookmark dropdown's text.
+        if $timer.prop('nodeName') == 'OPTION'
+          $timer.text(Math.floor(videoTime))
 
-    # Do the putting.
-    $.ajax({
-      url: url,
-      method: 'put',
-      data: type + '[playback_time]=' + videoTime
-    }).then () ->
-      $('.player').on 'play', (e) ->
-        play_location(this)
+      # Do the putting.
+      $.ajax({
+        url: url,
+        method: 'put',
+        data: type + '[playback_time]=' + videoTime
+      }).then () ->
+        $('.player').on 'play', (e) ->
+          play_location(this)
 
-  # Start playing at the playback_time.
-  $('.player').on 'play', (e) ->
-    play_location(this)
+    # Start playing at the playback_time.
+    .on 'play', (e) ->
+      this.focus()
+      play_location(this)
 
+    # Play and pause on space bar.
+    .on 'keyup', (e) ->
+      this.focus()
+      e.preventDefault()
+      e.stopPropagation()
+      player = $('.player')[0]
 
-  # Play and pause on space bar.
-  $('.player').on 'keyup', (e) ->
-    this.focus()
-    e.preventDefault()
-    e.stopPropagation()
-    player = $('.player')[0]
+      if (e.keyCode == 32 && player.paused == true)
+        player.play()
+      else if (e.keyCode == 32 && player.paused == false)
+        player.pause()
 
-    if (e.keyCode == 32 && player.paused == true)
-      player.play()
-    else if (e.keyCode == 32 && player.paused == false)
-      player.pause()
+    # Scroll playback time forward and backward with the Arrow keys.
+    .on 'keydown', (e) ->
+      player = $('.player')[0]
 
-  # Reset the playback_time to 0 when the movie has reached the end.
-  $('.player').on 'ended', (e) ->
-    $player = $(this)
+      if (e.keyCode == 39)
+        player.currentTime += 1
+      else if (e.keyCode == 37)
+        player.currentTime -= 1
 
-    if $player.hasClass('episode')
-      url = '/episodes/' + $player.data().episode + '.json'
-    else
-      url = '/dvds/' + $player.data().dvd + '.json'
+    # Play and Pause when video element is clicked.
+    .on 'click', (e) ->
+      $('.player').focus()
+      player = $(this)[0]
+      $player = $(player)
+      $player.focus()
 
-    $.ajax({
-      url: url,
-      method: 'put',
-      data: 'dvd[playback_time]=' + 0
-    })
+      if $player.hasClass('episode')
+        url ='/episodes/' + $player.data().episode + '.json'
+      else
+        url = '/dvds/' + $player.data().dvd + '.json'
 
-  # Play and Pause when video element is clicked.
-  $('.player').on 'click', (e) ->
-    this.focus()
-    player = $(this)[0]
-    $player = $(player)
+      $.ajax({
+        url: url,
+      }).then (data) ->
+        $player.prop('controls', true)
+        $player.prop('src', data.file_url)
+        $player.removeAttr('poster')
 
-    if $player.hasClass('episode')
-      url ='/episodes/' + $player.data().episode + '.json'
-    else
-      url = '/dvds/' + $player.data().dvd + '.json'
+        if (player.paused == true)
+          player.play()
+        else if (player.paused == false)
+          player.pause()
 
-    $.ajax({
-      url: url,
-    }).then (data) ->
-      $player.prop('controls', true)
-      $player.prop('src', data.file_url)
-      $player.removeAttr('poster')
+    # Reset the playback_time to 0 when the movie has reached the end.
+    .on 'ended', (e) ->
+      $player = $(this)
 
-    if (player.paused == true)
-      player.play()
-    else if (player.paused == false)
-      player.pause()
+      if $player.hasClass('episode')
+        url = '/episodes/' + $player.data().episode + '.json'
+      else
+        url = '/dvds/' + $player.data().dvd + '.json'
+
+      $.ajax({
+        url: url,
+        method: 'put',
+        data: 'dvd[playback_time]=' + 0
+      })
+
 
   # Seek to bookmark and play video.
   $('.bookmarks-select').on 'change', (e) ->
@@ -147,6 +159,7 @@ ready_dvd = ->
     $(window).on 'keydown', (e) ->
       return !(e.keyCode == 32);
 
+
 @getVideoTime = (time) ->
   hours = Math.floor(time / 3600)
   minutes = Math.floor(time / 60)
@@ -174,8 +187,8 @@ ready_dvd = ->
     reader.readAsDataURL(input.files[0]);
 
 @play_location = (video) ->
+  video.focus()
   self = video
-  self.focus()
   $player = $(video)
 
   videoTime = getVideoTime(video.currentTime)
