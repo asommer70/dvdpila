@@ -139,7 +139,15 @@ ready_dvd = ->
       else
         player.currentTime -= 1
 
-    # Reset the playback_time to 0 when the movie has reached the end.
+    .on 'dblclick', (e) ->
+      e.preventDefault()
+      e.stopPropagation()
+      player = $(this)[0]
+      $player = $(player)
+      $player.focus()
+
+      toggleFullScreen(player)
+
     .on 'ended', (e) ->
       $player = $(this)
 
@@ -244,6 +252,30 @@ ready_dvd = ->
         $preview.toggleClass('hide');
 
     reader.readAsDataURL(input.files[0]);
+
+@toggleFullScreen = (player) ->
+  if not document.fullscreenElement && not document.mozFullScreenElement && not document.webkitFullscreenElement &&
+  not document.msFullscreenElement
+   
+    if (player.requestFullscreen)
+      player.requestFullscreen()
+    else if (player.msRequestFullscreen)
+      player.msRequestFullscreen()
+    else if (player.mozRequestFullScreen)
+      player.mozRequestFullScreen()
+    else if (player.webkitRequestFullscreen)
+      player.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
+
+  else
+    if (player.exitFullscreen)
+     player.exitFullscreen()
+    else if (player.msExitFullscreen)
+      player.msExitFullscreen()
+    else if (player.mozCancelFullScreen)
+      player.mozCancelFullScreen()
+    else if (player.webkitExitFullscreen)
+      player.webkitExitFullscreen()
+
 
 # Fire the ready function on load and refresh.
 $(document).ready(ready_dvd)
