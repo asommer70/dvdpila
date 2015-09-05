@@ -82,22 +82,28 @@ ready_dvd = ->
       $player = $(player)
       $player.focus()
 
-      if $player.hasClass('episode')
-        url ='/episodes/' + $player.data().episode + '.json'
-      else
-        url = '/dvds/' + $player.data().dvd + '.json'
-
-      $.ajax({
-        url: url,
-      }).then (data) ->
-        $player.prop('controls', true)
-        $player.prop('src', data.file_url)
-        $player.removeAttr('poster')
-
+      if $player.attr('src') != undefined
         if (player.paused == true)
-          player.play()
+         player.play()
         else if (player.paused == false)
-          player.pause()
+         player.pause()
+      else
+        if $player.hasClass('episode')
+          url ='/episodes/' + $player.data().episode + '.json'
+        else
+          url = '/dvds/' + $player.data().dvd + '.json'
+
+        $.ajax({
+          url: url,
+        }).then (data) ->
+          $player.prop('controls', true)
+          $player.prop('src', data.file_url)
+          $player.removeAttr('poster')
+
+          if (player.paused == true)
+            player.play()
+          else if (player.paused == false)
+            player.pause()
 
     # Reset the playback_time to 0 when the movie has reached the end.
     .on 'ended', (e) ->
