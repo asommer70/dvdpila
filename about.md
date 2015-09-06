@@ -9,22 +9,20 @@ permalink: /about/
 
 The word <strong>Pila</strong> is Spanish for Pile, and I have a pile of DVDs that I'd like to rip and record that I have ripped them.
 
-This project is also an excuse to learn Ember.js and use the Bourbon SASS mixin library.
+This project started as an excuse to learn Ember.js and use the Bourbon SASS mixin library.  For version 3.0 the project morphed into a Ruby on Rails app and has become an excuse to learn React.js... at least at some point.
 
-Here are some additional projects that DVD Pila! uses:
+Here are some additional projects that DVD Pila! relies on:
 
 | Project       | Reason        |
 | ------------- | ------------- | 
-| [Python](https://www.python.org/)             | The server is written in Python, so we'll go ahead and list it first.                                 |
-| [Flask](http://flask.pocoo.org/)              | Basically used for database CRUD operations, and I've wanted to learn Flask for a while.              |
-| [psycopg2](http://initd.org/psycopg/)         | Have to be able to connect to the PostgreSQL database from Python, and this does the job, woo.        |
+| [Ruby](https://www.ruby-lang.org/en/)         | Without Ruby there would be no Rails, but Ruby is a great language for a lot of things. |
+| [Ruby on Rails](http://rubyonrails.org/)      | Probably the best website framework out there. After using several Rails allows fast and easy development of great database backed sites. |
 | [PostgreSQL](http://www.postgresql.org/)      | A cool database I have wanted to use for a while, and you gotta store your data somewhere.            |
-| [Ember.js](http://emberjs.com/)               | The project was started as an excuse to learn this great framework.                                   |
-| [Ember Data](https://github.com/emberjs/data) | Integrated REST API to database.                                                                      |
-| [Sass](http://sass-lang.com/)                 | A lot more fun writing CSS with SASS                                                                  |
-| [Bourbon Refills](http://refills.bourbon.io/) | I'm not great at making things look good, and having pre-defined elements is great.                   |
-| [Moment.js](http://momentjs.com/)             | This great library of JavaScript time functions isn't used that much, but it's worth a mention.       |
-| [Handlebars](http://handlebarsjs.com/)        | A dependency of Ember, but a great JavaScript template system that I'd like to use in other projects. |
+| [jQuery](https://jquery.com/)                 | Not sure what the web would look like today without jQuery, but it would sure as heck be a log less friendly. |
+| [Foundation](http://foundation.zurb.com/)     | Makes things look good and has a lot of UX baked in. |
+| [Sass](http://sass-lang.com/)                 | A lot more fun writing CSS with SASS                                |
+| [CoffeeScript](http://coffeescript.org/)      | Manipulating video playback is made a lot easier with CoffeeScript. |
+| [Dragonfly](http://markevans.github.io/dragonfly/) | Makes file upload very easy for images, files, etc. |
 
 Smoosh all these projects together with some code from various blogs, StackOverflow questions, etc, and I give you DVD Pila!.
 
