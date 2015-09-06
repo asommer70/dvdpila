@@ -1,0 +1,39 @@
+---
+layout: post
+title:  "DVD Pila! 3.0 New Features"
+date:   2015-09-05 16:10:00
+excerpt: <p>Here's a rundown of the new features in DVD Pila! 3.0.  You know, the ones not inherited from migrating to Ruby on Rails.</p>
+categories: rails
+---
+
+## Solid Foundation
+
+Hard to put a value on how great the Foundation framework is, but I’d say it’s pretty valuable.  The web app just works snappier and the pagination is a lot cleaner.  Though most of that could totally have been cleaned up in the Ember version.
+
+## DVD Playback
+
+Most of the enhancements in 3.0 revolve around playing video files.  The standard HTML5 video element doesn't provide many, well any really, way to control playback besides the **controls** element.
+
+That's where JavaScript comes in. Well really CoffeeScript and a whole bunch of jQuery event bindings.
+
+* Left and Right arrow keys can seek the video forward and backward.
+* Scrolling inside the video element will also seek the video forward and backward.
+* Double clicking the video will toggle fullscreen.
+* Single clicking the video will pause/play.
+
+## DVDs Themselves
+
+Because Rails is so awesome at CRUD tasks, and maybe I should have done it with the original, there’s a stand alone page for creating DVDs.  Previously all you could enter when creating a DVD was the title, rating, and user (which has been done away with… let me know if you’d like it brought back).  
+
+* After adding a **title** the DVD Pila! will search Duck Duck Go in the back ground and populate the rest of the fields if it finds the DVD.
+* There are now popover (tooltips) when hovering a DVD in the index page.
+* Episodes can now have Bookmarks.
+* Tags are more integrated and with Rails.
+
+## Going Forward
+
+At some point I’d like to develop an Android client for DVD Pila!.  The thought is to use the JSON API data to populate a mobile app and allow video playback as well.  Who knows maybe even an Android TV app could then be developed.
+
+The future is bright…
+
+Party On!
