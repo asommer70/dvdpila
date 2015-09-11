@@ -35,6 +35,13 @@ ready_dvd = ->
   # Handle Player actions.
   #
   if $('.player').length > 0
+    #
+    # Disable spacebar paging.
+    #
+    if $('video').length != 0
+      $(window).on 'keydown', (e) ->
+        return !(e.keyCode == 32);
+
     # Save playback_time when paused.
     $('.player').on 'pause', (e) ->
       this.focus()
@@ -200,12 +207,6 @@ ready_dvd = ->
     e.preventDefault()
     $('#' + $(this).data().exposer).toggle()
 
-  #
-  # Disable spacebar paging.
-  #
-  if $('video').length != 0
-    $(window).on 'keydown', (e) ->
-      return !(e.keyCode == 32);
 
 
 @getVideoTime = (time) ->
