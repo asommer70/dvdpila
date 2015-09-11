@@ -9,6 +9,7 @@ class Dvd < ActiveRecord::Base
   has_many :bookmarks
 
   def self.get_yoopsie(barcode)
+    require 'open-uri'
     #barcode = '717951000842'
     url = "http://www.yoopsie.com/query.php?query=" + barcode
     doc = Nokogiri::HTML(open(url))
