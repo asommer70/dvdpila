@@ -26,6 +26,16 @@ class DvdsController < ApplicationController
     end
   end
 
+  # POST /omdb/
+  def omdb
+    omdb = Dvd.get_omdb(params[:title])
+    if omdb
+      render json: {status: 'success', omdb: omdb }
+    else
+      render json: {status: 'failure', omdb: {} }
+    end
+  end
+
   # GET /dvds/1
   # GET /dvds/1.json
   def show
@@ -44,7 +54,10 @@ class DvdsController < ApplicationController
   # POST /dvds.json
   def create
     ddg = Dvd.get_ddg(dvd_params[:title])
-    @dvd = Dvd.new(ddg.merge!(dvd_params))
+    omdb = Dvd.get_omdb(dvd_params[:title])
+    props = ddg.merge!(omdb)
+    props.merge!(dvd_params)
+    @dvd = Dvd.new(props)
 
     respond_to do |format|
       if @dvd.save

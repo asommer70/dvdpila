@@ -8,8 +8,9 @@ class Dvd < ActiveRecord::Base
   has_many :episodes
   has_many :bookmarks
 
+  require 'open-uri'
+
   def self.get_yoopsie(barcode)
-    require 'open-uri'
     #barcode = '717951000842'
     url = "http://www.yoopsie.com/query.php?query=" + barcode
     doc = Nokogiri::HTML(open(url))
@@ -39,6 +40,18 @@ class Dvd < ActiveRecord::Base
         abstract_source: res.abstract_source,
         abstract_url: res.abstract_url.to_s,
         image_url: res.image.to_s
+    }
+  end
+
+  def self.get_omdb(title)
+    url = "http://www.omdbapi.com/?t=#{title.gsub(' ', '+')}&y=&plot=short&r=json"
+    omdb = JSON.load(open(url))
+
+    return {
+      abstract_txt: omdb['Plot'],
+      abstract_source: 'OMDb API',
+      abstract_url: url,
+      image_url: omdb['Poster']
     }
   end
 end
