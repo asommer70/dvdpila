@@ -39,8 +39,13 @@ ready_dvd = ->
     # Disable spacebar paging.
     #
     if $('video').length != 0
-      $(window).on 'keydown', (e) ->
-        return !(e.keyCode == 32);
+      $('video').on 'focus', (e) ->
+        $(window).on 'keydown', (e) ->
+          return !(e.keyCode == 32);
+
+    # Re-enable space bar.
+    $('video').on 'blur', (e) ->
+      $(window).off 'keydown'
 
     # Save playback_time when paused.
     $('.player').on 'pause', (e) ->
@@ -257,7 +262,7 @@ ready_dvd = ->
 @toggleFullScreen = (player) ->
   if not document.fullscreenElement && not document.mozFullScreenElement && not document.webkitFullscreenElement &&
   not document.msFullscreenElement
-   
+
     if (player.requestFullscreen)
       player.requestFullscreen()
     else if (player.msRequestFullscreen)
