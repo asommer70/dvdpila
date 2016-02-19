@@ -72,16 +72,14 @@ class DvdsController < ApplicationController
 
   def barcode
     yoopsie_data = Dvd.get_yoopsie(params[:barcode])
-    ddg = nil
+    omdb = nil
 
     if (yoopsie_data[:title])
-      ddg = Dvd.get_ddg(yoopsie_data[:title])
+      omdb = Dvd.get_omdb(yoopsie_data[:title])
     end
 
-    puts "ddg: #{ddg}"
-
-    if ddg
-      @dvd = Dvd.new(yoopsie_data.merge(ddg))
+    if omdb
+      @dvd = Dvd.new(yoopsie_data.merge(omdb))
     else
       @dvd = nil
     end
@@ -90,24 +88,21 @@ class DvdsController < ApplicationController
       @dvd.image_url = yoopsie_data[:image_url]
     end
 
-    respond_to do |format|
-      if @dvd.save
-        format.html { redirect_to @dvd, success: 'DVD was successfully created.' }
 
-        return_data = {
-            status: "DVD created...",
-            openUrl: request.base_url + dvd_path(@dvd)
-        }
-        puts "return_data: #{return_data}"
-        format.json { render json: return_data }
-      else
-        return_data = {
-            "status": "DVD *NOT* Created...",
-            "openUrl": request.base_url + dvd_path(@dvd)
-        }
-        format.html { render :new }
-        format.json { render json: return_data }
-      end
+    if @dvd.save
+      return_data = {
+          status: :ok,
+          message: "DVD created...",
+          openUrl: request.base_url + dvd_path(@dvd)
+      }
+      render json: return_data, status: 200
+    else
+      return_data = {
+          "status": 409,
+          "message": "DVD *NOT* Created...",
+          "openUrl": request.base_url + dvd_path(@dvd)
+      }
+      render json: return_data, stauts: 409
     end
   end
 
