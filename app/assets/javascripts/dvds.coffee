@@ -1,4 +1,6 @@
 ready_dvd = ->
+
+
   #
   # Handle Form actions.
   #
@@ -82,10 +84,12 @@ ready_dvd = ->
         $('.player').on 'play', (e) ->
           play_location(this)
 
+
     # Start playing at the playback_time.
     .on 'play', (e) ->
       this.focus()
       play_location(this)
+
 
     # Play and pause on space bar.
     .on 'keyup', (e) ->
@@ -240,6 +244,20 @@ ready_dvd = ->
     url = '/dvds/' + $player.data().dvd + '.json'
 
   $.get(url).then (data) ->
+    console.log('play_location() data:', data);
+
+    #
+    # Connect to the web socket.
+    #
+    dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+    # Send play event to web socket.
+    dispatcher.trigger('play', data);
+
+    dispatcher.bind 'create_success', (playing) ->
+      console.log('successfully created playing:', playing);
+
+
     self.currentTime = data.playback_time;
     self.play()
 
