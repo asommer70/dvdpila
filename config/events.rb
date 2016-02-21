@@ -8,10 +8,14 @@ WebsocketRails::EventMap.describe do
   #
   # Here is an example of mapping namespaced events:
   #   namespace :product do
-  subscribe :new, :to => PlayingsController, :with_method => :create
+  # subscribe :new, :to => PlayingsController, :with_method => :create
   #   end
   # The above will handle an event triggered on the client like `product.new`.
   #namesapce :playing do
-  subscribe :play, :to => PlayingsController, :with_method => :create
+  subscribe :play, :to => PlayingsController, :with_method => :play
+
+  subscribe :pause, :to => PlayingsController, :with_method => :pause
+
+  subscribe :stop, :to => PlayingsController, :with_method => :stop
   #end
 end

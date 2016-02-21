@@ -1,4 +1,28 @@
 ready_dvd = ->
+  #
+  # Connect to the web socket.
+  #
+  window.dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+  # Handle socket playback events.
+  window.dispatcher.bind 'playing_success', (playing) ->
+    console.log('successfully playing:', playing)
+
+  window.dispatcher.bind 'pause_success', (playing) ->
+    console.log('successfully paused:', playing)
+
+  window.dispatcher.bind 'stop_success', (playing) ->
+    console.log('successfully stopped:', playing)
+
+  if (window.location.pathname.split('/')[window.location.pathname.split('/').length - 2] == 'dvds')
+    # Send stop event to socket on refresh, nav away, close
+    $(window).on 'beforeunload', (e) ->
+      send_stop()
+
+      return 'Setting video to stop...'
+
+    $(document).on 'page:before-unload', (e) ->
+      send_stop()
 
 
   #
@@ -62,9 +86,12 @@ ready_dvd = ->
       if $player.hasClass('episode')
         url = '/episodes/' + $player.data().episode + '.json'
         type = 'episode'
+        window.dispatcher.trigger('pause', {id: $player.data().episode, type: type})
       else
         url = '/dvds/' + $player.data().dvd + '.json'
         type = 'dvd'
+        window.dispatcher.trigger('pause', {id: $player.data().dvd, type: type})
+
 
       # Update timer fields.
       $.each $('.timer'), (idx, timer) ->
@@ -80,7 +107,7 @@ ready_dvd = ->
         url: url,
         method: 'put',
         data: type + '[playback_time]=' + videoTime
-      }).then () ->
+      }).then (dvd) ->
         $('.player').on 'play', (e) ->
           play_location(this)
 
@@ -169,8 +196,10 @@ ready_dvd = ->
 
       if $player.hasClass('episode')
         url = '/episodes/' + $player.data().episode + '.json'
+        window.dispatcher.trigger('stop', {id: $player.data().episode, type: 'episode'});
       else
         url = '/dvds/' + $player.data().dvd + '.json'
+        window.dispatcher.trigger('stop', {id: $player.data().dvd, type: 'dvd'});
 
       $.ajax({
         url: url,
@@ -240,26 +269,29 @@ ready_dvd = ->
 
   if $player.hasClass('episode')
     url = '/episodes/' + $player.data().episode + '.json'
+    window.dispatcher.trigger('play', {id: $player.data().episode, type: 'episode'})
   else
     url = '/dvds/' + $player.data().dvd + '.json'
+    window.dispatcher.trigger('play', {id: $player.data().dvd, type: 'dvd'})
 
   $.get(url).then (data) ->
-    console.log('play_location() data:', data);
-
-    #
-    # Connect to the web socket.
-    #
-    dispatcher = new WebSocketRails('localhost:3000/websocket');
-
-    # Send play event to web socket.
-    dispatcher.trigger('play', data);
-
-    dispatcher.bind 'create_success', (playing) ->
-      console.log('successfully created playing:', playing);
-
-
-    self.currentTime = data.playback_time;
+    self.currentTime = data.playback_time
     self.play()
+
+
+@send_stop = () ->
+  $player = $('.player')
+  # console.log('$player:', $player.data().dvd)
+
+  if $player.hasClass('episode')
+    url = '/episodes/' + $player.data().episode + '.json'
+    window.dispatcher.trigger('stop', {id: $player.data().episode, type: 'episode'})
+  else
+    url = '/dvds/' + $player.data().dvd + '.json'
+    window.dispatcher.trigger('stop', {id: $player.data().dvd, type: 'dvd'})
+
+  if (window.location.pathname.split('/')[window.location.pathname.split('/').length - 2] != 'dvds')
+    $(document).off('page:before-unload')
 
 
 @readURL = (input) ->
