@@ -1,0 +1,8 @@
+development:
+  url: 'localhost:3000/websocket'
+
+test:
+  url: 'localhost:3000/websocket'
+
+production:
+  url: 'dvdpila/websocket'

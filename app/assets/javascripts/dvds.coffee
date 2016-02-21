@@ -1,10 +1,7 @@
 ready_dvd = ->
   #
-  # Connect to the web socket.
-  #
-  window.dispatcher = new WebSocketRails('localhost:3000/websocket');
-
   # Handle socket playback events.
+  #
   window.dispatcher.bind 'playing_success', (playing) ->
     console.log('successfully playing:', playing)
 
