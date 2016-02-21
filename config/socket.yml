@@ -5,4 +5,4 @@ test:
   url: 'localhost:3000/websocket'
 
 production:
-  url: 'dvdpila/websocket'
+  url: 'dvdpila:3001/websocket'
