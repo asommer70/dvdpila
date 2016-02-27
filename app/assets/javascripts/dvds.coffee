@@ -2,14 +2,21 @@ ready_dvd = ->
   #
   # Handle socket playback events.
   #
-  window.dispatcher.bind 'playing_success', (playing) ->
-    console.log('successfully playing:', playing)
+  channel = window.dispatcher.subscribe('remote')
+  channel.bind 'play_now', (playing) ->
+    console.log('play_now playing:', playing)
+    $('.player')[0].play()
 
   window.dispatcher.bind 'pause_success', (playing) ->
     console.log('successfully paused:', playing)
 
   window.dispatcher.bind 'stop_success', (playing) ->
     console.log('successfully stopped:', playing)
+
+  # window.dispatcher.bind 'dvds', (dvds) ->
+  #   console.log('here are the dvds:', dvds)
+
+  console.log('window.dispatcher:', window.dispatcher);
 
   if (window.location.pathname.split('/')[window.location.pathname.split('/').length - 2] == 'dvds')
     # Send stop event to socket on refresh, nav away, close

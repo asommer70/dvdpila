@@ -1,6 +1,6 @@
 class DvdsController < ApplicationController
   before_action :set_dvd, only: [:show, :edit, :update, :destroy]
-  protect_from_forgery :except => :barcode
+  protect_from_forgery :except => [:barcode, :socketio]
 
   # GET /dvds
   # GET /dvds.json

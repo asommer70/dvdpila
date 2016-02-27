@@ -12,10 +12,17 @@ WebsocketRails::EventMap.describe do
   #   end
   # The above will handle an event triggered on the client like `product.new`.
   #namesapce :playing do
+
+  subscribe :client_connected, :to => PlayingsController, :with_method => :connected
+
   subscribe :play, :to => PlayingsController, :with_method => :play
 
   subscribe :pause, :to => PlayingsController, :with_method => :pause
 
   subscribe :stop, :to => PlayingsController, :with_method => :stop
+
+  subscribe :now, :to => PlayingsController, :with_method => :now
+
+  subscribe :remote_play, :to => PlayingsController, :with_method => :remote_play
   #end
 end
