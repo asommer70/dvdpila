@@ -20,6 +20,18 @@ class PlayingsController < WebsocketRails::BaseController
     WebsocketRails[:remote].trigger 'play_now', @playing
   end
 
+  def remote_pause
+    WebsocketRails[:remote].trigger 'pause_now', @playing
+  end
+
+  def remote_previous
+    WebsocketRails[:remote].trigger 'previous_now', @playing
+  end
+
+  def remote_advance
+    WebsocketRails[:remote].trigger 'advance_now', @playing
+  end
+
   def pause
     # Need to check for stop status cause a Pause is sent when DVD is page is left and video is playing.
     if (@playing.status != 'stop')

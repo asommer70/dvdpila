@@ -5,7 +5,25 @@ ready_dvd = ->
   channel = window.dispatcher.subscribe('remote')
   channel.bind 'play_now', (playing) ->
     console.log('play_now playing:', playing)
+    # Set the video element source if it hasn't been set in the browser.
+    $player = $('.player')
+    if (!$player.attr('src'))
+      $player.click()
     $('.player')[0].play()
+
+  channel.bind 'pause_now', (playing) ->
+    console.log('pause_now playing:', playing)
+    $('.player')[0].pause()
+
+  channel.bind 'previous_now', (playing) ->
+    console.log('previous_now playing:', playing)
+    $player = $('.player');
+    $player[0].currentTime = $player[0].currentTime - 5;
+
+  channel.bind 'advance_now', (playing) ->
+    console.log('advance_now playing:', playing)
+    $player = $('.player');
+    $player[0].currentTime = $player[0].currentTime + 5;
 
   window.dispatcher.bind 'pause_success', (playing) ->
     console.log('successfully paused:', playing)

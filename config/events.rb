@@ -24,5 +24,8 @@ WebsocketRails::EventMap.describe do
   subscribe :now, :to => PlayingsController, :with_method => :now
 
   subscribe :remote_play, :to => PlayingsController, :with_method => :remote_play
+  subscribe :remote_pause, :to => PlayingsController, :with_method => :remote_pause
+  subscribe :remote_previous, :to => PlayingsController, :with_method => :remote_previous
+  subscribe :remote_advance, :to => PlayingsController, :with_method => :remote_advance
   #end
 end
