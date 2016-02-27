@@ -2,9 +2,8 @@ class PlayingsController < WebsocketRails::BaseController
   before_action :set_playing
 
   def connected
-    puts "Client connected to socket... #{message.inspect}"
-    @dvds = Dvd.order('updated_at DESC').paginate(:page => params[:page], :per_page => 3).as_json
-    send_message :dvds, @dvds
+    dvds = Dvd.order('updated_at DESC').paginate(:page => params[:page], :per_page => 5).as_json
+    send_message :dvds, dvds
   end
 
   def play
@@ -30,12 +29,21 @@ class PlayingsController < WebsocketRails::BaseController
 
   def now
     # Find the last updated DVD and check it's status
+    puts 'Executing now...'
     playing = Playing.order('updated_at').last
-    if playing && playing.status != 'stop'
+    puts "now playing: #{playing.inspect}"
+    # if playing && playing.status != 'stop'
       send_message :now_playing, playing
-    else
-      send_message :now_playing, 'nothing'
-    end
+    # else
+    #   send_message :now_playing, 'nothing'
+    # end
+  end
+
+  def new_now
+    puts "new_now #{@playing.inspect}"
+    @playing.update(status: 'pause')
+    WebsocketRails[:remote].trigger 'new_now', @playing
+    send_message :now_playing, @playing
   end
 
   def remote_play

@@ -25,6 +25,10 @@ ready_dvd = ->
     $player = $('.player');
     $player[0].currentTime = $player[0].currentTime + 5;
 
+  channel.bind 'new_now', (playing) ->
+    console.log('new_now playing:', playing)
+    Turbolinks.visit('/dvds/' + playing.dvd_id)
+
   window.dispatcher.bind 'pause_success', (playing) ->
     console.log('successfully paused:', playing)
 
