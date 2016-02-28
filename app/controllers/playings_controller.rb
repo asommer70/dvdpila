@@ -29,21 +29,18 @@ class PlayingsController < WebsocketRails::BaseController
 
   def now
     # Find the last updated DVD and check it's status
-    puts 'Executing now...'
     playing = Playing.order('updated_at').last
-    puts "now playing: #{playing.inspect}"
-    # if playing && playing.status != 'stop'
-      send_message :now_playing, playing
-    # else
-    #   send_message :now_playing, 'nothing'
-    # end
+    send_message :now_playing, playing
   end
 
   def new_now
-    puts "new_now #{@playing.inspect}"
     @playing.update(status: 'pause')
+
+    # Change the web page.
     WebsocketRails[:remote].trigger 'new_now', @playing
-    send_message :now_playing, @playing
+
+    # Change the DVD on the remote's Controls scene.
+    WebsocketRails[:browser].trigger 'dvd_change', @playing
   end
 
   def remote_play
