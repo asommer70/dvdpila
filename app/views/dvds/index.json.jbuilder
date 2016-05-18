@@ -7,7 +7,7 @@ json.array!(@dvds) do |dvd|
                 :abstract_url,
                 :file_url,
                 :playback_time
-  json.image_url dvd.image.url
+  json.image_url 'http://' + request.host_with_port + dvd.image.url
 
   json.url dvd_url(dvd, format: :json)
 end
