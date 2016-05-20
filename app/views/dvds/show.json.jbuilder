@@ -10,4 +10,4 @@ json.extract! @dvd,
               :created_at,
               :updated_at
 
-json.image_url @dvd.image.url
+json.image_url 'http://' + request.host_with_port + @dvd.image.url if @dvd.image

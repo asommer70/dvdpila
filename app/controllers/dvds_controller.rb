@@ -7,6 +7,7 @@ class DvdsController < ApplicationController
   def index
     #@dvds = Dvd.all.order('updated_at DESC')
     @dvds = Dvd.order('updated_at DESC').paginate(:page => params[:page], :per_page => 10)
+    puts "@dvds.count: #{@dvds.class}"
   end
 
   # GET /search
