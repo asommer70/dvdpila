@@ -12,7 +12,7 @@ json.dvds do |dvds|
                   :playback_time,
                   :created_at
     json.image_url 'http://' + request.host_with_port + dvd.image.url if dvd.image
-
     json.url dvd_url(dvd, format: :json)
+    json.tags dvd.tag_list
   end
 end

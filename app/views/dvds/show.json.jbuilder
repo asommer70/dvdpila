@@ -11,3 +11,5 @@ json.extract! @dvd,
               :updated_at
 
 json.image_url 'http://' + request.host_with_port + @dvd.image.url if @dvd.image
+json.url dvd_url(@dvd, format: :json)
+json.episodes @dvd.episodes if @dvd.episodes

@@ -10,11 +10,18 @@ class DvdsController < ApplicationController
     puts "@dvds.count: #{@dvds.class}"
   end
 
-  # GET /search
+  # POST /search
   def search
     @search = params[:search]
     @dvds = Dvd.where("title ~* ?", @search)
     render :index
+  end
+
+  # GET /search.json
+  def search_json
+    @search = params[:search]
+    @dvds = Dvd.where("title ~* ?", @search)
+    render 'index.json.jbuilder'
   end
 
   # POST /ddg/
