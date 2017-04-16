@@ -10,7 +10,11 @@ before((done) => {
 });
 
 beforeEach((done) => {
-  mongoose.connection.collections.dvds.drop(() => {
-    done();
+  const { dvds, tags } = mongoose.connection.collections;
+
+  dvds.drop(() => {
+    tags.drop(() => {
+      done();
+    });
   });
 });

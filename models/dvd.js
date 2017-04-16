@@ -13,7 +13,11 @@ const DvdSchema = new Schema({
   fileUrl: String,
   playbackTime: Number,
   episodes: [EpisodeSchema],
-  bookmarks: [BookmarkSchema]
+  bookmarks: [BookmarkSchema],
+  tags: [{
+    type: Schema.Types.ObjectId,
+    ref: 'tag'
+  }]
 },
 {
   timestamps: true
