@@ -1,0 +1,35 @@
+form(action="/dvds/add", method="post")
+  div(class="row")
+    div(class="large-4 columns")
+      input(type="text", name="title", placeholder="Title")
+  
+  div(class="row")
+    div(class="large-4 columns")
+      input(type="number", name="rating", placeholder="Rating")
+
+  div(class="row")        
+    div(class="large-4 columns")
+      textarea(name="abstractTxt", placeholder="Info", style="height: 66px;")
+        
+  div(class="row")        
+    div(class="large-4 columns")
+      input(type="text", name="abstractSource", placeholder="Info Source")
+
+  div(class="row")    
+    div(class="large-4 columns")
+      input(type="text", name="abstractUrl", placeholder="Info Source URL")
+  
+  div(class="row")  
+    div(class="large-4 columns")
+      input(type="text", name="fileUrl", placeholder="File URL")
+
+  div(class="row")
+    div(class="large-4 columns")
+      div(class="preview hide")
+        img(src="" class="image_to_upload")
+      label(for="dvd_image") DVD Image:
+      input(type="file" name="image" id="dvd_image")
+      
+  div(class="row")
+    div(class="large-4 columns")
+      button(type="submit", class="button small success") SAVE DVD

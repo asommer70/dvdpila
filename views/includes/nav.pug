@@ -2,11 +2,14 @@
 block nav
   .top-bar
     .top-bar-title
-      strong= 'DVD Pila!'
+      a(href="/")
+        strong= 'DVD Pila!'
     .top-bar-left
 
     .top-bar-right
       ul.menu
+        li
+          a(class='button primary small', href="/dvds/add") Add DVD
         li
           input(type="search" placeholder="Search")
         li
