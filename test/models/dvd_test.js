@@ -31,26 +31,47 @@ describe('Creating Dvd records', () => {
 });
 
 describe('Getting a Dvd', () => {
-  let dvd;
+  let drStrange;
+  let thorDarkWorld;
+  let ghostInTheShell;
+  let arrival;
+  let nerve;
 
   beforeEach((done) => {
-    dvd = new Dvd({title: 'Doctor Strange', rating: 5, fileUrl: 'http://videos/Doctor_Strange.mkv'});
-    dvd.save()
+    drStrange = new Dvd({title: 'Doctor Strange', rating: 5, fileUrl: 'http://videos/Doctor_Strange.mkv'});
+    thorDarkWorld = new Dvd({title: 'Thor: The Dark World', rating: 5, fileUrl: 'http://videos/Thor_The_Dark_World.mkv'});
+    ghostInTheShell = new Dvd({title: 'Ghost In The Shell', rating: 5, fileUrl: 'http://videos/Ghost_In_The_Shell.mkv'});
+    arrival = new Dvd({title: 'Arrival', rating: 0, fileUrl: 'http://videos/Arrival.mkv'});
+    nerve = new Dvd({title: 'Nerve', rating: 0, fileUrl: 'http://videos/Nerve.mkv'});
+
+    Promise.all([drStrange.save(), thorDarkWorld.save(), ghostInTheShell.save(), arrival.save(), nerve.save()])
       .then(() => done());
   });
 
   it('returns a list of Dvds based on title', (done) => {
     Dvd.find({title: 'Doctor Strange'})
       .then((dvds) => {
-        assert(dvds[0]._id.toString() === dvd._id.toString());
+        assert(dvds[0]._id.toString() === drStrange._id.toString());
         done();
       });
   });
 
   it('can find a Dvd with a particular id', (done) => {
-    Dvd.findOne({_id: dvd._id})
+    Dvd.findOne({_id: ghostInTheShell._id})
       .then((dvd) => {
-        assert(dvd.title === 'Doctor Strange');
+        assert(ghostInTheShell.title === 'Ghost In The Shell');
+        done();
+      });
+  });
+
+  it('can skip and limit the result set', (done) => {
+    Dvd.find({})
+      .sort({title: 1})
+      .skip(1)
+      .limit(2)
+      .then((dvds) => {
+        assert(dvds[0].title === 'Doctor Strange');
+        assert(dvds.length === 2);
         done();
       });
   });
