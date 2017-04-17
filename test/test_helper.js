@@ -12,9 +12,11 @@ before((done) => {
 beforeEach((done) => {
   const { dvds, tags } = mongoose.connection.collections;
 
-  dvds.drop(() => {
-    tags.drop(() => {
-      done();
-    });
-  });
+  dvds.drop()
+    .then(() => {
+      tags.drop()
+        .then(() => done())
+        .catch(() => done());
+    })
+    .catch(() => done());
 });
