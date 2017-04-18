@@ -1,6 +1,15 @@
 const Dvd = require('../models/dvd');
 
 module.exports = {
+  index(req, res, next) {
+    Dvd.find({})
+    .skip((parseInt(req.query.page) - 1) * 10)
+    .limit(10)
+    .then((dvds) => {
+      res.render('index', {dvds});
+    });
+  },
+
   dvd(req, res, next) {
     console.log('req.params:', req.params);
     Dvd.findById(req.params.id)
@@ -17,11 +26,13 @@ module.exports = {
   },
 
   create(req, res, next) {
-    Dvd.create(req.body)
-      .then((dvd) => {
-        res.redirect(302, '/dvds/' + dvd._id, {flash: 'DVD ' + dvd.title + ' created.'});
+    const dvd = new Dvd(req.body)
+    dvd.save()
+      .then(() => {
+        res.redirect(302, '/dvds/' + dvd._id);
       })
       .catch((err) => {
+        console.log('create err:', err);
         next();
       });
   },
@@ -41,5 +52,16 @@ module.exports = {
         res.redirect(204, '/dvds', {flash: 'DVD ' + dvd.title + ' deleted.'});
       })
       .catch(() => next);
+  },
+
+  api: {
+    index(req, res, next) {
+      Dvd.find({})
+      .skip(req.query.page * 2)
+      .limit(10)
+      .then((dvds) => {
+        res.json(dvds);
+      });
+    }
   }
 }

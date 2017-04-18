@@ -1,5 +1,7 @@
 extends layout.pug
   
 block content
-  h1= 'DVD Pila!'
-  p Welcome #{title}
+  div(class="row")
+    each dvd in dvds
+      div(class="columns large-4")
+        a(href="/dvds/" + dvd._id) #{dvd.title}

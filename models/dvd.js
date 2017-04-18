@@ -4,7 +4,7 @@ const BookmarkSchema = require('./bookmark_schema');
 const Schema = mongoose.Schema;
 
 const DvdSchema = new Schema({
-  title: { type: String, required: [true, 'Title is required.'] },
+  title: { type: String, required: [true, 'Title is required.'], index: true },
   rating: Number,
   abstractTxt: String,
   abstractSource: String,

@@ -53,4 +53,22 @@ describe('DvdsController', () => {
           });
       })
   });
+
+  it('GET /api/dvds returns a list of Dvds', (done) => {
+    drStrange = new Dvd({title: 'Doctor Strange', rating: 5, fileUrl: 'http://videos/Doctor_Strange.mkv'});
+    thorDarkWorld = new Dvd({title: 'Thor: The Dark World', rating: 5, fileUrl: 'http://videos/Thor_The_Dark_World.mkv'});
+    ghostInTheShell = new Dvd({title: 'Ghost In The Shell', rating: 5, fileUrl: 'http://videos/Ghost_In_The_Shell.mkv'});
+    arrival = new Dvd({title: 'Arrival', rating: 0, fileUrl: 'http://videos/Arrival.mkv'});
+    nerve = new Dvd({title: 'Nerve', rating: 0, fileUrl: 'http://videos/Nerve.mkv'});
+
+    Promise.all([drStrange.save(), thorDarkWorld.save(), ghostInTheShell.save(), arrival.save(), nerve.save()])
+      .then(() => {
+        request(app)
+          .get('/api/dvds')
+          .end((err, res) => {
+            assert(res.body[0].title == 'Doctor Strange');
+            done();
+          });
+      });
+  });
 });
