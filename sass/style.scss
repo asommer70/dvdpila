@@ -8,6 +8,7 @@
 @include foundation-button;
 @include foundation-menu;
 @include foundation-menu-icon;
+@include foundation-thumbnail;
 @include foundation-top-bar;
 
 body {
@@ -18,4 +19,26 @@ body {
   img {
     max-width: 400px;
   }
+}
+
+.delete {
+  font-size: 10px;
+  float: right;
+  padding-top: 20px;
+  color: map-get($foundation-palette, alert);
+}
+
+.dvd-attr {
+  li {
+    padding: 10px 5px;
+  }
+
+  li:nth-child(odd) {
+    background-color: $light-gray;
+  }
+}
+
+.abstract-url {
+  margin-top: 30px;
+  text-align: justify;
 }

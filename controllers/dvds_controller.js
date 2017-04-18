@@ -1,3 +1,4 @@
+const moment = require('moment');
 const Dvd = require('../models/dvd');
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
     console.log('req.params:', req.params);
     Dvd.findById(req.params.id)
       .then((dvd) => {
+        dvd.createdFromNow = moment(dvd.createdAt).fromNow();
         if (dvd === null) {
           res.redirect(404, '/', {flash: 'DVD not found.'});
         }
@@ -37,11 +39,24 @@ module.exports = {
       });
   },
 
+  editDvd(req, res, next) {
+    Dvd.findById(req.params.id)
+    .then((dvd) => {
+      res.render('dvd_edit', {dvd});
+    })
+    .catch(() => next);
+  },
+
   edit(req, res, next) {
+    if (req.file) {
+      req.body.imageUrl = '/images/posters/' + req.file.originalname
+    }
+    console.log('req.body:', req.body);
+
     Dvd.findByIdAndUpdate(req.params.id, req.body)
       .then(() => Dvd.findById(req.params.id))
       .then((dvd) => {
-        res.render('/dvds/' + dvd._id, {flash: 'DVD: ' + dvd.title + ' updated.', dvd});
+        res.json({flash: 'DVD: ' + dvd.title + ' updated.', dvd});
       })
       .catch(() => next);
   },
@@ -49,7 +64,7 @@ module.exports = {
   delete(req, res, next) {
     Dvd.findByIdAndRemove(req.params.id)
       .then((dvd) => {
-        res.redirect(204, '/dvds', {flash: 'DVD ' + dvd.title + ' deleted.'});
+        res.json({flash: 'DVD ' + dvd.title + ' deleted.'});
       })
       .catch(() => next);
   },

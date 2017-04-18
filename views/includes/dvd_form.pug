@@ -1,35 +1,40 @@
-form(action="/dvds", method="post")
-  div(class="row")
-    div(class="large-4 columns")
-      input(type="text", name="title", placeholder="Title")
+form(class={editform: dvd.title !== undefined} action="/dvds", method="post", data-dvdId=dvd._id, enctype='multipart/form-data')
+  .row
+    .large-4.columns
+      input(type="text", name="title", placeholder="Title", value=dvd.title)
   
-  div(class="row")
-    div(class="large-4 columns")
-      input(type="number", name="rating", placeholder="Rating")
+  .row
+    .large-4.columns
+      input(type="number", name="rating", placeholder="Rating", value=dvd.rating)
 
-  div(class="row")        
-    div(class="large-4 columns")
+  .row
+    .large-4.columns
       textarea(name="abstractTxt", placeholder="Info", style="height: 66px;")
+        |#{dvd.abstractTxt}
         
-  div(class="row")        
-    div(class="large-4 columns")
-      input(type="text", name="abstractSource", placeholder="Info Source")
+  .row
+    .large-4.columns
+      input(type="text", name="abstractSource", placeholder="Info Source", value=dvd.abstractSource)
 
-  div(class="row")    
-    div(class="large-4 columns")
-      input(type="text", name="abstractUrl", placeholder="Info Source URL")
+  .row
+    .large-4.columns
+      input(type="text", name="abstractUrl", placeholder="Info Source URL", value=dvd.abstractUrl)
   
-  div(class="row")  
-    div(class="large-4 columns")
-      input(type="text", name="fileUrl", placeholder="File URL")
+  .row
+    .large-4.columns
+      input(type="text", name="fileUrl", placeholder="File URL", value=dvd.fileUrl)
 
-  div(class="row")
-    div(class="large-4 columns")
-      div(class="preview hide")
+  .row
+    .large-4.columns
+      .preview.hide
         img(src="" class="image_to_upload")
       label(for="dvd_image") DVD Image:
       input(type="file" name="image" id="dvd_image")
       
-  div(class="row")
-    div(class="large-4 columns")
+  .row
+    .large-4.columns
       button(type="submit", class="button small success") SAVE DVD
+      
+      |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      
+      a(href="/dvds/" + dvd._id + '/delete', class="delete", data-dvdId=dvd._id) Delete DVD

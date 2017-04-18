@@ -12,5 +12,8 @@ learning
 .sass-cache
 node_modules/
 
-public/img/posters
-lib/tasks/not_created.list
+public/images/posters
+
+public/javascripts/jquery.min.js
+public/javascripts/foundation.min.js
+public/javascripts/moment.min.js

@@ -5,7 +5,8 @@
   "scripts": {
     "start": "NODE_ENV=dev ./node_modules/.bin/nodemon ./bin/www",
     "sass": "./node_modules/.bin/node-sass -r -w sass/style.scss public/stylesheets/style.css",
-    "test": "NODE_ENV=test mocha -c --recursive"
+    "test": "NODE_ENV=test mocha -c --recursive",
+    "build": "cp ./node_modules/jquery/dist/jquery.min.js ./node_modules/foundation-sites/dist/js/foundation.min.js ./public/javascripts/"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -15,8 +16,10 @@
     "express": "~4.13.4",
     "foundation-sites": "^6.3.1",
     "knex": "^0.12.9",
+    "moment": "^2.18.1",
     "mongoose": "^4.9.4",
     "morgan": "~1.7.0",
+    "multer": "^1.3.0",
     "pug": "^2.0.0-beta11",
     "serve-favicon": "~2.3.0"
   },

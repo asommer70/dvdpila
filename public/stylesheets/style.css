@@ -1473,6 +1473,22 @@ select {
     background: #8a8a8a;
     box-shadow: 0 7px 0 #8a8a8a, 0 14px 0 #8a8a8a; }
 
+.thumbnail {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  border: solid 4px #fefefe;
+  border-radius: 0;
+  box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.2);
+  line-height: 0; }
+
+a.thumbnail {
+  transition: box-shadow 200ms ease-out; }
+  a.thumbnail:hover, a.thumbnail:focus {
+    box-shadow: 0 0 6px 1px rgba(23, 121, 186, 0.5); }
+  a.thumbnail image {
+    box-shadow: none; }
+
 .top-bar {
   padding: 0.5rem; }
   .top-bar::before, .top-bar::after {
@@ -1525,3 +1541,19 @@ body {
 
 .preview img {
   max-width: 400px; }
+
+.delete {
+  font-size: 10px;
+  float: right;
+  padding-top: 20px;
+  color: #cc4b37; }
+
+.dvd-attr li {
+  padding: 10px 5px; }
+
+.dvd-attr li:nth-child(odd) {
+  background-color: #e6e6e6; }
+
+.abstract-url {
+  margin-top: 30px;
+  text-align: justify; }

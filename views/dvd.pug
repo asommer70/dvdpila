@@ -1,10 +1,35 @@
 extends layout.pug
-  
+
 block content
-  div(class="row")
-    div(class="columns large-4")
-      h1 #{dvd.title}
-      p #{dvd.abstractTxt}
-    div(class="columns large-6")
+  .row
+    .columns.large-4
+      img(src=dvd.imageUrl, class="thumbnail")
+        
+      ul(class="dvd-attr no-bullet")
+        li
+          strong Title: 
+          |#{dvd.title}
+        li
+          strong Created: 
+          |#{dvd.createdFromNow}
+        li
+          strong Rating: 
+          |#{dvd.rating}
+        li
+          strong Info: 
+          |#{dvd.abstractTxt}
+      
+      .row
+        .columns.large-4.abstract-url
+          a(href=dvd.abstractUrl) #{dvd.abstractSource}
+        .columns.large-4
+          a(href="https://duckduckgo.com/?q=" + dvd.title, class="ddg float-right", target="_blank")
+            img(src="/images/ddg_logo.svg", width="80", height="80")
+
+      .row
+        .columns.large-12
+          br/br/
+          a(href="/dvds/" + dvd._id + "/edit" class="button small") Edit DVD
+    .columns.large-6
       div
         h1= 'Left Hand COlumn...'
