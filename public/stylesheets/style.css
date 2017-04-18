@@ -1522,3 +1522,6 @@ select {
 
 body {
   margin: 0; }
+
+.preview img {
+  max-width: 400px; }
