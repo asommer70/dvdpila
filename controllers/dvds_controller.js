@@ -3,12 +3,14 @@ const Dvd = require('../models/dvd');
 
 module.exports = {
   index(req, res, next) {
-    Dvd.find({})
-    .skip((parseInt(req.query.page) - 1) * 10)
-    .limit(10)
-    .then((dvds) => {
-      res.render('index', {dvds});
-    });
+    Dvd.count({}, (err, count) => {
+      Dvd.find({})
+      .skip((parseInt(req.query.page) - 1) * 10)
+      .limit(10)
+      .then((dvds) => {
+        res.render('index', {dvds, currentPage: parseInt(req.query.page) || 1, maxPages: Math.ceil(count / 10)});
+      });
+    })
   },
 
   dvd(req, res, next) {

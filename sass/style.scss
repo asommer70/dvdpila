@@ -8,6 +8,7 @@
 @include foundation-button;
 @include foundation-menu;
 @include foundation-menu-icon;
+@include foundation-pagination;
 @include foundation-thumbnail;
 @include foundation-top-bar;
 
@@ -43,12 +44,8 @@ body {
   text-align: justify;
 }
 
-.dvd-list {
-  text-align: center;
-}
-
 .dvd-list-dvd {
-  margin-bottom: 100px;
+  margin-bottom: 60px;
 }
 
 .dvds-list-image {
