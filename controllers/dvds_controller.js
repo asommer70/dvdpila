@@ -14,7 +14,6 @@ module.exports = {
   },
 
   dvd(req, res, next) {
-    console.log('req.params:', req.params);
     Dvd.findById(req.params.id)
       .then((dvd) => {
         dvd.createdFromNow = moment(dvd.createdAt).fromNow();
@@ -24,6 +23,18 @@ module.exports = {
         res.render('dvd', {dvd});
       })
   },
+
+  dvdJson(req, res, next) {
+    Dvd.findById(req.params.id)
+      .then((dvd) => {
+        dvd.createdFromNow = moment(dvd.createdAt).fromNow();
+        if (dvd === null) {
+          res.status(404).json({message: 'DVD not found...'});
+        }
+        res.status(200).json({dvd});
+      })
+  },
+
 
   add(req, res, next) {
     res.render('dvd_edit', { dvd: new Dvd({}) });

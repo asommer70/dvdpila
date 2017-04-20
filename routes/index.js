@@ -21,6 +21,7 @@ router.get('/api/dvds', DvdsController.api.index);
 router.get('/dvds/add', DvdsController.add);
 router.get('/dvds/:id', DvdsController.dvd);
 router.get('/dvds/:id/edit', DvdsController.editDvd);
+router.get('/api/dvds/:id', DvdsController.dvdJson);
 
 router.post('/dvds', DvdsController.create);
 

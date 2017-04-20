@@ -6,7 +6,7 @@
     "start": "NODE_ENV=dev ./node_modules/.bin/nodemon ./bin/www",
     "sass": "./node_modules/.bin/node-sass -r -w sass/style.scss public/stylesheets/style.css",
     "test": "NODE_ENV=test mocha -c --recursive",
-    "build": "cp ./node_modules/jquery/dist/jquery.min.js ./node_modules/foundation-sites/dist/js/foundation.min.js ./public/javascripts/"
+    "build": "cp ./node_modules/mediaelement/build/mediaelement-and-player.min.js ./node_modules/jquery/dist/jquery.min.js ./node_modules/foundation-sites/dist/js/foundation.min.js ./public/javascripts/ && cp ./node_modules/mediaelement/build/mediaelementplayer.min.css ./node_modules/mediaelement/build/mejs-controls.svg ./public/stylesheets"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -16,6 +16,7 @@
     "express": "~4.13.4",
     "foundation-sites": "^6.3.1",
     "knex": "^0.12.9",
+    "mediaelement": "^4.0.5",
     "moment": "^2.18.1",
     "mongoose": "^4.9.4",
     "morgan": "~1.7.0",

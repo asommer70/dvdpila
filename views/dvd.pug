@@ -31,5 +31,7 @@ block content
           br/br/
           a(href="/dvds/" + dvd._id + "/edit" class="button small") Edit DVD
     .columns.large-6
-      div
-        h1= 'Left Hand COlumn...'
+      .row
+        .columns.large-12
+          video(id="player", width="700", height="340", controls='controls', data-dvdId=dvd._id)
+            source(src=dvd.fileUrl)

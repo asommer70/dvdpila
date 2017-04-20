@@ -51,3 +51,13 @@ body {
 .dvds-list-image {
   max-width: 160px;
 }
+
+.mejs__overlay-button {
+    background-image: url("//../images/mejs-controls.svg");
+}
+.mejs__overlay-loading-bg-img {
+    background-image: url("//../images/mejs-controls.svg");
+}
+.mejs__button > button {
+    background-image: url("//../images/mejs-controls.svg");
+}

@@ -68,3 +68,65 @@ $('.editform').submit(function(e) {
     }
   })
 });
+
+$('#player').mediaelementplayer({
+  pluginPath: "/javascripts/plugins/",
+  // features: ['markers', 'speed', 'playpause', 'progress', 'current', 'volume', 'time', 'fullscreen'],
+  features: ['playpause', 'current', 'progress', 'duration', 'speed', 'fullscreen', 'markers'],
+  markers: [391.876804, 2698.7523],
+  success: function(mediaElement, originalNode) {
+    // do things
+    console.log('player ready... mediaElement:', mediaElement, 'originalNode.paused:', originalNode.paused);
+    // console.log('this:', this, 'this.currentTime:', this.currentTime);
+    // console.log('play event... dvdId:', $(this).data().dvdid);
+
+    $(mediaElement).on('seeked', function() {
+      console.log('seeked event... currentTime:', originalNode.currentTime);
+      // updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
+      // originalNode.pause();
+      // if (!originalNode.paused) {
+      //   this.pause();
+      //   this.play();
+      // }
+    });
+
+    // Get playbackTime
+    $(mediaElement).on('play', function() {
+        $.ajax({
+          method: 'get',
+          url: '/api/dvds/' + $(originalNode).data().dvdid,
+          success: function(data) {
+            originalNode.currentTime = data.dvd.playbackTime;
+            // originalNode.play();
+          },
+          error: function(err) {
+            console.log('DVD GET err:', err);
+          }
+        });
+    });
+
+    // Save playbackTime.
+    $(mediaElement).on('pause', function() {
+      updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
+    });
+  }
+});
+
+function updatePlaybackTime(playbackTime, dvdId) {
+  $.ajax({
+    url: '/api/dvds/' + dvdId,
+    method: 'put',
+    data: JSON.stringify({playbackTime: playbackTime}),
+    cache: false,
+    dataType: 'json',
+    headers: {"Content-Type": "application/json"},
+    processData: false,
+    contentType: false,
+    success: function(res) {
+      console.log('DVD Update success res:', res);
+    },
+    error: function(err) {
+      console.log('DVD Update err:', err);
+    }
+  });
+}
