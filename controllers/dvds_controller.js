@@ -5,6 +5,7 @@ module.exports = {
   index(req, res, next) {
     Dvd.count({}, (err, count) => {
       Dvd.find({})
+      .sort({updatedAt: -18})
       .skip((parseInt(req.query.page) - 1) * 10)
       .limit(10)
       .then((dvds) => {
@@ -49,6 +50,21 @@ module.exports = {
       .catch((err) => {
         console.log('create err:', err);
         next();
+      });
+  },
+
+  createBookmark(req, res, next) {
+    Dvd.findById(req.body.dvdId)
+      .then((dvd) => {
+        dvd.bookmarks.push({name: req.body.name, time: req.body.time});
+        dvd.save()
+          .then(() => {
+            res.redirect(302, '/dvds/' + dvd._id);
+          })
+          .catch((err) => {
+            console.log('createBookmark err:', err);
+            next();
+          })
       });
   },
 

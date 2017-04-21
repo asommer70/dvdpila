@@ -24,6 +24,7 @@ router.get('/dvds/:id/edit', DvdsController.editDvd);
 router.get('/api/dvds/:id', DvdsController.dvdJson);
 
 router.post('/dvds', DvdsController.create);
+router.post('/dvds/bookmarks', DvdsController.createBookmark)
 
 router.put('/api/dvds/:id', upload.single('image'), DvdsController.edit);
 

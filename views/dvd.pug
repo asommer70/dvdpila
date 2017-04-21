@@ -35,3 +35,25 @@ block content
         .columns.large-12
           video(id="player", width="700", height="340", controls='controls', data-dvdId=dvd._id)
             source(src=dvd.fileUrl)
+          
+          br/
+          br/
+      .row
+        .columns.large-4
+          button(class="button primary", data-toggle="bookmarkForm") Add Bookmark
+          
+          div(id="bookmarkForm", class="hide", data-toggler=".hide")
+            form(action="/dvds/bookmarks", method="post")
+              input(type="text", name="name", placeholder="Name")
+
+              input(type="hidden", name="time", id="bookmark_time", value="")
+              input(type="hidden", name="dvdId", value=dvd._id)
+              button(name="button", type="submit", class="button small success") Create Bookmark
+              
+          button(class="button", type="button", data-toggle="bookmarks-dropdown") Bookmarks
+          div(class="dropdown-pane", id="bookmarks-dropdown", data-dropdown, data-auto-focus="true")
+            ul.no-bullet.bookmarks
+              each bookmark in dvd.bookmarks
+                li
+                  a(href="#", class="bookmark", data-time=bookmark.time) #{bookmark.name}
+      

@@ -69,36 +69,59 @@ $('.editform').submit(function(e) {
   })
 });
 
-$('#player').mediaelementplayer({
-  pluginPath: "/javascripts/plugins/",
-  features: ['playpause', 'current', 'progress', 'duration', 'speed', 'fullscreen', 'markers'],
-  markers: [391.876804, 2698.7523],
-  success: function(mediaElement, originalNode) {
-    // Get playbackTime
-    $(mediaElement).on('loadedmetadata', function(e) {
-      $.ajax({
-        method: 'get',
-        url: '/api/dvds/' + $(originalNode).data().dvdid,
-        success: function(data) {
-          originalNode.currentTime = data.dvd.playbackTime;
-        },
-        error: function(err) {
-          console.log('DVD GET err:', err);
+// Get the Bookmarks and Episodes before creating the MediaElement.
+if ($('#player').length !== 0) {
+  $.ajax({
+    method: 'get',
+    url: '/api/dvds/' + $('#player').data().dvdid,
+    success: function(data) {
+      var times = data.dvd.bookmarks.map(function(bookmark) { return bookmark.time });
+
+      $('#player').mediaelementplayer({
+        pluginPath: "/javascripts/plugins/",
+        features: ['playpause', 'current', 'progress', 'duration', 'speed', 'fullscreen', 'markers'],
+        markers: times,
+        success: function(mediaElement, originalNode) {
+          // Get playbackTime
+          $(mediaElement).on('loadedmetadata', function(e) {
+            $.ajax({
+              method: 'get',
+              url: '/api/dvds/' + $(originalNode).data().dvdid,
+              success: function(data) {
+                originalNode.currentTime = data.dvd.playbackTime;
+              },
+              error: function(err) {
+                console.log('DVD GET err:', err);
+              }
+            });
+          });
+
+          // Save playbackTime.
+          $(mediaElement).on('pause', function() {
+            updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
+          });
+
+          // Save playback if page is refreshed, or navigated away from.
+          $(window).on('beforeunload', function() {
+            updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
+          });
+
+          // Reset playbackTime to 0 when video has 'ended'.
+          $(mediaElement).on('ended', function() {
+            updatePlaybackTime(0, $(originalNode).data().dvdid);
+          });
         }
       });
-    });
+    }
+  });
 
-    // Save playbackTime.
-    $(mediaElement).on('pause', function() {
-      updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
-    });
+  // Update MediaElement playbackTime when Bookmark link is clicked.
+  $('.bookmark').on('click', function(e) {
+    e.preventDefault();
 
-    // Save playback if page is refreshed, or navigated away from.
-    $(window).on('beforeunload', function() {
-      updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
-    });
-  }
-});
+    $('#player')[0].currentTime = $(this).data().time;
+  });
+}
 
 function updatePlaybackTime(playbackTime, dvdId) {
   $.ajax({
@@ -116,4 +139,7 @@ function updatePlaybackTime(playbackTime, dvdId) {
       console.log('DVD Update err:', err);
     }
   });
+
+  // Set the value of the #bookmark_time input.
+  $('#bookmark_time').val(playbackTime);
 }
