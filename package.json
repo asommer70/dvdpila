@@ -6,7 +6,8 @@
     "start": "NODE_ENV=dev ./node_modules/.bin/nodemon ./bin/www",
     "sass": "./node_modules/.bin/node-sass -r -w sass/style.scss public/stylesheets/style.css",
     "test": "NODE_ENV=test mocha -c --recursive",
-    "build": "cp ./node_modules/mediaelement/build/mediaelement-and-player.min.js ./node_modules/jquery/dist/jquery.min.js ./node_modules/foundation-sites/dist/js/foundation.min.js ./public/javascripts/ && cp ./node_modules/mediaelement/build/mediaelementplayer.min.css ./node_modules/mediaelement/build/mejs-controls.svg ./public/stylesheets"
+    "copyfiles": "./bin/copy_files.sh",
+    "install_plugins": "node ./bin/install_plugins.js"
   },
   "dependencies": {
     "body-parser": "~1.15.1",

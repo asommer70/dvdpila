@@ -18,5 +18,8 @@ public/javascripts/jquery.min.js
 public/javascripts/foundation.min.js
 public/javascripts/moment.min.js
 public/javascripts/mediaelement-and-player.min.js
+public/javascripts/plugins/
 public/stylesheets/mediaelementplayer.min.css
 public/stylesheets/mejs-controls.svg
+public/stylesheets/context-menu.min.css
+public/stylesheets/speed.min.css
