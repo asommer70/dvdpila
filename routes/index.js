@@ -14,7 +14,6 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage });
 
-
 /* GET home page. */
 router.get('/', DvdsController.index);
 router.get('/api/dvds', DvdsController.api.index);
@@ -23,12 +22,11 @@ router.get('/dvds/:id', DvdsController.dvd);
 router.get('/dvds/:id/edit', DvdsController.editDvd);
 router.get('/api/dvds/:id', DvdsController.dvdJson);
 
-router.post('/dvds', DvdsController.create);
+router.post('/dvds', upload.single('image'), DvdsController.create);
 router.post('/dvds/bookmarks', DvdsController.createBookmark)
 
 router.put('/api/dvds/:id', upload.single('image'), DvdsController.edit);
 
 router.delete('/api/dvds/:id', DvdsController.delete);
-
 
 module.exports = router;

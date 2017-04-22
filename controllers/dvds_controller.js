@@ -5,7 +5,7 @@ module.exports = {
   index(req, res, next) {
     Dvd.count({}, (err, count) => {
       Dvd.find({})
-      .sort({updatedAt: -18})
+      .sort({updatedAt: -1})
       .skip((parseInt(req.query.page) - 1) * 10)
       .limit(10)
       .then((dvds) => {
@@ -42,9 +42,15 @@ module.exports = {
   },
 
   create(req, res, next) {
+    if (req.file) {
+      req.body.imageUrl = '/images/posters/' + req.file.originalname
+    }
+
     const dvd = new Dvd(req.body)
     dvd.save()
-      .then(() => {
+      .then(() => Dvd.findOne({title: req.body.title}))
+      .then((dvd) => {
+        // dvd.update({playbackTime: 0});
         res.redirect(302, '/dvds/' + dvd._id);
       })
       .catch((err) => {
@@ -101,6 +107,7 @@ module.exports = {
   api: {
     index(req, res, next) {
       Dvd.find({})
+      .sort({updatedAt: -1})
       .skip(req.query.page * 2)
       .limit(10)
       .then((dvds) => {

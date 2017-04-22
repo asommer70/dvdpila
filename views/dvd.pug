@@ -21,7 +21,7 @@ block content
       
       .row
         .columns.large-4.abstract-url
-          a(href=dvd.abstractUrl) #{dvd.abstractSource}
+          a(href=dvd.abstractUrl, target="_blank") #{dvd.abstractSource}
         .columns.large-4
           a(href="https://duckduckgo.com/?q=" + dvd.title, class="ddg float-right", target="_blank")
             img(src="/images/ddg_logo.svg", width="80", height="80")
