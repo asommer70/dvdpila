@@ -1,22 +1,24 @@
 const moment = require('moment');
 const Dvd = require('../models/dvd');
 const Episode = require('../models/episode_schema');
+const Tag = require('../models/tag');
 
 module.exports = {
   index(req, res, next) {
     Dvd.count({}, (err, count) => {
       Dvd.find({})
-      .sort({updatedAt: -1})
-      .skip((parseInt(req.query.page) - 1) * 10)
-      .limit(10)
-      .then((dvds) => {
-        res.render('index', {dvds, currentPage: parseInt(req.query.page) || 1, maxPages: Math.ceil(count / 10)});
-      });
+        .populate('tags')
+        .sort({updatedAt: -1})
+        .skip((parseInt(req.query.page) - 1) * 10)
+        .limit(10)
+        .then((dvds) => {
+          res.render('index', {dvds, currentPage: parseInt(req.query.page) || 1, maxPages: Math.ceil(count / 10)});
+        });
     })
   },
 
   dvd(req, res, next) {
-    Dvd.findById(req.params.id)
+    Dvd.findById(req.params.id).populate('tags')
       .then((dvd) => {
         if (dvd === null) {
           res.redirect(404, '/', {flash: 'DVD not found.'});
@@ -28,6 +30,7 @@ module.exports = {
 
   dvdJson(req, res, next) {
     Dvd.findById(req.params.id)
+      .populate('tags')
       .then((dvd) => {
         if (dvd === null) {
           res.status(404).json({message: 'DVD not found...'});
@@ -80,7 +83,7 @@ module.exports = {
         } else {
           dvd.bookmarks.push({name: req.body.name, time: req.body.time});
         }
-        
+
         dvd.save()
           .then(() => {
             res.redirect(302, '/dvds/' + dvd._id);
@@ -104,6 +107,28 @@ module.exports = {
             console.log('createEpisode err:', err);
             next();
           })
+      });
+  },
+
+  createTag(req, res, next) {
+    Dvd.findById(req.body.dvdId)
+      .then((dvd) => {
+        req.body.tagList.split(', ').map((tagStr) => {
+          Tag.findOne({name: tagStr})
+            .then((tag) => {
+              if (!tag) {
+                tag = new Tag({name: tagStr});
+              }
+
+              dvd.tags.push(tag);
+              tag.dvds.push(dvd);
+
+              Promise.all([dvd.save(), tag.save()])
+                .then(() => res.redirect(302, '/dvds/' + dvd._id))
+                .catch(() => next);
+            })
+            .catch((err) => console.log('Tag.find err:', err));
+        });
       });
   },
 
@@ -151,12 +176,13 @@ module.exports = {
   api: {
     index(req, res, next) {
       Dvd.find({})
-      .sort({updatedAt: -1})
-      .skip(req.query.page * 2)
-      .limit(10)
-      .then((dvds) => {
-        res.json(dvds);
-      });
+        .populate('tags')
+        .sort({updatedAt: -1})
+        .skip(req.query.page * 2)
+        .limit(10)
+        .then((dvds) => {
+          res.json(dvds);
+        });
     }
   }
 }

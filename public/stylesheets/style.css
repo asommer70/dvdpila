@@ -5,6 +5,31 @@
  * foundation.zurb.com
  * Licensed under MIT Open Source
  */
+.badge {
+  display: inline-block;
+  min-width: 3em;
+  padding: 0.3em;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  text-align: center;
+  background: #1779ba;
+  color: #fefefe; }
+  .badge.primary {
+    background: #1779ba;
+    color: #fefefe; }
+  .badge.secondary {
+    background: #767676;
+    color: #fefefe; }
+  .badge.success {
+    background: #3adb76;
+    color: #0a0a0a; }
+  .badge.warning {
+    background: #ffae00;
+    color: #0a0a0a; }
+  .badge.alert {
+    background: #cc4b37;
+    color: #fefefe; }
+
 .button {
   display: inline-block;
   vertical-align: middle;
@@ -1738,3 +1763,7 @@ body {
 
 .bookmarks li {
   margin-bottom: 10px; }
+
+.badge {
+  border-radius: 5px;
+  margin-right: 10px; }

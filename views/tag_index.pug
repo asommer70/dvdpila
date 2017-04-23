@@ -1,0 +1,9 @@
+extends layout.pug
+  
+block content
+  br/
+  .row.text-center
+    each tag in tags
+      .columns.large-1
+        a(href='/tags/' + tag.name) #{tag.name.toUpperCase()}
+        br/

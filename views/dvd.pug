@@ -49,7 +49,27 @@ block content
                 .row
                   .columns.large-12
                     button(name="button", type="submit", class="button small success") Create Episode
-
+        .row
+          .columns.large-12
+            br/
+            br/
+          
+            button(class="button primary", data-toggle="tagForm") Add Tag
+            
+            div(id="tagForm", class="hide", data-toggler=".hide")
+              form(action="/tags", method="post")
+                input(name="tagList", type="text", placeholder="Tag name, or CSV list of names")
+                input(type="hidden", name="dvdId", value=dvd._id)
+                button(name="button", type="submit", class="button small success") Save Tags
+            
+            br/
+            br/
+            
+            div(id="tags")
+              each tag in dvd.tags
+                a(href="/tags/" + tag.name) 
+                  span(class="badge") #{tag.name}
+                  
 
     .columns.large-6
       if dvd.fileUrl !== ''
@@ -63,3 +83,5 @@ block content
           - mediaType = 'episode'
           include includes/player.pug
           hr/
+          br/
+          br/

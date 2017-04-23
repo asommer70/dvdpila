@@ -1,0 +1,15 @@
+extends layout.pug
+  
+block content
+  br/
+  h1 #{tag.name.toUpperCase()}
+  p #{tag.dvds.length} DVDs with this tag.
+  br/
+  br/
+  .row.text-center
+    each dvd in tag.dvds
+      .columns.large-2.dvd-list-dvd
+        a(href='/dvds/' + dvd._id)
+          img(class="thumbnail dvds-list-image", src=dvd.imageUrl)
+        br/
+        a(href="/dvds/" + dvd._id) #{dvd.title}
