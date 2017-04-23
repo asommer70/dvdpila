@@ -37,4 +37,5 @@ form(class={editform: dvd.title !== undefined} action="/dvds", method="post", da
       
       |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       
-      a(href="/dvds/" + dvd._id + '/delete', class="delete", data-dvdId=dvd._id) Delete DVD
+      if dvd.title !== unefined
+        a(href="/dvds/" + dvd._id + '/delete', class="delete", data-dvdId=dvd._id) Delete DVD

@@ -17,6 +17,10 @@ module.exports = {
     })
   },
 
+  search(req, res, next) {
+
+  },
+
   dvd(req, res, next) {
     Dvd.findById(req.params.id).populate('tags')
       .then((dvd) => {
@@ -28,32 +32,17 @@ module.exports = {
       })
   },
 
-  dvdJson(req, res, next) {
-    Dvd.findById(req.params.id)
-      .populate('tags')
-      .then((dvd) => {
-        if (dvd === null) {
-          res.status(404).json({message: 'DVD not found...'});
-        }
-        dvd.createdFromNow = moment(dvd.createdAt).fromNow();
-        res.status(200).json({dvd});
-      })
-  },
-
-  episodeJson(req, res, next) {
-    Dvd.findById(req.params.dvdId)
-      .then((dvd) => {
-        if (dvd === null) {
-          res.status(404).json({message: 'DVD not found...'});
-        }
-        const episode = dvd.episodes.id(req.params.episodeId);
-        episode.createdFromNow = moment(episode.createdAt).fromNow();
-        res.status(200).json({episode});
-      })
-  },
-
-  add(req, res, next) {
+  addDvd(req, res, next) {
+    console.log('req.body:', req.body);
     res.render('dvd_edit', { dvd: new Dvd({}) });
+  },
+
+  editDvd(req, res, next) {
+    Dvd.findById(req.params.id)
+    .then((dvd) => {
+      res.render('dvd_edit', {dvd});
+    })
+    .catch(() => next);
   },
 
   create(req, res, next) {
@@ -132,47 +121,6 @@ module.exports = {
       });
   },
 
-  editDvd(req, res, next) {
-    Dvd.findById(req.params.id)
-    .then((dvd) => {
-      res.render('dvd_edit', {dvd});
-    })
-    .catch(() => next);
-  },
-
-  updateDvd(req, res, next) {
-    if (req.file) {
-      req.body.imageUrl = '/images/posters/' + req.file.originalname
-    }
-    console.log('req.body:', req.body);
-
-    Dvd.findByIdAndUpdate(req.params.id, req.body)
-      .then(() => Dvd.findById(req.params.id))
-      .then((dvd) => {
-        res.json({flash: 'DVD: ' + dvd.title + ' updated.', dvd});
-      })
-      .catch(() => next);
-  },
-
-  updateEpisode(req, res, next) {
-    Dvd.findById(req.params.dvdId)
-    .then((dvd) => {
-      const episode = dvd.episodes.id(req.params.episodeId);
-      episode.playbackTime = req.body.playbackTime;
-      dvd.save()
-        .then(() => res.json({flash: 'Episode: ' + episode.name + ' updated.', episode}))
-    })
-    .catch(() => next);
-  },
-
-  delete(req, res, next) {
-    Dvd.findByIdAndRemove(req.params.id)
-      .then((dvd) => {
-        res.json({flash: 'DVD ' + dvd.title + ' deleted.'});
-      })
-      .catch(() => next);
-  },
-
   api: {
     index(req, res, next) {
       Dvd.find({})
@@ -183,6 +131,63 @@ module.exports = {
         .then((dvds) => {
           res.json(dvds);
         });
-    }
-  }
+    },
+
+    dvd(req, res, next) {
+      Dvd.findById(req.params.id)
+        .populate('tags')
+        .then((dvd) => {
+          if (dvd === null) {
+            res.status(404).json({message: 'DVD not found...'});
+          }
+          dvd.createdFromNow = moment(dvd.createdAt).fromNow();
+          res.status(200).json({dvd});
+        })
+    },
+
+    updateDvd(req, res, next) {
+      if (req.file) {
+        req.body.imageUrl = '/images/posters/' + req.file.originalname
+      }
+      console.log('req.body:', req.body);
+
+      Dvd.findByIdAndUpdate(req.params.id, req.body)
+        .then(() => Dvd.findById(req.params.id))
+        .then((dvd) => {
+          res.json({flash: 'DVD: ' + dvd.title + ' updated.', dvd});
+        })
+        .catch(() => next);
+    },
+
+    deleteDvd(req, res, next) {
+      Dvd.findByIdAndRemove(req.params.id)
+        .then((dvd) => {
+          res.json({flash: 'DVD ' + dvd.title + ' deleted.'});
+        })
+        .catch(() => next);
+    },
+
+    episode(req, res, next) {
+      Dvd.findById(req.params.dvdId)
+        .then((dvd) => {
+          if (dvd === null) {
+            res.status(404).json({message: 'DVD not found...'});
+          }
+          const episode = dvd.episodes.id(req.params.episodeId);
+          episode.createdFromNow = moment(episode.createdAt).fromNow();
+          res.status(200).json({episode});
+        })
+    },
+
+    updateEpisode(req, res, next) {
+      Dvd.findById(req.params.dvdId)
+      .then((dvd) => {
+        const episode = dvd.episodes.id(req.params.episodeId);
+        episode.playbackTime = req.body.playbackTime;
+        dvd.save()
+          .then(() => res.json({flash: 'Episode: ' + episode.name + ' updated.', episode}))
+      })
+      .catch(() => next);
+    },
+  },
 }
