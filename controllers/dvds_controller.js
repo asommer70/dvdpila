@@ -74,7 +74,13 @@ module.exports = {
   createBookmark(req, res, next) {
     Dvd.findById(req.body.dvdId)
       .then((dvd) => {
-        dvd.bookmarks.push({name: req.body.name, time: req.body.time});
+        if (req.body.episodeId) {
+          const episode = dvd.episodes.id(req.body.episodeId);
+          episode.bookmarks.push({name: req.body.name, time: req.body.time});
+        } else {
+          dvd.bookmarks.push({name: req.body.name, time: req.body.time});
+        }
+        
         dvd.save()
           .then(() => {
             res.redirect(302, '/dvds/' + dvd._id);

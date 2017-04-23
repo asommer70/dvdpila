@@ -103,15 +103,12 @@ if ($('.player').length !== 0) {
               url = '/api/dvds/' + $originalNode.data().mediaid;
             }
 
-            console.log('url:', url);
-
             // Get playbackTime
             $mediaElement.on('loadedmetadata', function(e) {
               $.ajax({
                 method: 'get',
                 url: url,
                 success: function(data) {
-                  console.log('data:', data);
                   if (data.episode) {
                     originalNode.currentTime = data.episode.playbackTime;
                   } else {
@@ -126,7 +123,6 @@ if ($('.player').length !== 0) {
 
             // Save playbackTime.
             $mediaElement.on('pause', function() {
-              console.log('Pausing... url:', url);
               updatePlaybackTime(originalNode.currentTime, url);
             });
 
@@ -151,8 +147,9 @@ if ($('.player').length !== 0) {
   // Update MediaElement playbackTime when Bookmark link is clicked.
   $('.bookmark').on('click', function(e) {
     e.preventDefault();
-
-    $('.player')[0].currentTime = $(this).data().time;
+    $this = $(this);
+    var mediaId = $this.data().mediaid;
+    $('video[data-mediaid="' + mediaId + '"]')[0].currentTime = $this.data().time;
   });
 }
 
@@ -174,6 +171,8 @@ function updatePlaybackTime(playbackTime, url) {
     }
   });
 
-  // Set the value of the #bookmark_time input.
-  $('#bookmark_time').val(playbackTime);
+  // Set the value of the #bookmark_time_$mediaId input.
+  var parts = url.split('/');
+  var mediaId = parts[parts.length - 1];
+  $('#bookmark_time_' + mediaId).val(playbackTime);
 }
