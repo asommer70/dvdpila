@@ -19,6 +19,22 @@ body {
   margin: 0;
 }
 
+.top-bar-title {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.logo {
+  img {
+    margin-left: 63px;
+    width: 32px;
+  }
+}
+
+.addDvd {
+  margin-right: 10px;
+}
+
 .preview {
   img {
     max-width: 400px;
@@ -38,7 +54,7 @@ body {
   }
 
   li:nth-child(odd) {
-    background-color: $light-gray;
+    background-color: $pila-tan;
   }
 }
 

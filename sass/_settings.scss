@@ -43,6 +43,15 @@
 
 @import '../node_modules/foundation-sites/scss/util/util';
 
+$pila-dark-green: #475333;
+$light-aqua: #CBF8EF;
+$black: #202817;
+$blue: #2e4272;
+$pila-red: rgba(159, 65, 21, 1); // #9F4115;
+$pila-tan: #ECECD1;
+$pila-green: #05776D;
+
+
 // 1. Global
 // ---------
 
@@ -50,9 +59,9 @@ $global-font-size: 100%;
 $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary: #1779ba,
-  secondary: #767676,
-  success: #3adb76,
+  primary: $pila-red,
+  secondary: $pila-tan,
+  success: $pila-green,
   warning: #ffae00,
   alert: #cc4b37,
 );
@@ -613,7 +622,7 @@ $tooltip-radius: $global-radius;
 // -----------
 
 $topbar-padding: 0.5rem;
-$topbar-background: $light-gray;
+$topbar-background: $pila-dark-green;
 $topbar-submenu-background: $topbar-background;
 $topbar-title-spacing: 0.5rem 1rem 0.5rem 0;
 $topbar-input-width: 200px;

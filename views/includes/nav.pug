@@ -2,14 +2,14 @@
 block nav
   .top-bar
     .top-bar-title
-      a(href="/")
-        strong= 'DVD Pila!'
+      a(href="/", class="logo")
+        img(src="/images/dvd_pila_logo_white.svg")
     .top-bar-left
 
     .top-bar-right
       ul.menu
         li
-          a(class='button primary small', href="/dvds/add") Add DVD
+          a(class='button primary tiny addDvd', href="/dvds/add") Add DVD
         li
           form(method="post", action="/search")
             input(type="search" name="term" placeholder="Search")
