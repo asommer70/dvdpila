@@ -70,48 +70,81 @@ $('.editform').submit(function(e) {
 });
 
 // Get the Bookmarks and Episodes before creating the MediaElement.
-if ($('#player').length !== 0) {
+if ($('.player').length !== 0) {
+  var parts = window.location.pathname.split('/');
+  var dvdId = parts[parts.length - 1];
+
   $.ajax({
     method: 'get',
-    url: '/api/dvds/' + $('#player').data().dvdid,
+    url: '/api/dvds/' + dvdId,
     success: function(data) {
-      var times = data.dvd.bookmarks.map(function(bookmark) { return bookmark.time });
+      var times = {};
+      if (!data.dvd.episodes.length) {
+        times[data.dvd._id] = data.dvd.bookmarks.map(function(bookmark) { return bookmark.time });
+      } else {
+        data.dvd.episodes.map(function(episode) {
+          times[episode._id] = episode.bookmarks.map(function(bookmark) { return bookmark.time })
+        });
+      }
 
-      $('#player').mediaelementplayer({
-        pluginPath: "/javascripts/plugins/",
-        features: ['playpause', 'current', 'progress', 'duration', 'speed', 'fullscreen', 'markers'],
-        markers: times,
-        success: function(mediaElement, originalNode) {
-          // Get playbackTime
-          $(mediaElement).on('loadedmetadata', function(e) {
-            $.ajax({
-              method: 'get',
-              url: '/api/dvds/' + $(originalNode).data().dvdid,
-              success: function(data) {
-                originalNode.currentTime = data.dvd.playbackTime;
-              },
-              error: function(err) {
-                console.log('DVD GET err:', err);
-              }
+      $.each($('.player'), function(idx, player) {
+        $(player).mediaelementplayer({
+          pluginPath: "/javascripts/plugins/",
+          features: ['playpause', 'current', 'progress', 'duration', 'speed', 'fullscreen', 'markers'],
+          markers: times[$(player).data().mediaid],
+          success: function(mediaElement, originalNode) {
+            $originalNode = $(originalNode);
+            $mediaElement = $(mediaElement);
+
+            var url;
+            if ($originalNode.data().mediatype == 'episode') {
+              url = '/api/dvds/' + $originalNode.data().dvdid + '/episode/' + $originalNode.data().mediaid;
+            } else {
+              url = '/api/dvds/' + $originalNode.data().mediaid;
+            }
+
+            console.log('url:', url);
+
+            // Get playbackTime
+            $mediaElement.on('loadedmetadata', function(e) {
+              $.ajax({
+                method: 'get',
+                url: url,
+                success: function(data) {
+                  console.log('data:', data);
+                  if (data.episode) {
+                    originalNode.currentTime = data.episode.playbackTime;
+                  } else {
+                    originalNode.currentTime = data.dvd.playbackTime;
+                  }
+                },
+                error: function(err) {
+                  console.log('DVD GET err:', err);
+                }
+              });
             });
-          });
 
-          // Save playbackTime.
-          $(mediaElement).on('pause', function() {
-            updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
-          });
+            // Save playbackTime.
+            $mediaElement.on('pause', function() {
+              console.log('Pausing... url:', url);
+              updatePlaybackTime(originalNode.currentTime, url);
+            });
 
-          // Save playback if page is refreshed, or navigated away from.
-          $(window).on('beforeunload', function() {
-            updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
-          });
+            // Save playback if page is refreshed, or navigated away from.
+            // $(window).on('beforeunload', function() {
+            //   updatePlaybackTime(originalNode.currentTime, $(originalNode).data().dvdid);
+            // });
 
-          // Reset playbackTime to 0 when video has 'ended'.
-          $(mediaElement).on('ended', function() {
-            updatePlaybackTime(0, $(originalNode).data().dvdid);
-          });
-        }
+            // Reset playbackTime to 0 when video has 'ended'.
+            $(mediaElement).on('ended', function() {
+              updatePlaybackTime(0, url);
+            });
+          }
+        });
       });
+    }, // end get dvd/:id success function
+    error: function(req, status, err) {
+      console.log('GET dvd err:', err, 'status:', status);
     }
   });
 
@@ -119,13 +152,13 @@ if ($('#player').length !== 0) {
   $('.bookmark').on('click', function(e) {
     e.preventDefault();
 
-    $('#player')[0].currentTime = $(this).data().time;
+    $('.player')[0].currentTime = $(this).data().time;
   });
 }
 
-function updatePlaybackTime(playbackTime, dvdId) {
+function updatePlaybackTime(playbackTime, url) {
   $.ajax({
-    url: '/api/dvds/' + dvdId,
+    url: url,
     method: 'put',
     data: JSON.stringify({playbackTime: playbackTime}),
     cache: false,
@@ -134,9 +167,10 @@ function updatePlaybackTime(playbackTime, dvdId) {
     processData: false,
     contentType: false,
     success: function(res) {
+      // console.log('updatePlaybackTime success res:', res);
     },
     error: function(err) {
-      console.log('DVD Update err:', err);
+      console.log('DVD/Episode Update err:', err);
     }
   });
 

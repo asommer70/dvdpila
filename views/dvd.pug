@@ -30,30 +30,36 @@ block content
         .columns.large-12
           br/br/
           a(href="/dvds/" + dvd._id + "/edit" class="button small") Edit DVD
-    .columns.large-6
-      .row
-        .columns.large-12
-          video(id="player", width="700", height="340", controls='controls', data-dvdId=dvd._id)
-            source(src=dvd.fileUrl)
-          
-          br/
-          br/
-      .row
-        .columns.large-4
-          button(class="button primary", data-toggle="bookmarkForm") Add Bookmark
-          
-          div(id="bookmarkForm", class="hide", data-toggler=".hide")
-            form(action="/dvds/bookmarks", method="post")
-              input(type="text", name="name", placeholder="Name")
-
-              input(type="hidden", name="time", id="bookmark_time", value="")
-              input(type="hidden", name="dvdId", value=dvd._id)
-              button(name="button", type="submit", class="button small success") Create Bookmark
-              
-          button(class="button", type="button", data-toggle="bookmarks-dropdown") Bookmarks
-          div(class="dropdown-pane", id="bookmarks-dropdown", data-dropdown, data-auto-focus="true")
-            ul.no-bullet.bookmarks
-              each bookmark in dvd.bookmarks
-                li
-                  a(href="#", class="bookmark", data-time=bookmark.time) #{bookmark.name}
+      br/
       
+      if dvd.fileUrl === ''
+        .row
+          .columns.large-12
+            button(class="button primary", data-toggle="episodeForm") Add Episode
+            
+            div(id="episodeForm", class="hide", data-toggler=".hide")
+              form(action="/dvds/episodes", method="post")
+                .row
+                  .columns.large-12
+                    input(type="text", name="name", value="" placeholder="Name")
+                .row
+                  .columns.large-12
+                    input(type="text", name="fileUrl" value="" placeholder="File URL")
+                    input(type="hidden", name="dvdId", value=dvd._id)
+                .row
+                  .columns.large-12
+                    button(name="button", type="submit", class="button small success") Create Episode
+
+
+    .columns.large-6
+      if dvd.fileUrl !== ''
+        - media = dvd
+        - mediaType = 'dvd'
+        include includes/player.pug
+      else 
+        each episode in dvd.episodes
+          h4 #{episode.name}
+          - media = episode
+          - mediaType = 'episode'
+          include includes/player.pug
+          hr/

@@ -44,4 +44,19 @@ describe('Episodes on a Dvd', () => {
         done();
       });
   });
+
+  it('an Episode can be updated on a Dvd', (done) => {
+    const drStrange = new Dvd({title: 'Doctor Strange', episodes: [{name: 'Disc 1'}]});
+    drStrange.save()
+      .then(() => Dvd.findOne({title: 'Doctor Strange'}))
+      .then((dvd) => {
+        dvd.episodes[0].playbackTime = 90;
+        return dvd.save();
+      })
+      .then(() => Dvd.findOne({title: 'Doctor Strange'}))
+      .then((dvd) => {
+        assert(dvd.episodes[0].playbackTime == 90);
+        done();
+      });
+  });
 });

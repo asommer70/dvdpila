@@ -21,11 +21,14 @@ router.get('/dvds/add', DvdsController.add);
 router.get('/dvds/:id', DvdsController.dvd);
 router.get('/dvds/:id/edit', DvdsController.editDvd);
 router.get('/api/dvds/:id', DvdsController.dvdJson);
+router.get('/api/dvds/:dvdId/episode/:episodeId', DvdsController.episodeJson);
 
 router.post('/dvds', upload.single('image'), DvdsController.create);
 router.post('/dvds/bookmarks', DvdsController.createBookmark)
+router.post('/dvds/episodes', DvdsController.createEpisode)
 
-router.put('/api/dvds/:id', upload.single('image'), DvdsController.edit);
+router.put('/api/dvds/:id', upload.single('image'), DvdsController.updateDvd);
+router.put('/api/dvds/:dvdId/episode/:episodeId', DvdsController.updateEpisode);
 
 router.delete('/api/dvds/:id', DvdsController.delete);
 

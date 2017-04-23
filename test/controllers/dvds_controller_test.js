@@ -23,11 +23,11 @@ describe('DvdsController', () => {
       });
   });
 
-  it('PUT to /dvds/:id updates an existing Dvd', (done) => {
+  it('PUT to /api/dvds/:id updates an existing Dvd', (done) => {
     Dvd.create({title: 'Doctor Strange', rating: 5, fileUrl: 'http://videos/Doctor_Strange.mkv'})
       .then((dvd) => {
         request(app)
-          .put('/dvds/' + dvd._id)
+          .put('/api/dvds/' + dvd._id)
           .send({rating: 3.5})
           .end((err, res) => {
             Dvd.findOne({title: 'Doctor Strange'})
@@ -39,11 +39,11 @@ describe('DvdsController', () => {
       })
   });
 
-  it('DELETE to /dvds/:id deletes a Dvd', (done) => {
+  it('DELETE to /api/dvds/:id deletes a Dvd', (done) => {
     Dvd.create({title: 'Doctor Strange', rating: 5, fileUrl: 'http://videos/Doctor_Strange.mkv'})
       .then((dvd) => {
         request(app)
-          .delete('/dvds/' + dvd._id)
+          .delete('/api/dvds/' + dvd._id)
           .end((err, res) => {
             Dvd.findOne({title: 'Doctor Strange'})
               .then((dvd) => {
@@ -66,7 +66,7 @@ describe('DvdsController', () => {
         request(app)
           .get('/api/dvds')
           .end((err, res) => {
-            assert(res.body[0].title == 'Doctor Strange');
+            assert(res.body[0].title == 'Nerve');
             done();
           });
       });
