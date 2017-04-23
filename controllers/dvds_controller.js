@@ -18,7 +18,13 @@ module.exports = {
   },
 
   search(req, res, next) {
-
+    Dvd.find({ title: { $regex: new RegExp(req.body.term, 'ig') } })
+      .then((dvds) => {
+        res.render('search', {term: req.body.term, dvds});
+      })
+      .catch((err) => {
+        console.log('Search err:', err);
+      })
   },
 
   dvd(req, res, next) {

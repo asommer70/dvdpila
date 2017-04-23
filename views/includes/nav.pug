@@ -11,6 +11,7 @@ block nav
         li
           a(class='button primary small', href="/dvds/add") Add DVD
         li
-          input(type="search" placeholder="Search")
+          form(method="post", action="/search")
+            input(type="search" name="term" placeholder="Search")
         li
           button(type="button" class="button") Search

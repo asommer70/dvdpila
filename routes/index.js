@@ -30,6 +30,7 @@ router.post('/dvds', upload.single('image'), DvdsController.create);
 router.post('/dvds/bookmarks', DvdsController.createBookmark);
 router.post('/dvds/episodes', DvdsController.createEpisode);
 router.post('/tags', DvdsController.createTag);
+router.post('/search', DvdsController.search);
 
 router.put('/api/dvds/:id', upload.single('image'), DvdsController.api.updateDvd);
 router.put('/api/dvds/:dvdId/episode/:episodeId', DvdsController.api.updateEpisode);
