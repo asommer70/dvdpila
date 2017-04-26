@@ -1,5 +1,5 @@
 const Dvd = require('../models/dvd');
-const Tag = require('../models/tag');
+const Tag = require('../models/tag_schema');
 
 module.exports = {
   dvds(req, res, next) {

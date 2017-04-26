@@ -1,7 +1,7 @@
 const moment = require('moment');
 const Dvd = require('../models/dvd');
 const Episode = require('../models/episode_schema');
-const Tag = require('../models/tag');
+const Tag = require('../models/tag_schema');
 
 module.exports = {
   index(req, res, next) {
@@ -114,7 +114,7 @@ module.exports = {
               let tagged;
 
               if (!tag) {
-                tag = new Tag({name: tagStr});
+                tag = {name: tagStr};
                 tagged = -1;
               } else {
                 tagged = dvd.tags.findIndex((tagged) => {

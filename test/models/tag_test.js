@@ -23,7 +23,7 @@ describe('Tagging Dvds', () => {
   it('saves a relation between a dvd and a tag', (done) => {
     Dvd.findOne({title: 'Doctor Strange'})
       .then((dvd) => {
-        assert(dvd.tags[0].name === 'great');
+        assert(dvd.tags[0].name === 'scifi');
         done();
       })
   });
