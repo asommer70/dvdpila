@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const EpisodeSchema = require('./episode_schema');
 const BookmarkSchema = require('./bookmark_schema');
+const TagSchema = require('./tag_schema');
 const Schema = mongoose.Schema;
 
 const DvdSchema = new Schema({
@@ -14,10 +15,7 @@ const DvdSchema = new Schema({
   playbackTime: Number,
   episodes: [EpisodeSchema],
   bookmarks: [BookmarkSchema],
-  tags: [{
-    type: Schema.Types.ObjectId,
-    ref: 'tag'
-  }]
+  tags: [TagSchema]
 },
 {
   timestamps: true

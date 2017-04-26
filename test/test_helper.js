@@ -9,7 +9,7 @@ before((done) => {
     .on('error', (err) => console.warn('mongoose.connection err:', err));
 });
 
-beforeEach((done) => {
+afterEach((done) => {
   const { dvds, tags } = mongoose.connection.collections;
 
   dvds.drop()

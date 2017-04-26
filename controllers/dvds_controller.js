@@ -108,22 +108,36 @@ module.exports = {
   createTag(req, res, next) {
     Dvd.findById(req.body.dvdId)
       .then((dvd) => {
-        req.body.tagList.split(', ').map((tagStr) => {
-          Tag.findOne({name: tagStr})
+        const promises = req.body.tagList.replace(/\s/g, '').split(',').map((tagStr) => {
+          return Tag.findOne({name: tagStr})
             .then((tag) => {
+              let tagged;
+
               if (!tag) {
                 tag = new Tag({name: tagStr});
+                tagged = -1;
+              } else {
+                tagged = dvd.tags.findIndex((tagged) => {
+                  if (tagged.name == tag.name) {
+                    return;
+                  }
+                });
               }
 
-              dvd.tags.push(tag);
-              tag.dvds.push(dvd);
-
-              Promise.all([dvd.save(), tag.save()])
-                .then(() => res.redirect(302, '/dvds/' + dvd._id))
-                .catch(() => next);
+              if (tagged === -1) {
+                dvd.tags.push(tag);
+                tag.dvds.push(dvd);
+                return tag.save()
+                  .then(() => dvd.save());
+              }
             })
-            .catch((err) => console.log('Tag.find err:', err));
+
         });
+
+
+        Promise.all(promises)
+          .then(() => res.redirect(302, '/dvds/' + dvd._id))
+          .catch(() => next);
       });
   },
 
