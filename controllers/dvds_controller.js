@@ -60,7 +60,6 @@ module.exports = {
     dvd.save()
       .then(() => Dvd.findOne({title: req.body.title}))
       .then((dvd) => {
-        // dvd.update({playbackTime: 0});
         res.redirect(302, '/dvds/' + dvd._id);
       })
       .catch((err) => {
@@ -108,36 +107,26 @@ module.exports = {
   createTag(req, res, next) {
     Dvd.findById(req.body.dvdId)
       .then((dvd) => {
-        const promises = req.body.tagList.replace(/\s/g, '').split(',').map((tagStr) => {
-          return Tag.findOne({name: tagStr})
-            .then((tag) => {
-              let tagged;
+        req.body.tagList.replace(/\s/g, '').split(',').forEach((tagStr) => {
+          const tagged = dvd.tags.findIndex((tag) => {
+            if (tag.name === tagStr) {
+              return true;
+            }
+            return false;
+          });
 
-              if (!tag) {
-                tag = {name: tagStr};
-                tagged = -1;
-              } else {
-                tagged = dvd.tags.findIndex((tagged) => {
-                  if (tagged.name == tag.name) {
-                    return;
-                  }
-                });
-              }
-
-              if (tagged === -1) {
-                dvd.tags.push(tag);
-                tag.dvds.push(dvd);
-                return tag.save()
-                  .then(() => dvd.save());
-              }
-            })
-
+          if (tagged === -1) {
+            dvd.tags.push({name: tagStr});
+          }
         });
 
+        console.log('dvd.tags:', dvd.tags);
 
-        Promise.all(promises)
-          .then(() => res.redirect(302, '/dvds/' + dvd._id))
-          .catch(() => next);
+        dvd.save()
+          .then(() => {
+            res.redirect(302, '/dvds/' + dvd._id);
+          })
+          .catch((err) => console.log('createTag dvd.save err:', err));
       });
   },
 

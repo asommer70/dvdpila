@@ -20,7 +20,6 @@ router.get('/', DvdsController.index);
 router.get('/dvds/add', DvdsController.addDvd); // This route had to come before /dvd/:id route.
 router.get('/dvds/:id', DvdsController.dvd);
 router.get('/dvds/:id/edit', DvdsController.editDvd);
-router.get('/tags', TagsController.index);
 router.get('/tags/:name', TagsController.dvds);
 router.get('/api/dvds', DvdsController.api.index);
 router.get('/api/dvds/:id', DvdsController.api.dvd);
