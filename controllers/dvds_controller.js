@@ -1,7 +1,11 @@
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const moment = require('moment');
 const Dvd = require('../models/dvd');
 const Episode = require('../models/episode_schema');
 const Tag = require('../models/tag_schema');
+
 
 module.exports = {
   index(req, res, next) {
@@ -39,7 +43,6 @@ module.exports = {
   },
 
   addDvd(req, res, next) {
-    console.log('req.body:', req.body);
     res.render('dvd_edit', { dvd: new Dvd({}) });
   },
 
@@ -120,14 +123,38 @@ module.exports = {
           }
         });
 
-        console.log('dvd.tags:', dvd.tags);
-
         dvd.save()
           .then(() => {
             res.redirect(302, '/dvds/' + dvd._id);
           })
           .catch((err) => console.log('createTag dvd.save err:', err));
       });
+  },
+
+  omdb(req, res, next) {
+    url = "http://www.omdbapi.com/?t=" + req.body.title.replace(/\s/, '+') + "&y=&plot=short&r=json";
+
+    var request = http.get(url, function(response) {
+      var body = '';
+
+      response.on('data', (chunk) => {
+          body += chunk;
+      });
+
+      response.on('end', () => {
+          var data = JSON.parse(body);
+
+          if (data.Poster) {
+            const filename = data.Title.replace(/\'/g, '').replace(/\s/g, '_') + '.jpg';
+            const poster = fs.createWriteStream("public/images/posters/" + filename);
+            var request = https.get(data.Poster, function(imgRes) {
+              imgRes.pipe(poster);
+              data.imageUrl = '/images/posters/' + filename;
+              res.json(data);
+            });
+          }
+      });
+    });
   },
 
   api: {
@@ -158,7 +185,6 @@ module.exports = {
       if (req.file) {
         req.body.imageUrl = '/images/posters/' + req.file.originalname
       }
-      console.log('req.body:', req.body);
 
       Dvd.findByIdAndUpdate(req.params.id, req.body)
         .then(() => Dvd.findById(req.params.id))

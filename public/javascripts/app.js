@@ -69,6 +69,31 @@ $('.editform').submit(function(e) {
   })
 });
 
+// Get DVD info from OBDBAPI.
+$('#title').on('blur', function(e) {
+  if (window.location.pathname.split('/')[window.location.pathname.split('/').length - 1] != 'edit')
+    $.ajax({
+      url: '/omdb',
+      method: 'post',
+      data: 'title=' + $('#title').val(),
+      success: function(data) {
+        $('#abstractSource').val('OMDb API');
+        $('#abstracTxt').val(data.Plot).height($('#abstracTxt').prop('scrollHeight'));
+        $('#abstractUrl').val("http://www.omdbapi.com/?t=" + $('#title').val().replace(/\s/, '+') + "&y=&plot=short&r=json");
+
+        $('.image_to_upload').attr('src', data.Poster);
+        $preview = $('.preview');
+        if ($preview.hasClass('hide')) {
+          $preview.toggleClass('hide');
+        }
+        if (data.imageUrl) {
+          $('#imageUrl').val(data.imageUrl);
+        }
+      }
+    });
+});
+
+
 // Get the Bookmarks and Episodes before creating the MediaElement.
 if ($('.player').length !== 0) {
   var parts = window.location.pathname.split('/');
