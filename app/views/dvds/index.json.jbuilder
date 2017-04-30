@@ -16,7 +16,7 @@ json.array!(@dvds) do |dvd|
   json.image_url dvd.image.url
   json.tags dvd.tags
   json.episodes dvd.episodes do |episode|
-    json.extract! episode, :id, :name, :file_url, :dvd_id, :created_at, :updated_at, :bookmarks
+    json.extract! episode, :id, :name, :file_url, :playback_time, :dvd_id, :created_at, :updated_at, :bookmarks
   end
   json.bookmarks dvd.bookmarks
 end
