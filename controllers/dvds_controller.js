@@ -31,7 +31,7 @@ module.exports = {
       })
   },
 
-  dvd(req, res, next) {
+  show(req, res, next) {
     Dvd.findById(req.params.id).populate('tags')
       .then((dvd) => {
         if (dvd === null) {
@@ -169,7 +169,7 @@ module.exports = {
         });
     },
 
-    dvd(req, res, next) {
+    show(req, res, next) {
       Dvd.findById(req.params.id)
         .populate('tags')
         .then((dvd) => {
