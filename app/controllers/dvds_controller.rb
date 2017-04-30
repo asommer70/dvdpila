@@ -1,19 +1,27 @@
 class DvdsController < ApplicationController
   before_action :set_dvd, only: [:show, :edit, :update, :destroy]
-  protect_from_forgery :except => :barcode
+  protect_from_forgery :except => [:barcode, :socketio]
 
   # GET /dvds
   # GET /dvds.json
   def index
     #@dvds = Dvd.all.order('updated_at DESC')
     @dvds = Dvd.order('updated_at DESC').paginate(:page => params[:page], :per_page => 10)
+    puts "@dvds.count: #{@dvds.class}"
   end
 
-  # GET /search
+  # POST /search
   def search
     @search = params[:search]
     @dvds = Dvd.where("title ~* ?", @search)
     render :index
+  end
+
+  # GET /search.json
+  def search_json
+    @search = params[:search]
+    @dvds = Dvd.where("title ~* ?", @search)
+    render 'index.json.jbuilder'
   end
 
   # POST /ddg/

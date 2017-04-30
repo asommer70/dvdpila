@@ -1,6 +1,7 @@
 class Dvd < ActiveRecord::Base
   dragonfly_accessor :image
   acts_as_taggable_on :tags
+  attr_accessor :image_web_url
 
   validates :rating, allow_nil: true, :numericality => { :greater_than => 0, :less_than_or_equal_to => 5 }
   validates :playback_time, allow_nil: true, :numericality => { :greater_than_or_equal_to => 0 }
@@ -53,5 +54,11 @@ class Dvd < ActiveRecord::Base
       abstract_url: url,
       image_url: omdb['Poster']
     }
+  end
+
+  def as_json(options={})
+    self.image_web_url = self.image.thumb('1024x1024').url  if self.image
+
+    super(methods: [:image_web_url], only: [:id, :title, :file_url, :image_web_url, :playback_time, :rating])
   end
 end

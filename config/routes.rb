@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   post '/search', to: 'dvds#search', as: 'search'
+  get '/search.json', to: 'dvds#search_json', as: 'search_json'
   post '/barcode', to: 'dvds#barcode', as: 'barcode'
   post '/ddg', to: 'dvds#ddg', as: 'ddg'
   post '/omdb', to: 'dvds#omdb', as: 'omdb'

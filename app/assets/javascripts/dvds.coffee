@@ -2,14 +2,35 @@ ready_dvd = ->
   #
   # Handle socket playback events.
   #
-  window.dispatcher.bind 'playing_success', (playing) ->
-    console.log('successfully playing:', playing)
+  channel = window.dispatcher.subscribe('remote')
+  channel.bind 'play_now', (playing) ->
+    # Set the video element source if it hasn't been set in the browser.
+    $player = $('.player')
+    if (!$player.attr('src'))
+      $player.click()
+    else
+      $('.player')[0].play()
 
-  window.dispatcher.bind 'pause_success', (playing) ->
-    console.log('successfully paused:', playing)
+  channel.bind 'pause_now', (playing) ->
+    $('.player')[0].pause()
 
-  window.dispatcher.bind 'stop_success', (playing) ->
-    console.log('successfully stopped:', playing)
+  channel.bind 'previous_now', (playing) ->
+    $player = $('.player');
+    $player[0].currentTime = $player[0].currentTime - 5;
+
+  channel.bind 'advance_now', (playing) ->
+    $player = $('.player');
+    $player[0].currentTime = $player[0].currentTime + 5;
+
+  channel.bind 'new_now', (playing) ->
+    Turbolinks.visit('/dvds/' + playing.dvd_id)
+
+  # window.dispatcher.bind 'pause_success', (playing) ->
+  #   console.log('successfully paused:', playing)
+  #
+  # window.dispatcher.bind 'stop_success', (playing) ->
+  #   console.log('successfully stopped:', playing)
+
 
   if (window.location.pathname.split('/')[window.location.pathname.split('/').length - 2] == 'dvds')
     # Send stop event to socket on refresh, nav away, close
