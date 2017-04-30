@@ -12,8 +12,8 @@
 !/log/.keep
 /tmp
 .idea
-.swp
-.swo
+*.swp
+*.swo
 .DS_Store
 learning
 .sass-cache/*

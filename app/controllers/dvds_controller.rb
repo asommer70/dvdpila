@@ -53,10 +53,11 @@ class DvdsController < ApplicationController
   # POST /dvds
   # POST /dvds.json
   def create
-    ddg = Dvd.get_ddg(dvd_params[:title])
+    #ddg = Dvd.get_ddg(dvd_params[:title])
     omdb = Dvd.get_omdb(dvd_params[:title])
-    props = ddg.merge!(omdb)
-    props.merge!(dvd_params)
+    #props = ddg.merge!(omdb)
+    #props.merge!(dvd_params)
+    props = omdb.merge!(dvd_params)
     @dvd = Dvd.new(props)
 
     respond_to do |format|
