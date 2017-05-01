@@ -13,12 +13,11 @@ if (process.env.NODE_ENV !== 'test') {
 
 // Hard coded endPage for current DVD Pila! database.
 let page = 1;
-// const endPage = 5;
 const endPage = 83;
 
 while (page < endPage) {
+
   const request = http.get("http://dvdpila/dvds.json?page=" + page, function(response) {
-    // response.pipe(contextMenu);
     var body = '';
 
     response.on('data', (chunk) => {
@@ -30,70 +29,81 @@ while (page < endPage) {
 
         if (dvds.length) {
           dvds.forEach((dvd) => {
-            console.log('dvd.title:', dvd.title);
-
-            const newDvd = new Dvd({
-              title: dvd.title,
-              rating: dvd.rating,
-              abstractTxt: dvd.abstract_txt,
-              abstractSource: dvd.abstract_source,
-              abstarctUrl: dvd.abstract_url,
-              fileUrl: dvd.fileUrl,
-              playbackTime: dvd.playback_time,
-              tags: [],
-              episodes: [],
-              bookmarks: []
-            });
-
-            if (dvd.tags.length) {
-              dvd.tags.forEach((tag) => {
-                newDvd.tags.push({name: tag.name})
+            setTimeout(() => {
+              const newDvd = new Dvd({
+                title: dvd.title,
+                rating: dvd.rating,
+                abstractTxt: dvd.abstract_txt,
+                abstractSource: dvd.abstract_source,
+                abstractUrl: dvd.abstract_url,
+                fileUrl: dvd.file_url,
+                playbackTime: dvd.playback_time,
+                tags: [],
+                episodes: [],
+                bookmarks: []
               });
-            }
 
-            if (dvd.bookmarks.length) {
-              dvd.bookmarks.forEach((bookmark) => {
-                newDvd.bookmarks.push({name: bookmark.name, time: bookmark.time})
-              });
-            }
+              if (dvd.tags.length) {
+                dvd.tags.forEach((tag) => {
+                  newDvd.tags.push({name: tag.name})
+                });
+              }
 
-            if (dvd.episodes.length) {
-              dvd.episodes.forEach((episode) => {
-                const newEpisode = {
-                  name: episode.name,
-                  fileUrl: episode.file_url,
-                  playbackTime: episode.playback_time,
-                  bookmarks: []
-                }
+              if (dvd.bookmarks.length) {
+                dvd.bookmarks.forEach((bookmark) => {
+                  newDvd.bookmarks.push({name: bookmark.name, time: bookmark.time})
+                });
+              }
 
-                if (episode.bookmarks.length) {
-                  episode.bookmarks.forEach((bookmark) => {
-                    newEpisode.bookmarks.push({name: bookmark.name, time: bookmark.time})
-                  });
-                }
+              if (dvd.episodes.length) {
+                dvd.episodes.forEach((episode) => {
+                  const newEpisode = {
+                    name: episode.name,
+                    fileUrl: episode.file_url,
+                    playbackTime: episode.playback_time,
+                    bookmarks: []
+                  }
 
-                newDvd.episodes.push(newEpisode)
-              });
-            }
+                  if (episode.bookmarks.length) {
+                    episode.bookmarks.forEach((bookmark) => {
+                      newEpisode.bookmarks.push({name: bookmark.name, time: bookmark.time})
+                    });
+                  }
 
-            const filename = dvd.title.replace(/\'/g, '').replace(/\s/g, '_').replace(/\)/g, '').replace(/\(/g, '').replace(/\//g, '_') + '.jpg';
-            const poster = fs.createWriteStream("public/images/posters/" + filename);
+                  newDvd.episodes.push(newEpisode)
+                });
+              }
 
-            var request = http.get("http://dvdpila" + dvd.image_url, function(response) {
-              response.pipe(poster);
-            });
+              const filename = dvd.title.replace(/\'/g, '').replace(/\s/g, '_').replace(/\)|\(|\/|'/g, '').toLowerCase() + '.jpg';
+              setTimeout(() => {
+                savePoster(filename, dvd.image_url);
+              }, 4000);
 
-            newDvd.imageUrl = '/images/posters/' + filename;
-            newDvd.save()
-              .then(() => {
-                return;
-              })
-              .catch((err) => console.log('newDvd.save err:', err));
-          });
+              newDvd.imageUrl = '/images/posters/' + filename;
+              newDvd.save()
+                .then(() => {
+                  console.log('dvd.title:', newDvd.title);
+                })
+                .catch((err) => console.log('newDvd.save err:', err));
+            }, 2000);
+
+          }); // end dvds.forEach
         } // end if dvds.length
 
     }); // end response.on end
   });
 
   page++;
+}
+
+function savePoster(filename, imageUrl) {
+  const poster = fs.createWriteStream("public/images/posters/" + filename);
+
+  const posterReq = http.get("http://dvdpila" + imageUrl, function(res) {
+    res.pipe(poster);
+    res.on('error', (err) => {
+      console.log('posterReq err:', err);
+    })
+  });
+
 }
