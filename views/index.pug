@@ -9,6 +9,10 @@ block content
           img(class="thumbnail dvds-list-image", src=dvd.imageUrl)
         br/
         a(href="/dvds/" + dvd._id) #{dvd.title}
+        br/
+        br/
+        each tag in dvd.tags
+          span(class="badge") #{tag.name}
 
   .row
     .columns.large-10
