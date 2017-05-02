@@ -30,7 +30,7 @@ form(class={editform: dvd.title !== undefined} action="/dvds", method="post", da
         img(src="" class="image_to_upload")
       label(for="dvd_image") DVD Image:
       input(type="file" name="image" id="dvd_image")
-      input(type="hidden", name="imageUrl", id="imageUrl")
+      input(type="hidden", name="imageUrl", id="imageUrl", value=dvd.imageUrl)
       
   .row
     .large-4.columns
