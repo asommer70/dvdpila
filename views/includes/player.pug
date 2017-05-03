@@ -45,4 +45,5 @@
       div(id="tags")
         each tag in dvd.tags
           a(href="/tags/" + tag.name) 
-            span(class="badge") #{tag.name}
+            span(class="badge tag-name") #{tag.name}
+              span(aria-hidden="true", class="remove-tag hide", data-dvdId=dvd._id, data-tagName=tag.name) &nbsp; &times;

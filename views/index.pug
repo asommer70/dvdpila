@@ -12,7 +12,8 @@ block content
         br/
         br/
         each tag in dvd.tags
-          span(class="badge") #{tag.name}
+          a(href="/tags/" + tag.name) 
+            span(class="badge") #{tag.name}
 
   .row.text-center
     .columns.large-10
@@ -63,3 +64,5 @@ block content
             |Next
           else
             a(href="/?page=" + (parseInt(currentPage) + 1), aria-label="Next page") Next
+      br/
+      br/

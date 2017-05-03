@@ -1,5 +1,27 @@
 $(document).foundation();
 
+// Display/hide the x button inside the tag pill.
+$('.tag-name').hover(function(e) {
+  $($(this).children()[0]).toggleClass('hide');
+}, function() {
+  $($(this).children()[0]).toggleClass('hide');
+});
+
+$('.remove-tag').on('click', function(e) {
+  e.preventDefault();
+  console.log('remove-tag click...');
+  // $.ajax({
+  //   url: '/api/dvds/' + $(this).data().dvdid,
+  //   method: 'delete',
+  //   success: function(res) {
+  //     window.location = window.location.origin;
+  //   },
+  //   error: function(err) {
+  //     console.log('DVD Delete err:', err);
+  //   }
+  // })
+});
+
 // Display the image to be uploaded.
 $('#dvd_image').on('change', function(e) {
   window.image = e.target.files[0];
@@ -38,7 +60,7 @@ $('a.delete').on('click', function(e) {
     error: function(err) {
       console.log('DVD Delete err:', err);
     }
-  })
+  });
 });
 
 $('.editform').submit(function(e) {

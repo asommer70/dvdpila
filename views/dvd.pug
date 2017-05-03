@@ -64,12 +64,12 @@ block content
             
             br/
             br/
-            
+
             div(id="tags")
               each tag in dvd.tags
                 a(href="/tags/" + tag.name) 
                   span(class="badge") #{tag.name}
-                  
+  
 
     .columns.large-6
       if dvd.fileUrl !== ''
