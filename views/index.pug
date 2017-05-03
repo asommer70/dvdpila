@@ -14,32 +14,52 @@ block content
         each tag in dvd.tags
           span(class="badge") #{tag.name}
 
-  .row
-    .columns.large-12
-      .pager
-        ul(class="pagination", role="navigation", aria-label="Pagination")
-          li(class=['pagination-previous', {'disabled': currentPage === 1}])
-            if currentPage === 1
-              |Previous
-            else
-              a(href="/?page=" + (parseInt(currentPage) - 1)) Previous
-              
-          if currentPage >= 0
-            - for (var i = currentPage - 1; i > 0; i--) {
-              li
-                a(href="/?page=" + (parseInt(currentPage) - i), aria-label="Page " + (parseInt(currentPage) - i)) #{parseInt(currentPage) - i}
-            - }
+  .row.text-center
+    .columns.large-10
+      ul(class="pagination", role="navigation", aria-label="Pagination")
+        li(class=['pagination-previous', {'disabled': currentPage === 1}])
+          if currentPage === 1
+            |Previous
+          else
+            a(href="/?page=" + (parseInt(currentPage) - 1)) Previous
             
+        if currentPage >= 9
           li
-            a(class={'current': currentPage}, href="/?page=" + currentPage, aria-label="Page " + currentPage) #{currentPage}
+            a(href="/?page=1", aria-label="Page 1") 1
+          li
+            a(href="/?page=2", aria-label="Page 2") 2
+          li(class="ellipsis" aria-hidden="true")
+          - for (var i = currentPage - 5; i < currentPage; i++) {
+            li
+              a(href="/?page=" + i, aria-label="Page " + i) #{i}
+          - }
+        else 
+          - for (var i = 1; i < currentPage; i++) {
+            li
+              a(href="/?page=" + i, aria-label="Page " + i) #{i}
+          - }
             
-          if currentPage < maxPages
-            - for (var i = currentPage + 1; i <= maxPages; i++) {
-              li
-                a(href="/?page=" + i, aria-label="Page " + i) #{i}
-            - }
-          li(class=['pagination-next', {'disabled': currentPage === maxPages}])
-            if currentPage === maxPages
-              |Next
-            else
-              a(href="/?page=" + (parseInt(currentPage) + 1), aria-label="Next page") Next
+        li
+          a(class={'current': currentPage}, href="/?page=" + currentPage, aria-label="Page " + currentPage) #{currentPage}
+
+        if currentPage < maxPages - 6  
+          - for (var i = currentPage + 1; i < currentPage + 5; i++) {
+            li
+              a(href="/?page=" + i, aria-label="Page " + i) #{i}
+          - }
+          li(class="ellipsis" aria-hidden="true")
+          li
+            a(href="/?page=" + (maxPages - 1), aria-label="Page " + (maxPages - 1)) #{maxPages - 1}
+          li
+            a(href="/?page=" + maxPages, aria-label="Page " + maxPages) #{maxPages}
+        else
+          - for (var i = currentPage + 1; i < maxPages + 1; i++) {
+            li
+              a(href="/?page=" + i, aria-label="Page " + i) #{i}
+          - }
+          
+        li(class=['pagination-next', {'disabled': currentPage === maxPages}])
+          if currentPage === maxPages
+            |Next
+          else
+            a(href="/?page=" + (parseInt(currentPage) + 1), aria-label="Next page") Next
