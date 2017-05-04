@@ -9,17 +9,18 @@ $('.tag-name').hover(function(e) {
 
 $('.remove-tag').on('click', function(e) {
   e.preventDefault();
-  console.log('remove-tag click...');
-  // $.ajax({
-  //   url: '/api/dvds/' + $(this).data().dvdid,
-  //   method: 'delete',
-  //   success: function(res) {
-  //     window.location = window.location.origin;
-  //   },
-  //   error: function(err) {
-  //     console.log('DVD Delete err:', err);
-  //   }
-  // })
+  var url = '/api/tags/' + $(this).data().dvdid + '/' + $(this).data().tagid;
+
+  $.ajax({
+    url: url,
+    method: 'delete',
+    success: function(res) {
+      window.location.reload();
+    },
+    error: function(err) {
+      console.log('DVD Delete err:', err);
+    }
+  })
 });
 
 // Display the image to be uploaded.

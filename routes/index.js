@@ -37,5 +37,6 @@ router.put('/api/dvds/:id', upload.single('image'), DvdsController.api.updateDvd
 router.put('/api/dvds/:dvdId/episode/:episodeId', DvdsController.api.updateEpisode);
 
 router.delete('/api/dvds/:id', DvdsController.api.deleteDvd);
+router.delete('/api/tags/:dvdId/:tagId', DvdsController.api.deleteTag);
 
 module.exports = router;

@@ -224,5 +224,23 @@ module.exports = {
       })
       .catch(() => next);
     },
+
+    deleteTag(req, res, next) {
+      Dvd.findById(req.params.dvdId)
+        .then((dvd) => {
+          dvd.tags.id(req.params.tagId).remove()
+          dvd.save()
+            .then(() => {
+              res.status(200).json({message: 'Tag removed from ' + dvd.title});
+            })
+            .catch((err) => {
+              res.status(500).json(err);
+            });
+        })
+        .catch((err) => {
+          console.log('Dvd.findById err:', err);
+          res.status(404).json(err);
+        });
+    }
   },
 }
