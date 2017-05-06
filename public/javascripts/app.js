@@ -23,6 +23,28 @@ $('.remove-tag').on('click', function(e) {
   })
 });
 
+$('.remove-bookmark').on('click', function(e) {
+  e.preventDefault();
+  var $this = $(this);
+  var url;
+  if ($this.data().mediatype == 'dvd') {
+    url = '/api/bookmarks/' + $this.data().mediaid + '/' + $this.data().bookmarkid;
+  } else {
+    url = '/api/episode/bookmarks/' + $this.data().dvdid + '/' + $this.data().mediaid + '/' + $this.data().bookmarkid;
+  }
+
+  $.ajax({
+    url: url,
+    method: 'delete',
+    success: function(res) {
+      window.location.reload();
+    },
+    error: function(err) {
+      console.log('DVD Delete err:', err);
+    }
+  })
+});
+
 // Display the image to be uploaded.
 $('#dvd_image').on('change', function(e) {
   window.image = e.target.files[0];

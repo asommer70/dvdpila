@@ -32,7 +32,7 @@ block content
           a(href="/dvds/" + dvd._id + "/edit" class="button small") Edit DVD
       br/
       
-      if dvd.fileUrl === ''
+      if dvd.fileUrl === '' || dvd.fileUrl == undefined || dvd.fileUrl !== null
         .row
           .columns.large-12
             button(class="button primary", data-toggle="episodeForm") Add Episode
@@ -68,11 +68,11 @@ block content
             div(id="tags")
               each tag in dvd.tags
                 a(href="/tags/" + tag.name) 
-                  span(class="badge") #{tag.name}
-  
+                  span(class="badge tag-name") #{tag.name}
+                    span(aria-hidden="true", class="remove-tag hide", data-dvdId=dvd._id, data-tagId=tag._id) &nbsp; &times;  
 
     .columns.large-6
-      if dvd.fileUrl !== ''
+      if dvd.fileUrl !== '' && dvd.fileUrl !== undefined && dvd.fileUrl !== null
         - media = dvd
         - mediaType = 'dvd'
         include includes/player.pug

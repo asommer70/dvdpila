@@ -24,8 +24,22 @@
       ul.no-bullet.bookmarks
         each bookmark in media.bookmarks
           li
-            a(href="#", class="bookmark", data-time=bookmark.time, data-mediaId=media._id) #{bookmark.name}
-
+            a(href="#", class="bookmark", data-time=bookmark.time, data-mediaId=media._id) 
+              span #{bookmark.name} &nbsp;&nbsp;  
+              if mediaType == 'dvd'
+                span(aria-hidden="true", 
+                    class="remove-bookmark", 
+                    data-mediaId=dvd._id, 
+                    data-dvdId=dvd._id, 
+                    data-mediaType='dvd',
+                    data-bookmarkId=bookmark._id) &nbsp; &times;
+              else
+                span(aria-hidden="true", 
+                    class="remove-bookmark", 
+                    data-mediaId=media._id, 
+                    data-dvdId=dvd._id, 
+                    data-mediaType='episode',
+                    data-bookmarkId=bookmark._id) &nbsp; &times;
 .row
   .columns.large-4
     if mediaType == 'dvd'
