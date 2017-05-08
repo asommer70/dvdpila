@@ -3,6 +3,7 @@ var router = express.Router();
 var multer  = require('multer')
 var DvdsController = require('../controllers/dvds_controller');
 var TagsController = require('../controllers/tags_controller');
+var FeedController = require('../controllers/feed_controller');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -21,6 +22,7 @@ router.get('/dvds/add', DvdsController.addDvd); // This route had to come before
 router.get('/dvds/:id', DvdsController.show);
 router.get('/dvds/:id/edit', DvdsController.editDvd);
 router.get('/tags/:name', TagsController.dvds);
+router.get('/upcoming', FeedController.index);
 router.get('/api/dvds', DvdsController.api.index);
 router.get('/api/dvds/:id', DvdsController.api.show);
 router.get('/api/dvds/:dvdId/episode/:episodeId', DvdsController.api.episode);

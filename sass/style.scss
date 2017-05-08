@@ -3,6 +3,7 @@
 
 @include foundation-badge;
 @include foundation-button;
+@include foundation-card;
 @include foundation-dropdown;
 @include foundation-flex-grid;
 @include foundation-flex-classes;
@@ -29,6 +30,12 @@ body {
     margin-left: 63px;
     width: 32px;
   }
+}
+
+.menu li a {
+  color: white;
+  padding-top: 17px;
+  // vertical-align: middle;
 }
 
 .addDvd {

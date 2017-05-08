@@ -184,6 +184,28 @@
     float: none;
     margin-left: 0; }
 
+.card {
+  margin-bottom: 1rem;
+  border: 1px solid #e6e6e6;
+  border-radius: 0;
+  background: #fefefe;
+  box-shadow: none;
+  overflow: hidden;
+  color: #0a0a0a; }
+  .card > :last-child {
+    margin-bottom: 0; }
+
+.card-divider {
+  padding: 1rem;
+  background: #e6e6e6; }
+  .card-divider > :last-child {
+    margin-bottom: 0; }
+
+.card-section {
+  padding: 1rem; }
+  .card-section > :last-child {
+    margin-bottom: 0; }
+
 .dropdown-pane {
   position: absolute;
   z-index: 10;
@@ -1734,6 +1756,10 @@ body {
 .logo img {
   margin-left: 63px;
   width: 32px; }
+
+.menu li a {
+  color: white;
+  padding-top: 17px; }
 
 .addDvd {
   margin-right: 10px; }
