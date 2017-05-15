@@ -13,24 +13,46 @@ const request = https.get(youtube, function(response) {
   response.on('end', () => {
 
     const document = parse5.parse(body);
-    const youtubeIds = [];
+    const youtubeIds = {};
     const ol = findNodeByName('ol', document);
 
     ol.forEach((node) => {
       const links = findNodeByName('a', node);
 
       links.forEach((link) => {
+        // console.log('link.childNodes:', link.childNodes);
+        let youtubeId;
+
         link.attrs.forEach((attr) => {
           if (attr.name == 'href') {
             if (attr.value.substr(0, 6) === '/watch') {
-              const youtubeId = attr.value.split('v=')[1];
+              youtubeId = attr.value.split('v=')[1];
 
-              if (youtubeIds.indexOf(youtubeId) === -1) {
-                youtubeIds.push(youtubeId);
+              if (!youtubeIds.hasOwnProperty(youtubeId)) {
+                // TODO:as get the title attribute for the link and create an object then push the object to the array.
+                //
+                // TODO:as maybe also get a link to the trailer image and add it to the object.
+                // https://i.ytimg.com/vi/GjwfqXTebIY/hqdefault.jpg
+                // https://i.ytimg.com/vi/3cxixDgHUYw/hqdefault.jpg
+                youtubeIds[youtubeId] = {
+                  id: youtubeId,
+                  img: 'https://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg',
+                  url: 'https://www.youtube.com/embed/' + youtubeId
+                };
               }
             }
           }
         });
+
+        if (link.childNodes[0].nodeName == '#text') {
+          if (youtubeIds.hasOwnProperty(youtubeId)) {
+            if (!youtubeIds[youtubeId].title) {
+              youtubeIds[youtubeId].title = link.childNodes[0].value;
+            }
+          }
+
+          // console.log('title:', link.childNodes[0].value);
+        }
       });
     });
 
