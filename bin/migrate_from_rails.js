@@ -86,7 +86,7 @@ while (page < endPage) {
               const filename = dvd.title.replace(/\'/g, '').replace(/\s/g, '_').replace(/\)|\(|\/|'/g, '').toLowerCase() + '.jpg';
               setTimeout(() => {
                 savePoster(filename, dvd.image_url);
-              }, 4000);
+              }, 5000);
 
               newDvd.imageUrl = '/images/posters/' + filename;
               newDvd.save()
@@ -94,7 +94,7 @@ while (page < endPage) {
                   console.log('dvd.title:', newDvd.title);
                 })
                 .catch((err) => console.log('newDvd.save err:', err));
-            }, 2000);
+            }, 5000);
 
           }); // end dvds.forEach
         } // end if dvds.length
