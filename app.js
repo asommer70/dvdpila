@@ -14,10 +14,10 @@ var app = express();
 mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV === 'test') {
   mongoose.connect('mongodb://localhost/dvdpila_test');
-} else if (process.env.NODE_ENV === 'production') {
-  mongoose.connect('mongodb://localhost/dvdpila');
-} else {
+} else if (process.env.NODE_ENV === 'dev') {
   mongoose.connect('mongodb://localhost/dvdpila_dev');
+} else {
+  mongoose.connect('mongodb://localhost/dvdpila');
 }
 
 // view engine setup
