@@ -5,6 +5,11 @@ const Dvd = require('../models/dvd');
 const Episode = require('../models/episode_schema');
 const Tag = require('../models/tag_schema');
 
+var pluginsDir = './public/images/posters';
+if (!fs.existsSync(pluginsDir)){
+    fs.mkdirSync(pluginsDir);
+}
+
 // Connect to MongoDB.
 mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV === 'test') {

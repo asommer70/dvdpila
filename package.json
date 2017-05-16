@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=dev ./node_modules/.bin/nodemon ./bin/www",
+    "start": "NODE_ENV=production ./node_modules/.bin/nodemon ./bin/www",
+    "dev": "NODE_ENV=dev ./node_modules/.bin/nodemon ./bin/www",
     "sass": "./node_modules/.bin/node-sass -r -w sass/style.scss public/stylesheets/style.css",
     "test": "NODE_ENV=test mocha -c --recursive",
     "copyfiles": "./bin/copy_files.sh",
