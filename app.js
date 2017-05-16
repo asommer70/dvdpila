@@ -12,7 +12,11 @@ var app = express();
 
 // Connect to MongoDB.
 mongoose.Promise = global.Promise;
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV === 'test') {
+  mongoose.connect('mongodb://localhost/dvdpila_test');
+} else if (process.env.NODE_ENV === 'production') {
+  mongoose.connect('mongodb://localhost/dvdpila');
+} else {
   mongoose.connect('mongodb://localhost/dvdpila_dev');
 }
 

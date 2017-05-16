@@ -7,7 +7,8 @@
     "sass": "./node_modules/.bin/node-sass -r -w sass/style.scss public/stylesheets/style.css",
     "test": "NODE_ENV=test mocha -c --recursive",
     "copyfiles": "./bin/copy_files.sh",
-    "install_plugins": "node ./bin/install_plugins.js"
+    "install_plugins": "node ./bin/install_plugins.js",
+    "migrate": "NODE_ENV=production node ./bin/migrate_from_rails.js"
   },
   "dependencies": {
     "body-parser": "~1.15.1",

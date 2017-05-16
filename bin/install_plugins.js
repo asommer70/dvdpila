@@ -1,6 +1,11 @@
 var https = require('https');
 var fs = require('fs');
 
+var pluginsDir = './public/javascripts/plugins';
+if (!fs.existsSync(pluginsDir)){
+    fs.mkdirSync(pluginsDir);
+}
+
 var contextMenu = fs.createWriteStream("public/javascripts/plugins/context-menu.min.js");
 var request = https.get("https://raw.githubusercontent.com/mediaelement/mediaelement-plugins/master/dist/context-menu/context-menu.min.js", function(response) {
   response.pipe(contextMenu);
