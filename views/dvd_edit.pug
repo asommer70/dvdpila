@@ -6,4 +6,8 @@ block content
   else
     h3= 'New DVD'
   br
-  include includes/dvd_form.pug
+  .row
+    .large-8.columns
+      include includes/dvd_form.pug
+    .large-2.columns
+      ul(id="wikipedia_data")

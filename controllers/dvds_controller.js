@@ -132,9 +132,10 @@ module.exports = {
   },
 
   omdb(req, res, next) {
-    url = "http://www.omdbapi.com/?t=" + req.body.title.replace(/\s/, '+') + "&y=&plot=short&r=json";
+    // url = "http://www.omdbapi.com/?t=" + req.body.title.replace(/\s/, '+') + "&y=&plot=short&r=json";
+    const url = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=' + req.body.title;
 
-    var request = http.get(url, function(response) {
+    var request = https.get(url, function(response) {
       var body = '';
 
       response.on('data', (chunk) => {
@@ -143,16 +144,18 @@ module.exports = {
 
       response.on('end', () => {
           var data = JSON.parse(body);
-
-          if (data.Poster) {
-            const filename = data.Title.replace(/\'/g, '').replace(/\s/g, '_') + '.jpg';
-            const poster = fs.createWriteStream("public/images/posters/" + filename);
-            var request = https.get(data.Poster, function(imgRes) {
-              imgRes.pipe(poster);
-              data.imageUrl = '/images/posters/' + filename;
-              res.json(data);
-            });
-          }
+          console.log('data:', data);
+          res.json(data);
+          //
+          // if (data.Poster) {
+          //   const filename = data.Title.replace(/\'/g, '').replace(/\s/g, '_') + '.jpg';
+          //   const poster = fs.createWriteStream("public/images/posters/" + filename);
+          //   var request = https.get(data.Poster, function(imgRes) {
+          //     imgRes.pipe(poster);
+          //     data.imageUrl = '/images/posters/' + filename;
+          //     res.json(data);
+          //   });
+          // }
       });
     });
   },

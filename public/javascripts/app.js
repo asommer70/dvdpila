@@ -122,18 +122,22 @@ $('#title').on('blur', function(e) {
       method: 'post',
       data: 'title=' + $('#title').val(),
       success: function(data) {
-        $('#abstractSource').val('OMDb API');
-        $('#abstracTxt').val(data.Plot).height($('#abstracTxt').prop('scrollHeight'));
-        $('#abstractUrl').val("http://www.omdbapi.com/?t=" + $('#title').val().replace(/\s/, '+') + "&y=&plot=short&r=json");
-
-        $('.image_to_upload').attr('src', data.Poster);
-        $preview = $('.preview');
-        if ($preview.hasClass('hide')) {
-          $preview.toggleClass('hide');
-        }
-        if (data.imageUrl) {
-          $('#imageUrl').val(data.imageUrl);
-        }
+        console.log('data:', data);
+        data[1].forEach(function(entry, idx) {
+          $('#wikipedia_data').append('<li>[' + idx + '] &nbsp;&nbsp;' + entry + '</li>');
+        });
+        // $('#abstractSource').val('OMDb API');
+        // $('#abstracTxt').val(data.Plot).height($('#abstracTxt').prop('scrollHeight'));
+        // $('#abstractUrl').val("http://www.omdbapi.com/?t=" + $('#title').val().replace(/\s/, '+') + "&y=&plot=short&r=json");
+        //
+        // $('.image_to_upload').attr('src', data.Poster);
+        // $preview = $('.preview');
+        // if ($preview.hasClass('hide')) {
+        //   $preview.toggleClass('hide');
+        // }
+        // if (data.imageUrl) {
+        //   $('#imageUrl').val(data.imageUrl);
+        // }
       }
     });
 });
