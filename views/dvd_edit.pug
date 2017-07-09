@@ -1,13 +1,12 @@
 extends layout.pug
   
 block content
-  if dvd.title !== undefined
-    h3= 'Edit DVD'
-  else
-    h3= 'New DVD'
   br
   .row
-    .large-8.columns
+    .large-4.columns
       include includes/dvd_form.pug
-    .large-2.columns
+    .large-6.columns
+      h3(class="wikititle hide")= 'Wikipedia Results'
+      br
+      .flash.hide
       ul(id="wikipedia_data")

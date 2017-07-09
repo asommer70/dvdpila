@@ -114,30 +114,66 @@ $('.editform').submit(function(e) {
   })
 });
 
-// Get DVD info from OBDBAPI.
+// Get DVD info from Wikipedia.
 $('#title').on('blur', function(e) {
   if (window.location.pathname.split('/')[window.location.pathname.split('/').length - 1] != 'edit')
     $.ajax({
-      url: '/omdb',
+      url: '/wikiSearch',
       method: 'post',
       data: 'title=' + $('#title').val(),
       success: function(data) {
         console.log('data:', data);
+        var $wikipedia_data = $('#wikipedia_data');
+
+        $wikititle = $('.wikititle');
+        if ($wikititle.hasClass('hide')) {
+          $wikititle.toggleClass('hide');
+        }
+
         data[1].forEach(function(entry, idx) {
-          $('#wikipedia_data').append('<li>[' + idx + '] &nbsp;&nbsp;' + entry + '</li>');
+          var li = '<li>';
+          li += '<a href="' + data[3][idx] + '" class="wikilink" data-idx="' + idx + '">';
+          li += entry;
+          li += '</a>'
+          li += '</li>';
+          $wikipedia_data.append(li);
         });
-        // $('#abstractSource').val('OMDb API');
-        // $('#abstracTxt').val(data.Plot).height($('#abstracTxt').prop('scrollHeight'));
-        // $('#abstractUrl').val("http://www.omdbapi.com/?t=" + $('#title').val().replace(/\s/, '+') + "&y=&plot=short&r=json");
-        //
-        // $('.image_to_upload').attr('src', data.Poster);
-        // $preview = $('.preview');
-        // if ($preview.hasClass('hide')) {
-        //   $preview.toggleClass('hide');
-        // }
-        // if (data.imageUrl) {
-        //   $('#imageUrl').val(data.imageUrl);
-        // }
+
+        $('.wikilink').on('click', function(e) {
+          e.preventDefault();
+          var $this = $(this);
+
+          $.ajax({
+            url: '/wikiData',
+            method: 'post',
+            data: 'pageUrl=' + data[3][$this.data().idx],
+            success: function(data) {
+              $('#abstractSource').val('Wikipedia');
+              $('#abstracTxt').val(data.plot).height($('#abstracTxt').prop('scrollHeight'));
+              $('#abstractUrl').val(data.pageUrl);
+
+              $('.image_to_upload').attr('src', data.imageUrl);
+              $preview = $('.preview');
+              if ($preview.hasClass('hide')) {
+                $preview.toggleClass('hide');
+              }
+              if (data.imageUrl) {
+                $('#imageUrl').val(data.imageUrl);
+              }
+              $flash = $('.flash');
+              if (!$flash.hasClass('hide')) {
+                $flash.toggleClass('hide');
+              }
+            },
+            error: function(err) {
+              $flash = $('.flash');
+              if ($flash.hasClass('hide')) {
+                $flash.toggleClass('hide');
+              }
+              $flash.html(err.responseText);
+            }
+          });
+        });
       }
     });
 });

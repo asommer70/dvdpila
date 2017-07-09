@@ -32,8 +32,8 @@ router.post('/dvds/bookmarks', DvdsController.createBookmark);
 router.post('/dvds/episodes', DvdsController.createEpisode);
 router.post('/tags', DvdsController.createTag);
 router.post('/search', DvdsController.search);
-router.post('/omdb', DvdsController.omdb);
-
+router.post('/wikiSearch', DvdsController.wikiSearch);
+router.post('/wikiData', DvdsController.wikiData);
 
 router.put('/api/dvds/:id', upload.single('image'), DvdsController.api.updateDvd);
 router.put('/api/dvds/:dvdId/episode/:episodeId', DvdsController.api.updateEpisode);

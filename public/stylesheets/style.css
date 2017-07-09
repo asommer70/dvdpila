@@ -1808,3 +1808,9 @@ body {
 
 .remove-tag {
   padding-right: 3px; }
+
+.flash {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #cc4b37;
+  color: #cc4b37; }

@@ -102,3 +102,10 @@ body {
 .remove-tag {
   padding-right: 3px;
 }
+
+.flash {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid map-get($foundation-palette, alert);
+  color: map-get($foundation-palette, alert);
+}

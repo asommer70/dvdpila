@@ -5,7 +5,7 @@ const moment = require('moment');
 const Dvd = require('../models/dvd');
 const Episode = require('../models/episode_schema');
 const Tag = require('../models/tag_schema');
-
+const wiki = require('../helpers/wiki');
 
 module.exports = {
   index(req, res, next) {
@@ -131,32 +131,29 @@ module.exports = {
       });
   },
 
-  omdb(req, res, next) {
-    // url = "http://www.omdbapi.com/?t=" + req.body.title.replace(/\s/, '+') + "&y=&plot=short&r=json";
-    const url = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=' + req.body.title;
+  wikiSearch(req, res, next) {
+    wiki.search(req.body.title, (data) => {
+      res.json(data);
+    });
+  },
 
-    var request = https.get(url, function(response) {
-      var body = '';
-
-      response.on('data', (chunk) => {
-          body += chunk;
-      });
-
-      response.on('end', () => {
-          var data = JSON.parse(body);
-          console.log('data:', data);
-          res.json(data);
-          //
-          // if (data.Poster) {
-          //   const filename = data.Title.replace(/\'/g, '').replace(/\s/g, '_') + '.jpg';
-          //   const poster = fs.createWriteStream("public/images/posters/" + filename);
-          //   var request = https.get(data.Poster, function(imgRes) {
-          //     imgRes.pipe(poster);
-          //     data.imageUrl = '/images/posters/' + filename;
-          //     res.json(data);
-          //   });
-          // }
-      });
+  wikiData(req, res, next) {
+    wiki.getImageName(req.body.pageUrl, (err, data) => {
+      if (err) {
+        res.status(500).send(err.message);
+      } else {
+        wiki.getImageUrl(data.imageName, (err, imageUrl) => {
+          if (err) {
+            res.status(500).send(err.message);
+          } else {
+            wiki.downloadImage(imageUrl, data.imageName, (localUrl) => {
+              wiki.getPlot(data.title, (plot) => {
+                res.json({imageName: data.imageName, imageUrl: localUrl, plot: plot, pageUrl: req.body.pageUrl});
+              });
+            });
+          }
+        });
+      }
     });
   },
 
