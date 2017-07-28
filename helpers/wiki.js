@@ -47,22 +47,29 @@ module.exports = {
   },
 
   getImageUrl: function(imageName, callback) {
-    var request = https.get(imageUrl + imageName, function(response) {
+    https.get(imageUrl + imageName, function(response) {
       var body = '';
+      if (response.statusCode == 400) {
+        callback(new Error('Problem getting ImageUrl: ' + imageUrl + imageName), null);
+      }
 
       response.on('data', (chunk) => {
         body += chunk;
       });
 
       response.on('end', () => {
-        var data = JSON.parse(body);
-        const pageId = Object.keys(data.query.pages)[0];
-        if (pageId == -1) {
-          callback(new Error('Could not find pageId...'), null);
-        } else {
-          callback(null, data.query.pages[pageId].imageinfo[0].url);
+        if (body) {
+          var data = JSON.parse(body);
+          const pageId = Object.keys(data.query.pages)[0];
+          if (pageId == -1) {
+            callback(new Error('Could not find pageId...'), null);
+          } else {
+            callback(null, data.query.pages[pageId].imageinfo[0].url);
+          }
         }
       });
+    }).on('error', (err) => {
+      console.log('getImageUrl request err:', err);
     });
   },
 
@@ -94,7 +101,7 @@ module.exports = {
             plot = part.replace('==Plot==', '');
           }
         });
-        console.log('plot:', plot);
+
         callback(plot);
       });
     });
