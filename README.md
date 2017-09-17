@@ -1,7 +1,7 @@
 DVD Pila!
 =======
 
-A web app that helps you keep track of your archived DVDs.  Now converted to a Node Express web app.
+A web app that helps you keep track of your archived DVDs.  Now converted to a [Go](https://golang.org/) web app.
 
 ## Features
  * Organize your DVD backup files.
@@ -10,4 +10,4 @@ A web app that helps you keep track of your archived DVDs.  Now converted to a N
 
 ## Installation
 
-See the [wiki page](https://github.com/asommer70/dvdpila/wiki/Installation).
+See the [wiki page](https://github.com/asommer70/dvdpila/wiki/Installation) (needs updated).
