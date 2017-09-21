@@ -4,12 +4,16 @@ import (
 	"testing"
 	"dvdpila/db"
 	"flag"
+	//"github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 )
 
+var ldb *gorm.DB
+
 func init() {
-	db.Connect()
+	ldb = db.Connect()
 	if flag.Lookup("test.v") != nil {
-		CreateTables()
+		CreateTables(ldb)
 	}
 }
 
@@ -26,14 +30,14 @@ func TestCreateDvd(t *testing.T) {
 		PlaybackTime: 0,
 	}
 
-	db.Db.Create(&dvd)
+	ldb.Create(&dvd)
 
 	var dt Dvd
-	db.Db.First(&dt)
+	ldb.First(&dt)
 
 	if (dt.Title != "Ghost In The Shell") {
 		t.Errorf("Expected dt.Title to be 'Ghost In The Shell' but it is %v", dt.Title)
 	}
 
-	db.Db.Delete(&dt)
+	ldb.Delete(&dt)
 }

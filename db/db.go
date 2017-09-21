@@ -7,20 +7,18 @@ import (
 	"flag"
 )
 
-// DB ... export the database connection for use by models and such.
-var Db *gorm.DB
-
-func Connect() {
+func Connect() *gorm.DB {
 	var err error
+	var db *gorm.DB
 
 	if flag.Lookup("test.v") != nil {
-		Db, err = gorm.Open("postgres", "host=localhost user=pila dbname=dvdpila_test sslmode=disable password=dvds")
+		db, err = gorm.Open("postgres", "host=localhost user=pila dbname=dvdpila_test sslmode=disable password=dvds")
 	} else {
-		Db, err = gorm.Open("postgres", "host=localhost user=pila dbname=dvdpila_dev sslmode=disable password=dvds")
+		db, err = gorm.Open("postgres", "host=localhost user=pila dbname=dvdpila_dev sslmode=disable password=dvds")
 	}
 	Check(err, "gorm.Open")
 
-	//log.Println("Db.DB().Ping():", Db.DB().Ping())
+	return db
 }
 
 
