@@ -9,8 +9,12 @@ func CreateTables(db *gorm.DB) {
 	//defer res.Close()
 
 	dt := db.HasTable(&Dvd{})
-
 	if !dt {
 		db.AutoMigrate(&Dvd{})
+	}
+
+	et := db.HasTable(&Episode{})
+	if !et {
+		db.AutoMigrate(&Episode{})
 	}
 }

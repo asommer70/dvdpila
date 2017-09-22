@@ -8,5 +8,6 @@ type Episode struct {
 	EpisodeFileURL string
 	PlaybackTime int
 	Dvd Dvd
+	DvdID  uint
 	Bookmarks []Bookmark
 }
