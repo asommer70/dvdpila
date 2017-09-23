@@ -105,3 +105,33 @@ func TestEpisodeBelongsToDvd(t *testing.T) {
 		t.Errorf("Expected ep.Dvd.Title to be 'Ghost In The Shell' but it is %v", ep.Dvd.Title)
 	}
 }
+
+func TestEpisodeHasManyBookmarks(t *testing.T) {
+	episode := Episode{
+		Name: "Disc 3",
+		EpisodeFileURL: "http://videos/Ghost_In_The_Shell_2017.mkv",
+		PlaybackTime: 0,
+		Dvd: dvd,
+		DvdID: dvd.ID,
+	}
+	ldb.Create(&episode)
+
+	bookmark := Bookmark{
+		Name: "Funny Thing",
+		Time: 30,
+		Episode: episode,
+		EpisodeID: episode.ID,
+	}
+	ldb.Create(&bookmark)
+
+	var ep Episode
+	ldb.First(&ep, episode.ID)
+	ldb.Model(&ep).Related(&ep.Bookmarks)
+
+	if (len(ep.Bookmarks) != 1) {
+		t.Errorf("Expected len(ep.Bookmarks) to be 1 but it is %v", len(ep.Bookmarks))
+	}
+
+	ldb.Delete(&bookmark)
+	ldb.Delete(&ep)
+}

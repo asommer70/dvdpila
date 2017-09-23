@@ -7,5 +7,7 @@ type Bookmark struct {
 	Name string
 	Time int
 	Dvd Dvd
+	DvdID uint
 	Episode Episode
+	EpisodeID uint
 }

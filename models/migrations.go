@@ -17,4 +17,9 @@ func CreateTables(db *gorm.DB) {
 	if !et {
 		db.AutoMigrate(&Episode{})
 	}
+
+	bt := db.HasTable(&Bookmark{})
+	if !bt {
+		db.AutoMigrate(&Bookmark{})
+	}
 }

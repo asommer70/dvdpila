@@ -108,3 +108,36 @@ func TestDvdHasManyEpisodes(t *testing.T) {
 	ldb.Delete(&episode)
 	ldb.Delete(&dt)
 }
+
+func TestDvdHasManyBookmarks(t *testing.T) {
+	dvd := Dvd{
+		Title:        "Ghost In The Shell",
+		Rating:       5,
+		AbstractTxt:  `In the near future, the vast majority of humans are [[Human enhancement|augmented]] with cybernetics, enhancing various traits like vision, strength, and intelligence. Hanka Robotics, the world's leading developer of augmentative technology, establishes a secret project to develop a mechanical body, or "shell", that can [[Brain–computer interface|integrate]] a human brain rather than an [[artificial intelligence|AI]]. `,
+		AbstractSrc:  "Wikipedia",
+		AbstractURL:  "https://en.wikipedia.org/wiki/Ghost_in_the_Shell_(2017_film)",
+		ImageURL:     "http://dvdpila/images/posters/Ghost_in_the_Shell_2017_film.png",
+		FileURL:      "http://videos/Ghost_In_The_Shell_2017.mkv",
+		PlaybackTime: 0,
+	}
+	ldb.Create(&dvd)
+
+	bookmark := Bookmark{
+		Name: "Funny Thing",
+		Time: 25,
+		Dvd: dvd,
+		DvdID: dvd.ID,
+	}
+	ldb.Create(&bookmark)
+
+	var dt Dvd
+	ldb.First(&dt, dvd.ID)
+	ldb.Model(&dt).Related(&dt.Bookmarks)
+
+	if (len(dt.Bookmarks) != 1) {
+		t.Errorf("Expected len(dt.Bookmarks) to be 1 but it is %v", len(dt.Bookmarks))
+	}
+
+	ldb.Delete(&bookmark)
+	ldb.Delete(&dt)
+}
