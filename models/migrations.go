@@ -22,4 +22,9 @@ func CreateTables(db *gorm.DB) {
 	if !bt {
 		db.AutoMigrate(&Bookmark{})
 	}
+	
+	tt := db.HasTable(&Tag{})
+	if !tt {
+	  db.AutoMigrate(&Tag{})
+	}
 }
