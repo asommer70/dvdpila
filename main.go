@@ -22,7 +22,7 @@ func main() {
 
 	router := httprouter.New()
 	router.GET("/", dc.Find)
-	//router.Handle("GET", "/", dvdController.Find)
+	router.ServeFiles("/assets/*filepath", http.Dir("./assets/"))
 
 	log.Println("Listening on port 3000...")
 	http.ListenAndServe("localhost:3000", router)
