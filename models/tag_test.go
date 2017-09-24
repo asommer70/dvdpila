@@ -4,6 +4,7 @@ import (
 "testing"
 "dvdpila/db"
 "flag"
+	"log"
 )
 
 func init() {
@@ -71,13 +72,13 @@ func TestTagHasManyDvds(t *testing.T) {
 	ldb.Create(&tag)
 	
 	var tg Tag
-	ldb.First(&tg, tag.ID)
-	ldb.Model(&tg).Related(&tg.Dvds)
-	
+	ldb.Debug().First(&tg, tag.ID).Related(&tg.Dvds, "Dvds")
+	log.Println("tg.Dvds:", tg.Dvds)
+
 	if (len(tg.Dvds) != 2) {
 	  t.Errorf("Expected len(tg.Dvds) to be 2, but it is %v", len(tg.Dvds))
 	}
 	
-// 	ldb.Delete(&tg)
-// 	ldb.Delete(&snatched)
+ 	ldb.Delete(&tg)
+ 	ldb.Delete(&snatched)
 }
