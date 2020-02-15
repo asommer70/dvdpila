@@ -263,6 +263,25 @@ module.exports = {
           console.log('Dvd.findById err:', err);
           res.status(404).json(err);
         });
+    },
+
+    deleteEpisode(req, res, next) {
+      Dvd.findById(req.params.dvdId)
+        .then((dvd) => {
+          dvd.episodes.id(req.params.episodeId).remove();
+
+          dvd.save()
+            .then(() => {
+              res.status(200).json({message: 'Episode removed from ' + dvd.title});
+            })
+            .catch((err) => {
+              res.status(500).json(err);
+            });
+        })
+        .catch((err) => {
+          console.log('Dvd.findById err:', err);
+          res.status(404).json(err);
+        });
     }
   },
 }

@@ -42,5 +42,6 @@ router.delete('/api/dvds/:id', DvdsController.api.deleteDvd);
 router.delete('/api/tags/:dvdId/:tagId', DvdsController.api.deleteTag);
 router.delete('/api/bookmarks/:dvdId/:bookmarkId', DvdsController.api.deleteBookmark);
 router.delete('/api/episode/bookmarks/:dvdId/:episodeId/:bookmarkId', DvdsController.api.deleteBookmark);
+router.delete('/api/episode/:dvdId/:episodeId', DvdsController.api.deleteEpisode);
 
 module.exports = router;

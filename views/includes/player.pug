@@ -40,6 +40,8 @@
                     data-dvdId=dvd._id, 
                     data-mediaType='episode',
                     data-bookmarkId=bookmark._id) &nbsp; &times;
+  .columns.large-1.float-right
+    button(class="button tiny delete-episode", data-dvdid=dvd._id, data-episodeid=media._id) Delete Episode
 .row
   .columns.large-4
     if mediaType == 'dvd'

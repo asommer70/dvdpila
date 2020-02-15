@@ -86,6 +86,23 @@ $('a.delete').on('click', function(e) {
   });
 });
 
+$('button.delete-episode').on('click', function(e) {
+  e.preventDefault();
+
+  if (confirm("Really DELETE episode?")) {
+    $.ajax({
+      url: '/api/episode/' + $(this).data().dvdid + '/' + $(this).data().episodeid,
+      method: 'delete',
+      success: function(res) {
+        location.reload();
+      },
+      error: function(err) {
+        console.log('Episode Delete err:', err);
+      }
+    });
+  }
+});
+
 $('.editform').submit(function(e) {
   e.preventDefault();
   $this = $(this);
