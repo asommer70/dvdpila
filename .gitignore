@@ -3,8 +3,8 @@
 !/log/.keep
 /tmp
 .idea
-.swp
-.swo
+*.swp
+*.swo
 .DS_Store
 npm-debug.log
 learning
@@ -13,17 +13,10 @@ learning
 node_modules/
 package-lock.json
 
-public/images/posters
+# public/images/posters
 
-public/javascripts/jquery.min.js
-public/javascripts/foundation.min.js
-public/javascripts/moment.min.js
-public/javascripts/mediaelement-and-player.min.js
-public/javascripts/plugins/
-public/stylesheets/mediaelementplayer.min.css
-public/stylesheets/mejs-controls.svg
-public/stylesheets/context-menu.min.css
-public/stylesheets/speed.min.css
-
-
-assets/css/
+# Pyton excludes.
+venv/
+*.pyc
+.env
+__pycache__/

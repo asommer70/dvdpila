@@ -1,0 +1,12 @@
+{% extends 'body.html' %}
+
+{% block main %}
+   <div class="main">
+      {% if dvd %}
+        <h3>Title: {{ dvd.title }}!</h3>
+        <p>Templates working...</p>
+      {% else %}
+        <h1>Hello, World!</h1>
+      {% endif %}
+    </div>
+{% endblock %}

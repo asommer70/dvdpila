@@ -1,7 +1,7 @@
 DVD Pila!
 =======
 
-A web app that helps you keep track of your archived DVDs.  Now converted to a [Go](https://golang.org/) web app.
+A web app that helps you keep track of your archived DVDs.  Now converted to a [Flask](https://flask.palletsprojects.com/en/2.0.x/) web app.
 
 ## Features
  * Organize your DVD backup files.
