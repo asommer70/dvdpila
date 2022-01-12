@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask import url_for
 from flask import render_template
+from flask_debugtoolbar import DebugToolbarExtension
 import os
 from models import db, Dvd, Episode, Bookmark, Tag
 
@@ -9,24 +10,22 @@ from models import db, Dvd, Episode, Bookmark, Tag
 load_dotenv()
 
 
-# app = Flask(__name__, static_url_path='/assets', static_folder='assets')
 app = Flask(__name__)
-# engine = create_engine(
-#    "postgresql+psycopg2://scott:tiger@localhost/test",
-#    isolation_level="SERIALIZABLE",
-# )
+app.config['SECRET_KEY'] = 'yahchu2aXil2'
+toolbar = DebugToolbarExtension(app)
 db_user = os.getenv('DB_USER')
 db_pass = os.getenv('DB_PASS')
 db_con = f"postgresql+psycopg2://{db_user}:{db_pass}@localhost/dvdpila"
 app.config['SQLALCHEMY_DATABASE_URI'] = db_con
-# db = SQLAlchemy(app)
 db.init_app(app)
 
 
+# import pdb; pdb.set_trace()
 
 
 @app.route("/")
 def hello_world():
     url_for('static', filename='style.css')
     dvd = Dvd.query.first()
+    # import pdb; pdb.set_trace()
     return render_template('index.html', dvd=dvd)
