@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
 from flask import Flask
+from flask_debugtoolbar import DebugToolbarExtension
+from flask_migrate import Migrate
 from flask import url_for
 from flask import render_template
-from flask_debugtoolbar import DebugToolbarExtension
 import os
 from models import db, Dvd, Episode, Bookmark, Tag
 
@@ -18,6 +19,7 @@ db_pass = os.getenv('DB_PASS')
 db_con = f"postgresql+psycopg2://{db_user}:{db_pass}@localhost/dvdpila"
 app.config['SQLALCHEMY_DATABASE_URI'] = db_con
 db.init_app(app)
+migrate = Migrate(app, db)
 
 
 # import pdb; pdb.set_trace()
