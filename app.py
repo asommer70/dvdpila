@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 from flask_migrate import Migrate
 from flask import url_for
 from flask import render_template
@@ -13,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yahchu2aXil2'
-toolbar = DebugToolbarExtension(app)
+# toolbar = DebugToolbarExtension(app)
 db_user = os.getenv('DB_USER')
 db_pass = os.getenv('DB_PASS')
 db_con = f"postgresql+psycopg2://{db_user}:{db_pass}@localhost/dvdpila"

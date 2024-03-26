@@ -11,3 +11,7 @@ A web app that helps you keep track of your archived DVDs.  Now converted to a [
 ## Installation
 
 See the [wiki page](https://github.com/asommer70/dvdpila/wiki/Installation) (needs updated).
+
+### Setup the Database
+
+* Execute ```flask db upgrade``` to create the tables in a new database.
